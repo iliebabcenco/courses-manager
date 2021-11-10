@@ -1,0 +1,9 @@
+/.idea/
+/gateway-service/mvnw.cmd
+/gateway-service/mvnw
+/gateway-service/.mvn/
+/users-service/.mvn/
+/users-service/mvnw
+/users-service/mvnw.cmd
+/gateway-service/target/
+/users-service/target/

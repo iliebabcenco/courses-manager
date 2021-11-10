@@ -1,0 +1,17 @@
+server:
+  port: 8090
+spring:
+  security:
+    filter:
+      order=10:
+  datasource:
+    url: jdbc:mysql://localhost:3306/users?createDatabaseIfNotExist=true
+    username: hbstudent
+    password: hbstudent
+    driver-class-name: com.mysql.jdbc.Driver
+  jpa:
+    hibernate.ddl-auto: update
+    generate-ddl: true
+    show-sql: true
+hibernate:
+  dialect: "org.hibernate.dialect.MySQL5Dialect"
