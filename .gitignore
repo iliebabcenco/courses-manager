@@ -7,3 +7,6 @@
 /users-service/mvnw.cmd
 /gateway-service/target/
 /users-service/target/
+/gateway-service/gateway-service.iml
+/courses-manager.iml
+/users-service/user-service.iml
