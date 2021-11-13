@@ -4,12 +4,11 @@ import lombok.AllArgsConstructor;
 import md.ilie.coursesmanager.userservice.entity.User;
 import md.ilie.coursesmanager.userservice.service.UserService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/users")
 @AllArgsConstructor
 public class UserController {

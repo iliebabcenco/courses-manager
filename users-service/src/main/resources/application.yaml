@@ -1,14 +1,14 @@
 server:
-  port: 8090
+  port: 8081
 spring:
   security:
     filter:
-      order=10:
+      order=15:
   datasource:
     url: jdbc:mysql://localhost:3306/users?createDatabaseIfNotExist=true
     username: hbstudent
     password: hbstudent
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate.ddl-auto: update
     generate-ddl: true
