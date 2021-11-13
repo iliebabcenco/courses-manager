@@ -1,5 +1,7 @@
 package md.ilie.coursesmanager.userservice.entity;
 
+import lombok.Getter;
+import lombok.Setter;
 import md.ilie.coursesmanager.userservice.entity.enums.Role;
 
 import javax.persistence.*;
@@ -7,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Getter
+@Setter
 public class User {
 
   @Id
