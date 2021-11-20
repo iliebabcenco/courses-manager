@@ -11,12 +11,13 @@ public class AuthController {
 
     private UserServiceClient userServiceClient;
 
-    @GetMapping("check")
+    @GetMapping("/check")
     public String checker() {
+
         return "success-checked!";
     }
 
-    @GetMapping("check")
+    @GetMapping("/users")
     public String getAllUsers() {
         userServiceClient.getAllUsers();
         return "RECEIVED ALL USERS!!!";

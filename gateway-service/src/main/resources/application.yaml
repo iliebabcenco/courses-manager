@@ -2,3 +2,6 @@ spring:
   security:
     filter:
       order: 10
+
+server:
+  port: 8081
