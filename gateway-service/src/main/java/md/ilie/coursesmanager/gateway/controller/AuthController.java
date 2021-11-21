@@ -13,7 +13,7 @@ public class AuthController {
 
     @GetMapping("/check")
     public String checker() {
-
+        System.out.println("CONTROLLER checker!!!");
         return "success-checked!";
     }
 

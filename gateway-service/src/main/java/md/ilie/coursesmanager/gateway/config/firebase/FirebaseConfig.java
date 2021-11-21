@@ -19,7 +19,7 @@ public class FirebaseConfig {
 
   @Primary
   @Bean
-  public FirebaseApp getfirebaseApp() throws IOException {
+  public FirebaseApp getFirebaseApp() throws IOException {
     FirebaseOptions options =
         FirebaseOptions.builder()
             .setCredentials(GoogleCredentials.getApplicationDefault())
