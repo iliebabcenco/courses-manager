@@ -9,5 +9,6 @@
 /users-service/target/
 /gateway-service/gateway-service.iml
 /courses-manager.iml
-/users-service/user-service.iml
+/users-service/userEntity-service.iml
 /users-service/users-service.iml
+/users-service/user-service.iml
