@@ -21,7 +21,6 @@ import javax.servlet.http.HttpServletResponse;
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-  private UserService userService;
   private FirebaseTokenFilter firebaseTokenFilter;
   private FirebaseAuthenticationProvider firebaseProvider;
 

@@ -2,6 +2,8 @@ package md.ilie.coursesmanager.userservice.config.firebase;
 
 import com.google.firebase.auth.FirebaseToken;
 
+import java.util.Map;
+
 public class FirebaseTokenHolder {
 	private FirebaseToken token;
 
@@ -24,6 +26,14 @@ public class FirebaseTokenHolder {
 	public String getUid() {
 		return token.getUid();
 	}
+
+	public Map<String, Object> getClaims() {
+	    return token.getClaims();
+    }
+
+    public String getPicture() {
+	    return token.getPicture();
+    }
 
 
 }
