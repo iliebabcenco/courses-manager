@@ -1,6 +1,9 @@
 package md.ilie.coursesmanager.userservice.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,6 +21,9 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Table(name = "users")
 public class UserEntity implements UserDetails {
 
@@ -33,6 +39,12 @@ public class UserEntity implements UserDetails {
   private String picture;
   @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   private List<RoleEntity> authorities;
+
+  public UserEntity(String username, String password, List<RoleEntity> authorities) {
+    this.username = username;
+    this.password = password;
+    this.authorities = authorities;
+  }
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {

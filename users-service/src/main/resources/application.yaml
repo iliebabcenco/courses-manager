@@ -10,5 +10,8 @@ spring:
     hibernate.ddl-auto: update
     generate-ddl: true
     show-sql: true
+  security:
+    filter:
+      order: 10
 hibernate:
   dialect: "org.hibernate.dialect.MySQL5Dialect"

@@ -50,12 +50,12 @@ public class UserService implements UserDetailsService {
         if (userDetails == null)
             return null;
 
-        Set<GrantedAuthority> grantedAuthorities = new HashSet<GrantedAuthority>();
+        Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
         for (GrantedAuthority role : userDetails.getAuthorities()) {
             grantedAuthorities.add(new SimpleGrantedAuthority(role.getAuthority()));
         }
 
         return new User(userDetails.getUsername(),
-          userDetails.getPassword(), userDetails.getAuthorities());
+          userDetails.getPassword(), grantedAuthorities);
     }
 }
