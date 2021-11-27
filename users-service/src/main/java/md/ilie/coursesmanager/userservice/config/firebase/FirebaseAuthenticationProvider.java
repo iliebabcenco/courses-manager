@@ -41,7 +41,7 @@ public class FirebaseAuthenticationProvider implements AuthenticationProvider {
 
   @Override
   public boolean supports(Class<?> authentication) {
-
+    System.out.println("\n\n\n suports method in PROVIDER");
     return (FirebaseAuthenticationToken.class.isAssignableFrom(authentication));
   }
 

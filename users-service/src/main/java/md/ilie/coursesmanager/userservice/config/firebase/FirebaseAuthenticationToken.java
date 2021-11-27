@@ -1,6 +1,5 @@
 package md.ilie.coursesmanager.userservice.config.firebase;
 
-import com.google.firebase.auth.FirebaseToken;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import java.util.Collection;

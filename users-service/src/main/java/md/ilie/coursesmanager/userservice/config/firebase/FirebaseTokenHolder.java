@@ -31,7 +31,7 @@ public class FirebaseTokenHolder {
 	    return token.getClaims();
     }
 
-    public String getPicture() {
+	public String getPicture() {
 	    return token.getPicture();
     }
 

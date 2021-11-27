@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
-@Order(1)
+//@Order(1)
 @AllArgsConstructor
 public class FirebaseTokenFilter extends OncePerRequestFilter {
 
@@ -45,11 +45,13 @@ public class FirebaseTokenFilter extends OncePerRequestFilter {
         if (decodedToken == null) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid token!");
         }
+
         System.out.println("Filter with dekoded token " + decodedToken.getEmail());
         System.out.println("Filter with dekoded token " + decodedToken.getUid());
 
         Authentication auth = getAuthentication(decodedToken);
-        SecurityContextHolder.getContext().setAuthentication(firebaseAuthenticationProvider.authenticate(auth));
+//        firebaseAuthenticationProvider.authenticate(auth)
+        SecurityContextHolder.getContext().setAuthentication(auth);
         logger.debug("Successfully Authenticated");
 
         filterChain.doFilter(request, response);
@@ -57,7 +59,7 @@ public class FirebaseTokenFilter extends OncePerRequestFilter {
 
     private Authentication getAuthentication(FirebaseToken decodedToken) {
         assert decodedToken != null;
-        return new FirebaseAuthenticationToken(decodedToken.getUid(), new FirebaseTokenHolder(decodedToken));
+        return new FirebaseAuthenticationToken(decodedToken.getName(), new FirebaseTokenHolder(decodedToken));
     }
 
 }
