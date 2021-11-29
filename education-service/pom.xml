@@ -3,10 +3,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>users-service</artifactId>
+    <artifactId>education-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>users-service</name>
-    <description>users-service</description>
+    <name>education-service</name>
+    <description>education-service</description>
 
     <parent>
         <groupId>md.ilie.coursesmanager</groupId>
@@ -21,7 +21,7 @@
     <dependencies>
         <dependency>
             <groupId>md.ilie.coursesmanager</groupId>
-            <artifactId>education-service</artifactId>
+            <artifactId>users-service</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>

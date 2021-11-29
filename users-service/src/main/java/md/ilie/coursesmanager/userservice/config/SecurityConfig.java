@@ -4,8 +4,6 @@ import lombok.AllArgsConstructor;
 import md.ilie.coursesmanager.userservice.config.firebase.FirebaseAuthenticationProvider;
 import md.ilie.coursesmanager.userservice.config.firebase.FirebaseTokenFilter;
 import md.ilie.coursesmanager.userservice.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -27,7 +25,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   private FirebaseTokenFilter firebaseTokenFilter;
   private FirebaseAuthenticationProvider firebaseProvider;
 
-
   @Override
   protected void configure(AuthenticationManagerBuilder auth) throws Exception {
     auth.userDetailsService(userService);
@@ -42,14 +39,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         (request, response, ex) -> {
           response.sendError(
             HttpServletResponse.SC_UNAUTHORIZED,
-            ex.getMessage()
-          );
-        }
-      )
-      .and();
+            ex.getMessage());
+        }).and();
     http.authorizeRequests()
       .antMatchers("/users/**").permitAll().anyRequest().authenticated();
-
     http.addFilterBefore(firebaseTokenFilter, UsernamePasswordAuthenticationFilter.class);
   }
 

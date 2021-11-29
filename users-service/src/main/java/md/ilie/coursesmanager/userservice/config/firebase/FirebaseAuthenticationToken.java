@@ -21,7 +21,7 @@ public class FirebaseAuthenticationToken extends AbstractAuthenticationToken {
     super(authorities);
     this.principal = principal;
     this.credentials = credentials;
-    super.setAuthenticated(true); // must use super, as we override
+    super.setAuthenticated(true);
   }
 
   @Override
@@ -39,7 +39,6 @@ public class FirebaseAuthenticationToken extends AbstractAuthenticationToken {
       throw new IllegalArgumentException(
         "Cannot set this token to trusted - use constructor which takes a GrantedAuthority list instead");
     }
-
     super.setAuthenticated(false);
   }
 

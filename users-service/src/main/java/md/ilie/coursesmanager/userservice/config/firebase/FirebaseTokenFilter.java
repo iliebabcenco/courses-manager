@@ -19,41 +19,28 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
-//@Order(1)
 @AllArgsConstructor
 public class FirebaseTokenFilter extends OncePerRequestFilter {
-
-    private FirebaseAuthenticationProvider firebaseAuthenticationProvider;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         String authenticationHeader = request.getHeader("Authorization");
-
         if (authenticationHeader == null || !authenticationHeader.startsWith("Bearer "))
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Missing token!");
-
         FirebaseToken decodedToken = null;
         try {
             String token = authenticationHeader.substring(7);
             decodedToken = FirebaseAuth.getInstance().verifyIdToken(token);
-
         } catch (FirebaseAuthException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Error! " + e.getMessage());
         }
-
         if (decodedToken == null) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid token!");
         }
-
-        System.out.println("Filter with dekoded token " + decodedToken.getEmail());
-        System.out.println("Filter with dekoded token " + decodedToken.getUid());
-
         Authentication auth = getAuthentication(decodedToken);
-//        firebaseAuthenticationProvider.authenticate(auth)
         SecurityContextHolder.getContext().setAuthentication(auth);
         logger.debug("Successfully Authenticated");
-
         filterChain.doFilter(request, response);
     }
 
