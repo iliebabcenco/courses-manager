@@ -26,7 +26,8 @@ public class UserService implements UserDetailsService {
     }
 
     public UserEntity getUser(String id) {
-        return userRepository.findById(id).get();
+        return userRepository.findById(id).orElseThrow(
+          () -> new UsernameNotFoundException("Could not find user: [" + id + "]"));
     }
 
     public List<UserEntity> getAllUsers() {
@@ -46,16 +47,16 @@ public class UserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        UserDetails userDetails = userRepository.findByUsername(username);
-        if (userDetails == null)
-            return null;
+//        UserDetails userDetails = userRepository.findByUsername(username);
+//        if (userDetails == null)
+//            return null;
+//
+//        Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
+//        for (GrantedAuthority role : userDetails.getAuthorities()) {
+//            grantedAuthorities.add(new SimpleGrantedAuthority(role.getAuthority()));
+//        }
+//        UserEn
 
-        Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
-        for (GrantedAuthority role : userDetails.getAuthorities()) {
-            grantedAuthorities.add(new SimpleGrantedAuthority(role.getAuthority()));
-        }
-
-        return new User(userDetails.getUsername(),
-          userDetails.getPassword(), grantedAuthorities);
+        return userRepository.findByUsername(username);
     }
 }

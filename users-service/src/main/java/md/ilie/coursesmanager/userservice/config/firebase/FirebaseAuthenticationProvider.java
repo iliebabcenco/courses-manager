@@ -36,8 +36,9 @@ public class FirebaseAuthenticationProvider implements AuthenticationProvider {
         user.setEmail(holder.getEmail());
         user.setPicture(holder.getPicture());
         user.setId(holder.getUid());
-        user.setAuthorities(authenticationToken.getAuthorities().stream().map(role
-                -> new RoleEntity(role.getAuthority())).collect(Collectors.toList()));
+//        user.setAuthorities(authenticationToken.getAuthorities().stream().map(role
+//                -> new RoleEntity(role.getAuthority())).collect(Collectors.toList()));
+      user.setAuthorities(List.of(new RoleEntity("USER")));
        details = userService.createUser(user);
     }
     authenticationToken = new FirebaseAuthenticationToken(details, authentication.getCredentials(),
