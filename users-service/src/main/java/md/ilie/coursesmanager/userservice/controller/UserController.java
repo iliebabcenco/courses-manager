@@ -17,7 +17,7 @@ public class UserController {
     private UserService service;
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserEntity> getUser(@PathVariable() int id) {
+    public ResponseEntity<UserEntity> getUser(@PathVariable() String id) {
         return ResponseEntity.ok(service.getUser(id));
 //        return ResponseEntity.ok("Got iit");
     }
@@ -34,7 +34,7 @@ public class UserController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<UserEntity> updateUser(@PathVariable int id, @RequestBody UserEntity userEntity) {
+    public ResponseEntity<UserEntity> updateUser(@PathVariable String id, @RequestBody UserEntity userEntity) {
         try {
             return ResponseEntity.ok(service.updateUser(id, userEntity));
         } catch (Exception e) {

@@ -25,7 +25,7 @@ public class UserService implements UserDetailsService {
         return userRepository.save(userEntity);
     }
 
-    public UserEntity getUser(int id) {
+    public UserEntity getUser(String id) {
         return userRepository.findById(id).get();
     }
 
@@ -35,7 +35,7 @@ public class UserService implements UserDetailsService {
         return usersList;
     }
 
-    public UserEntity updateUser(int id, UserEntity userEntity) throws Exception {
+    public UserEntity updateUser(String id, UserEntity userEntity) throws Exception {
         if (userRepository.existsById(id)) {
             return userRepository.save(userEntity);
         }

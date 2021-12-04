@@ -7,10 +7,14 @@ import md.ilie.coursesmanager.userservice.service.UserService;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Component
@@ -26,8 +30,15 @@ public class FirebaseAuthenticationProvider implements AuthenticationProvider {
     FirebaseAuthenticationToken authenticationToken = (FirebaseAuthenticationToken) authentication;
     UserDetails details = userService.loadUserByUsername(authenticationToken.getName());
     if (details == null) {
-      details = userService.createUser(new UserEntity(authenticationToken.getName(),
-        authenticationToken.getCredentials().toString(), List.of(new RoleEntity("USER"))));//to do
+        FirebaseTokenHolder holder = (FirebaseTokenHolder) authentication.getCredentials();
+        UserEntity user = new UserEntity();
+        user.setUsername(holder.getName());
+        user.setEmail(holder.getEmail());
+        user.setPicture(holder.getPicture());
+        user.setId(holder.getUid());
+        user.setAuthorities(authenticationToken.getAuthorities().stream().map(role
+                -> new RoleEntity(role.getAuthority())).collect(Collectors.toList()));
+       details = userService.createUser(user);
     }
     authenticationToken = new FirebaseAuthenticationToken(details, authentication.getCredentials(),
       details.getAuthorities());

@@ -4,20 +4,22 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import md.ilie.coursesmanager.educationservice.entity.Course;
+//import md.ilie.coursesmanager.educationservice.entity.Course;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 import java.util.List;
 
-@Entity
+//@Entity
 @AllArgsConstructor
-@NoArgsConstructor
+//@NoArgsConstructor
 @Getter
 @Setter
-public class StudentEntity extends UserEntity {
+//@Table(name = "students")
+public class StudentEntity {
 
-    @ManyToMany
-    private List<Course> studentCourses;
+//    @ManyToMany
+//    private List<Course> studentCourses;
 
 }

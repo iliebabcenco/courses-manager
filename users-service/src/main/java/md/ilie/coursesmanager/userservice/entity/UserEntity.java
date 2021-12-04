@@ -28,8 +28,7 @@ import java.util.List;
 public class UserEntity implements UserDetails {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Integer id;
+  private String id;
 
   private String username;
   private String email;
