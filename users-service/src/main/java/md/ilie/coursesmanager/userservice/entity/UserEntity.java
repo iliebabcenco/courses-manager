@@ -32,13 +32,8 @@ public class UserEntity implements UserDetails {
   private String picture;
 
   @ElementCollection(fetch = FetchType.EAGER)
+  @Enumerated(EnumType.STRING)
   private List<RoleEnum> authorities;
-
-  public UserEntity(String username, String password, List<RoleEnum> authorities) {
-    this.username = username;
-    this.password = password;
-    this.authorities = authorities;
-  }
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {

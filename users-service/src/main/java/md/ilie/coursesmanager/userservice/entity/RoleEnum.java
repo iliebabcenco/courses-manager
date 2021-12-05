@@ -4,10 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 
-import javax.persistence.*;
 
-//@Entity
-//@Table(name = "roles")
 @NoArgsConstructor
 @AllArgsConstructor
 public enum RoleEnum implements GrantedAuthority {
@@ -15,9 +12,6 @@ public enum RoleEnum implements GrantedAuthority {
     USER(2, "USER"),
     MANAGER(3, "MANAGER");
 
-//    @Id
-//    @Column(name = "id")
-//    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     private String authority;
