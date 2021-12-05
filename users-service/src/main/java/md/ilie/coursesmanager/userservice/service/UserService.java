@@ -3,6 +3,7 @@ package md.ilie.coursesmanager.userservice.service;
 import lombok.AllArgsConstructor;
 import md.ilie.coursesmanager.userservice.entity.UserEntity;
 import md.ilie.coursesmanager.userservice.repository.UserRepository;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -16,6 +17,7 @@ import java.util.List;
 public class UserService implements UserDetailsService {
 
     private UserRepository userRepository;
+
 
     public UserEntity createUser(UserEntity userEntity) {
         return userRepository.save(userEntity);

@@ -11,13 +11,13 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import java.util.List;
 
-//@Entity
-@AllArgsConstructor
+@Entity
+//@AllArgsConstructor
 //@NoArgsConstructor
 @Getter
 @Setter
-//@Table(name = "students")
-public class StudentEntity {
+@Table(name = "students")
+public class StudentEntity extends UserEntity{
 
 //    @ManyToMany
 //    private List<Course> studentCourses;

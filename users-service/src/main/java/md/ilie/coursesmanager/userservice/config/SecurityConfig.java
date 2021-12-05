@@ -3,11 +3,14 @@ package md.ilie.coursesmanager.userservice.config;
 import lombok.AllArgsConstructor;
 import md.ilie.coursesmanager.userservice.config.firebase.FirebaseAuthenticationProvider;
 import md.ilie.coursesmanager.userservice.config.firebase.FirebaseTokenFilter;
+import md.ilie.coursesmanager.userservice.entity.RoleEnum;
 import md.ilie.coursesmanager.userservice.service.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -41,9 +44,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             HttpServletResponse.SC_UNAUTHORIZED,
             ex.getMessage());
         }).and();
-    http.authorizeRequests()
-      .antMatchers("/users/**").permitAll().anyRequest().authenticated();
-    http.addFilterBefore(firebaseTokenFilter, UsernamePasswordAuthenticationFilter.class);
+
+    http
+            .addFilterBefore(firebaseTokenFilter, UsernamePasswordAuthenticationFilter.class)
+            .authorizeRequests()
+            .antMatchers(HttpMethod.GET, "/users/**").hasAuthority("USER")
+            .antMatchers("/users/**").hasAuthority("ADMIN")
+            .anyRequest().authenticated();
   }
 
   @Bean

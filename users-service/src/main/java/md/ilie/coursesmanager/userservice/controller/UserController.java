@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import md.ilie.coursesmanager.userservice.entity.UserEntity;
 import md.ilie.coursesmanager.userservice.service.UserService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,12 +18,10 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<UserEntity> getUser(@PathVariable() String id) {
         return ResponseEntity.ok(service.getUser(id));
-//        return ResponseEntity.ok("Got iit");
     }
 
     @GetMapping
     public ResponseEntity<List<UserEntity>> getAllUsers() {
-
         return ResponseEntity.ok(service.getAllUsers());
     }
 
