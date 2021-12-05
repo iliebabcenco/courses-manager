@@ -2,17 +2,15 @@ package md.ilie.coursesmanager.userservice.config.firebase;
 
 import lombok.AllArgsConstructor;
 import md.ilie.coursesmanager.userservice.entity.RoleEntity;
+import md.ilie.coursesmanager.userservice.entity.RoleEnum;
 import md.ilie.coursesmanager.userservice.entity.UserEntity;
 import md.ilie.coursesmanager.userservice.service.UserService;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,9 +34,9 @@ public class FirebaseAuthenticationProvider implements AuthenticationProvider {
         user.setEmail(holder.getEmail());
         user.setPicture(holder.getPicture());
         user.setId(holder.getUid());
-//        user.setAuthorities(authenticationToken.getAuthorities().stream().map(role
-//                -> new RoleEntity(role.getAuthority())).collect(Collectors.toList()));
-      user.setAuthorities(List.of(new RoleEntity("USER")));
+        user.setAuthorities(authenticationToken.getAuthorities().stream().map(role
+                -> RoleEnum.valueOf(role.getAuthority())).collect(Collectors.toList()));
+//      user.setAuthorities(List.of(RoleEnum.USER, RoleEnum.ADMIN));
        details = userService.createUser(user);
     }
     authenticationToken = new FirebaseAuthenticationToken(details, authentication.getCredentials(),

@@ -40,7 +40,6 @@ public class FirebaseTokenFilter extends OncePerRequestFilter {
         }
         Authentication auth = getAuthentication(decodedToken);
         SecurityContextHolder.getContext().setAuthentication(auth);
-        logger.debug("Successfully Authenticated");
         filterChain.doFilter(request, response);
     }
 

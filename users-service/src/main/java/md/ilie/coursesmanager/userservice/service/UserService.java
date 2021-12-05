@@ -3,17 +3,13 @@ package md.ilie.coursesmanager.userservice.service;
 import lombok.AllArgsConstructor;
 import md.ilie.coursesmanager.userservice.entity.UserEntity;
 import md.ilie.coursesmanager.userservice.repository.UserRepository;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Service
 @AllArgsConstructor
@@ -45,18 +41,8 @@ public class UserService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
-//        UserDetails userDetails = userRepository.findByUsername(username);
-//        if (userDetails == null)
-//            return null;
-//
-//        Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
-//        for (GrantedAuthority role : userDetails.getAuthorities()) {
-//            grantedAuthorities.add(new SimpleGrantedAuthority(role.getAuthority()));
-//        }
-//        UserEn
-
-        return userRepository.findByUsername(username);
+        return userRepository.findByEmail(email);
     }
 }

@@ -7,14 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+
+import javax.persistence.*;
 import java.util.Collection;
 import java.util.List;
 
@@ -36,10 +30,11 @@ public class UserEntity implements UserDetails {
   private String phoneNumber;
   private boolean isEmailVerified;
   private String picture;
-  @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-  private List<RoleEntity> authorities;
 
-  public UserEntity(String username, String password, List<RoleEntity> authorities) {
+  @ElementCollection(fetch = FetchType.EAGER)
+  private List<RoleEnum> authorities;
+
+  public UserEntity(String username, String password, List<RoleEnum> authorities) {
     this.username = username;
     this.password = password;
     this.authorities = authorities;
