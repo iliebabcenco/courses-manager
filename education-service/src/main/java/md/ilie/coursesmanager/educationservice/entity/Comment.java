@@ -20,6 +20,6 @@ public class Comment {
     private Integer id;
     private String content;
     @ManyToOne
-    private UserEntity userId;
+    private UserEntity user;
 
 }

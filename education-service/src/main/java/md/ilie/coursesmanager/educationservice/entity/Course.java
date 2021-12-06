@@ -27,8 +27,11 @@ public class Course {
     private LocalDate startDate;
     private LocalDate endDate;
     @ManyToMany
-    private List<StudentEntity> courseStudentsList;
+    private List<StudentEntity> students;
     @ManyToOne
-    private TeacherEntity courseTeacher;
+    private TeacherEntity teacher;
+    @OneToMany
+    private List<Mark> marks;
+
 
 }

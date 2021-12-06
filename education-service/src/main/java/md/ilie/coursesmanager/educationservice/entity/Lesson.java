@@ -24,6 +24,6 @@ public class Lesson {
     private LocalDate startDate;
     private LocalDate endDate;
     @ManyToOne
-    private Course lessonCourse;
+    private Course courses;
 
 }
