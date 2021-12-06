@@ -11,14 +11,14 @@ import javax.persistence.*;
 @Builder
 @Getter
 @Setter
-public class Mark {
+public class MarkEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private Integer value;
     @ManyToOne
-    private Course courses;
+    private CourseEntity courses;
     @ManyToOne
     private StudentEntity student;
 

@@ -23,7 +23,7 @@ public class UserService implements UserDetailsService {
         return userRepository.save(userEntity);
     }
 
-    public UserEntity getUser(String id) {
+    public UserEntity getUser(Integer id) {
         return userRepository.findById(id).orElseThrow(
           () -> new UsernameNotFoundException("Could not find user: [" + id + "]"));
     }
@@ -34,7 +34,7 @@ public class UserService implements UserDetailsService {
         return usersList;
     }
 
-    public UserEntity updateUser(String id, UserEntity userEntity) throws Exception {
+    public UserEntity updateUser(Integer id, UserEntity userEntity) throws Exception {
         if (userRepository.existsById(id)) {
             return userRepository.save(userEntity);
         }

@@ -37,7 +37,7 @@ public class FirebaseAuthenticationProvider implements AuthenticationProvider {
       user.setUsername(holder.getName());
       user.setEmail(holder.getEmail());
       user.setPicture(holder.getPicture());
-      user.setId(holder.getUid());
+      user.setUid(holder.getUid());
       user.setAuthorities(List.of(RoleEnum.USER));
       Map<String, Object> claims = new HashMap<>();
       claims.put("roles", List.of(RoleEnum.USER.getAuthority()));

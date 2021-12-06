@@ -16,7 +16,7 @@ public class UserController {
     private UserService service;
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserEntity> getUser(@PathVariable() String id) {
+    public ResponseEntity<UserEntity> getUser(@PathVariable() Integer id) {
         return ResponseEntity.ok(service.getUser(id));
     }
 
@@ -27,11 +27,15 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<UserEntity> createUser(@RequestBody UserEntity userEntity) {
-        return ResponseEntity.ok(service.createUser(userEntity));
+        try {
+            return ResponseEntity.ok(service.createUser(userEntity));
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<UserEntity> updateUser(@PathVariable String id, @RequestBody UserEntity userEntity) {
+    public ResponseEntity<UserEntity> updateUser(@PathVariable Integer id, @RequestBody UserEntity userEntity) {
         try {
             return ResponseEntity.ok(service.updateUser(id, userEntity));
         } catch (Exception e) {
