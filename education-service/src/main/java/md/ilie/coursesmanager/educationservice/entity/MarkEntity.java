@@ -11,6 +11,7 @@ import javax.persistence.*;
 @Builder
 @Getter
 @Setter
+@Table(name = "marks")
 public class MarkEntity {
 
     @Id

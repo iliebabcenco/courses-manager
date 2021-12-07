@@ -13,28 +13,6 @@ import java.util.List;
 @AllArgsConstructor
 public class LessonController {
 
-    private LessonRepository repository;
 
-    public List<LessonEntity> findAllLessonsByIds(Integer... ids) {
-        List<LessonEntity> lessonsList = new ArrayList<>();
-        repository.findAllById(Arrays.asList(ids)).forEach(lessonsList::add);
-        return lessonsList;
-    }
-
-    public List<LessonEntity> findAll() {
-        List<LessonEntity> lessonsList = new ArrayList<>();
-        repository.findAll().forEach(lessonsList::add);
-        return lessonsList;
-    }
-
-    public LessonEntity save(LessonEntity lessonEntity) {
-
-        return repository.save(lessonEntity);
-    }
-
-    public void delete(LessonEntity lessonEntity) {
-
-        repository.delete(lessonEntity);
-    }
     
 }

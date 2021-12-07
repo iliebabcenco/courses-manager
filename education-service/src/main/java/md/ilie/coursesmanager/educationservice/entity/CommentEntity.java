@@ -13,6 +13,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 @Setter
+@Table(name = "comments")
 public class CommentEntity {
 
     @Id

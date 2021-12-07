@@ -17,6 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
+@Table(name = "courses")
 public class CourseEntity {
 
     @Id

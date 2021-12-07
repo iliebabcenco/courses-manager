@@ -15,9 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Table(name = "users")
-@Inheritance(
-        strategy = InheritanceType.JOINED
-)
+@Inheritance(strategy = InheritanceType.JOINED)
 public class UserEntity implements UserDetails {
 
   @Id

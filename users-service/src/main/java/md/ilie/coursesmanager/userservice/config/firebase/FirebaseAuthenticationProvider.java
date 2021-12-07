@@ -23,7 +23,8 @@ public class FirebaseAuthenticationProvider implements AuthenticationProvider {
 
   private UserService userService;
 
-  @SneakyThrows @Override
+  @SneakyThrows
+  @Override
   public Authentication authenticate(Authentication authentication) throws AuthenticationException {
     if (!supports(authentication.getClass())) {
       return null;
@@ -33,16 +34,19 @@ public class FirebaseAuthenticationProvider implements AuthenticationProvider {
     FirebaseTokenHolder holder = (FirebaseTokenHolder) authentication.getCredentials();
     List<RoleEnum> roles = null;
     if (details == null) {
-      UserEntity user = new UserEntity();
-      user.setUsername(holder.getName());
-      user.setEmail(holder.getEmail());
-      user.setPicture(holder.getPicture());
-      user.setUid(holder.getUid());
-      user.setAuthorities(List.of(RoleEnum.USER));
+      roles = List.of(RoleEnum.USER);
+      UserEntity user = UserEntity
+        .builder()
+        .username(holder.getName())
+        .email(holder.getEmail())
+        .picture(holder.getPicture())
+        .uid(holder.getUid())
+        .authorities(roles)
+        .build();
       Map<String, Object> claims = new HashMap<>();
       claims.put("roles", List.of(RoleEnum.USER.getAuthority()));
       FirebaseAuth.getInstance().setCustomUserClaims(holder.getUid(), claims);
-      roles = List.of(RoleEnum.USER);
+
       details = userService.createUser(user);
     } else {
       roles = ((List<String>) holder.getClaims().get("roles"))

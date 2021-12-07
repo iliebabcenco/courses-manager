@@ -13,28 +13,6 @@ import java.util.List;
 @AllArgsConstructor
 public class MarkController {
 
-    private MarkRepository repository;
 
-    public List<MarkEntity> findAllLessonsByIds(Integer... ids) {
-        List<MarkEntity> marksList = new ArrayList<>();
-        repository.findAllById(Arrays.asList(ids)).forEach(marksList::add);
-        return marksList;
-    }
-
-    public List<MarkEntity> findAll() {
-        List<MarkEntity> marksList = new ArrayList<>();
-        repository.findAll().forEach(marksList::add);
-        return marksList;
-    }
-
-    public MarkEntity save(MarkEntity markEntity) {
-
-        return repository.save(markEntity);
-    }
-
-    public void delete(MarkEntity markEntity) {
-
-        repository.delete(markEntity);
-    }
 
 }
