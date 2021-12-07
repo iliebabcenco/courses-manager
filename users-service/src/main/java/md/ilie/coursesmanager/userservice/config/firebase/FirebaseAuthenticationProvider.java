@@ -1,5 +1,7 @@
 package md.ilie.coursesmanager.userservice.config.firebase;
 
+import static md.ilie.coursesmanager.userservice.utils.UserEntityMapper.firebaseTokenHolderToUserEntity;
+
 import com.google.firebase.auth.FirebaseAuth;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
@@ -21,7 +23,7 @@ import java.util.stream.Collectors;
 @Component
 public class FirebaseAuthenticationProvider implements AuthenticationProvider {
 
-  private UserService userService;
+  private final UserService userService;
 
   @SneakyThrows
   @Override
@@ -32,21 +34,13 @@ public class FirebaseAuthenticationProvider implements AuthenticationProvider {
     FirebaseAuthenticationToken authenticationToken = (FirebaseAuthenticationToken) authentication;
     UserDetails details = userService.loadUserByUsername(authenticationToken.getName());
     FirebaseTokenHolder holder = (FirebaseTokenHolder) authentication.getCredentials();
-    List<RoleEnum> roles = null;
+    List<RoleEnum> roles = List.of(RoleEnum.USER);
     if (details == null) {
-      roles = List.of(RoleEnum.USER);
-      UserEntity user = UserEntity
-        .builder()
-        .username(holder.getName())
-        .email(holder.getEmail())
-        .picture(holder.getPicture())
-        .uid(holder.getUid())
-        .authorities(roles)
-        .build();
+      UserEntity user = firebaseTokenHolderToUserEntity(holder, roles);
+
       Map<String, Object> claims = new HashMap<>();
       claims.put("roles", List.of(RoleEnum.USER.getAuthority()));
       FirebaseAuth.getInstance().setCustomUserClaims(holder.getUid(), claims);
-
       details = userService.createUser(user);
     } else {
       roles = ((List<String>) holder.getClaims().get("roles"))

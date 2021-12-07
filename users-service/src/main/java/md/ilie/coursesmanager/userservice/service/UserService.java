@@ -15,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 public class UserService implements UserDetailsService {
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     public UserEntity createUser(UserEntity userEntity) {
         return userRepository.save(userEntity);

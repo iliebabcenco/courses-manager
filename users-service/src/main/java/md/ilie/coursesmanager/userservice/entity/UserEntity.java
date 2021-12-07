@@ -1,5 +1,6 @@
 package md.ilie.coursesmanager.userservice.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,18 +26,24 @@ public class UserEntity implements UserDetails {
   private String uid;
   private String username;
   private String email;
-  private String password;
   private String phoneNumber;
   private boolean isEmailVerified;
   private String picture;
+  @Transient
+  @JsonIgnore
+  private String password;
 
-  @ElementCollection(fetch = FetchType.EAGER)
-  @Enumerated(EnumType.STRING)
+  @Transient
   private List<RoleEnum> authorities;
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
     return authorities;
+  }
+
+  @Override
+  public String getPassword() {
+    return null;
   }
 
   @Override
