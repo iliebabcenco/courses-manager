@@ -4,16 +4,16 @@ import lombok.AllArgsConstructor;
 import md.ilie.coursesmanager.educationservice.entity.CourseEntity;
 import md.ilie.coursesmanager.educationservice.repository.CourseRepository;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 @AllArgsConstructor
 public class CourseService {
 
-    private CourseRepository repository;
+    private final CourseRepository repository;
 
     public List<CourseEntity> findAllCoursesByIds(Integer... ids) {
         List<CourseEntity> coursesList = new ArrayList<>();
@@ -27,13 +27,27 @@ public class CourseService {
         return coursesList;
     }
 
-    public CourseEntity save(CourseEntity CourseEntity) {
-
-        return repository.save(CourseEntity);
+    public CourseEntity findById(int id) {
+        return repository.findById(id).orElseThrow(
+          () -> new NoSuchElementException("Could not find course: [" + id + "]"));
     }
 
-    public void delete(CourseEntity CourseEntity) {
+    public CourseEntity save(CourseEntity courseEntity) {
 
-        repository.delete(CourseEntity);
+        return repository.save(courseEntity);
     }
+
+    public void delete(int id) {
+
+        repository.deleteById(id);
+    }
+
+    public CourseEntity update(int id, CourseEntity courseEntity) {
+
+        if (repository.existsById(id)) {
+            repository.save(courseEntity);
+        }
+        throw new NoSuchElementException("Could not find course: [" + id + "]");
+    }
+
 }

@@ -4,10 +4,10 @@ import lombok.AllArgsConstructor;
 import md.ilie.coursesmanager.educationservice.entity.MarkEntity;
 import md.ilie.coursesmanager.educationservice.repository.MarkRepository;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 @AllArgsConstructor
@@ -27,14 +27,27 @@ public class MarkService {
         return marksList;
     }
 
+    public MarkEntity findById(int id) {
+        return repository.findById(id).orElseThrow(
+          () -> new NoSuchElementException("Could not find mark: [" + id + "]"));
+    }
+
     public MarkEntity save(MarkEntity markEntity) {
 
         return repository.save(markEntity);
     }
 
-    public void delete(MarkEntity markEntity) {
+    public void delete(int id) {
 
-        repository.delete(markEntity);
+        repository.deleteById(id);
+    }
+
+    public MarkEntity update(int id, MarkEntity markEntity) {
+
+        if (repository.existsById(id)) {
+            repository.save(markEntity);
+        }
+        throw new NoSuchElementException("Could not find mark: [" + id + "]");
     }
 
 }
