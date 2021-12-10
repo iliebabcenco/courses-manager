@@ -13,7 +13,7 @@ import java.util.NoSuchElementException;
 @AllArgsConstructor
 public class MarkService {
 
-    private MarkRepository repository;
+    private final MarkRepository repository;
 
     public List<MarkEntity> findAllLessonsByIds(Integer... ids) {
         List<MarkEntity> marksList = new ArrayList<>();

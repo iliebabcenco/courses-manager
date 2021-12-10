@@ -1,9 +1,8 @@
 package md.ilie.coursesmanager.educationservice.repository;
 
 import md.ilie.coursesmanager.educationservice.entity.LessonEntity;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
-@Repository
-public interface LessonRepository extends CrudRepository<LessonEntity, Integer> {
+//@Repository
+public interface LessonRepository extends MongoRepository<LessonEntity, Integer> {
 }

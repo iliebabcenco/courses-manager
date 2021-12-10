@@ -22,9 +22,7 @@ public class LessonService {
     }
 
     public List<LessonEntity> findAll() {
-        List<LessonEntity> lessonsList = new ArrayList<>();
-        repository.findAll().forEach(lessonsList::add);
-        return lessonsList;
+        return new ArrayList<>(repository.findAll());
     }
 
     public LessonEntity findById(int id) {

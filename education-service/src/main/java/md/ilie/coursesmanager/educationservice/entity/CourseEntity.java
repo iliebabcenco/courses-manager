@@ -2,36 +2,41 @@ package md.ilie.coursesmanager.educationservice.entity;
 
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+//import md.ilie.coursesmanager.userservice.entity.StudentEntity;
+//import md.ilie.coursesmanager.userservice.entity.TeacherEntity;
 import md.ilie.coursesmanager.userservice.entity.StudentEntity;
 import md.ilie.coursesmanager.userservice.entity.TeacherEntity;
+import org.springframework.data.annotation.Id;
 
-import javax.persistence.*;
+//import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
-@Entity
+//@Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-@Table(name = "courses")
+@Builder
+//@Table(name = "courses")
 public class CourseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
     private String description;
     private LocalDate startDate;
     private LocalDate endDate;
-    @ManyToMany
+//    @ManyToMany
     private List<StudentEntity> students;
-    @ManyToOne
+//    @ManyToOne
     private TeacherEntity teacher;
-    @OneToMany
+//    @OneToMany
     private List<MarkEntity> marks;
 
 
