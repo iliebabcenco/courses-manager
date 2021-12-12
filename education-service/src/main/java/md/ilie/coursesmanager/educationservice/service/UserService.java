@@ -1,0 +1,41 @@
+package md.ilie.coursesmanager.educationservice.service;
+
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import md.ilie.coursesmanager.educationservice.client.UserServiceClient;
+import md.ilie.coursesmanager.userservice.config.firebase.FirebaseAuthenticationToken;
+import md.ilie.coursesmanager.userservice.entity.UserEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+
+@Service
+@AllArgsConstructor
+@Slf4j
+public class UserService implements UserDetailsService {
+
+    private final UserServiceClient usersClient;
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return null;
+    }
+
+    public UserDetails loadUserByEmail(String email) throws UsernameNotFoundException {
+        return usersClient.loadUserByEmail(email).getBody();
+    }
+
+    public UserEntity createUser(UserEntity userEntity) throws UsernameNotFoundException {
+        return usersClient.createUser(userEntity).getBody();
+    }
+
+    public FirebaseAuthenticationToken loadAuthByToken(String token) throws UsernameNotFoundException {
+        FirebaseAuthenticationToken authenticationToken = usersClient.loadAuthByToken(token).getBody();
+        log.info("FirebaseAuthenticationToken in UserService: "+authenticationToken);
+        return authenticationToken;
+    }
+
+
+}

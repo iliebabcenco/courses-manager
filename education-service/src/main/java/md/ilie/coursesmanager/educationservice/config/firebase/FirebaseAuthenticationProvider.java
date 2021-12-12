@@ -1,13 +1,13 @@
-package md.ilie.coursesmanager.userservice.config.firebase;
-
-import static md.ilie.coursesmanager.userservice.utils.UserEntityMapper.firebaseTokenHolderToUserEntity;
+package md.ilie.coursesmanager.educationservice.config.firebase;
 
 import com.google.firebase.auth.FirebaseAuth;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
+import md.ilie.coursesmanager.userservice.config.firebase.FirebaseAuthenticationToken;
+import md.ilie.coursesmanager.userservice.config.firebase.FirebaseTokenHolder;
 import md.ilie.coursesmanager.userservice.entity.RoleEnum;
 import md.ilie.coursesmanager.userservice.entity.UserEntity;
-import md.ilie.coursesmanager.userservice.service.UserService;
+import md.ilie.coursesmanager.educationservice.service.UserService;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -18,6 +18,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+import static md.ilie.coursesmanager.userservice.utils.UserEntityMapper.firebaseTokenHolderToUserEntity;
 
 @AllArgsConstructor
 @Component
@@ -31,7 +33,7 @@ public class FirebaseAuthenticationProvider implements AuthenticationProvider {
     if (!supports(authentication.getClass())) {
       return null;
     }
-    FirebaseAuthenticationToken authenticationToken = (FirebaseAuthenticationToken) authentication;
+    md.ilie.coursesmanager.userservice.config.firebase.FirebaseAuthenticationToken authenticationToken = (md.ilie.coursesmanager.userservice.config.firebase.FirebaseAuthenticationToken) authentication;
     UserDetails details = userService.loadUserByEmail(authenticationToken.getName());
     FirebaseTokenHolder holder = (FirebaseTokenHolder) authentication.getCredentials();
     List<RoleEnum> roles = List.of(RoleEnum.USER);
@@ -47,7 +49,7 @@ public class FirebaseAuthenticationProvider implements AuthenticationProvider {
         .stream().map(RoleEnum::valueOf).collect(Collectors.toList());
     }
 
-    authenticationToken = new FirebaseAuthenticationToken(details, authentication.getCredentials(),
+    authenticationToken = new md.ilie.coursesmanager.userservice.config.firebase.FirebaseAuthenticationToken(details, authentication.getCredentials(),
       roles);
     return authenticationToken;
   }

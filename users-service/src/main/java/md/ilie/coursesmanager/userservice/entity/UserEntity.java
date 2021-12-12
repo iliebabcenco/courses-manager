@@ -25,6 +25,7 @@ public class UserEntity implements UserDetails {
 
   private String uid;
   private String username;
+  @Column(unique=true)
   private String email;
   private String phoneNumber;
   private boolean isEmailVerified;

@@ -3,6 +3,7 @@ package md.ilie.coursesmanager.educationservice.controller;
 import lombok.AllArgsConstructor;
 import md.ilie.coursesmanager.educationservice.entity.CourseEntity;
 import md.ilie.coursesmanager.educationservice.service.CourseService;
+import md.ilie.coursesmanager.educationservice.util.exception.ResourceNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -41,7 +42,6 @@ public class CourseController {
 
   @GetMapping("/{id}")
   public ResponseEntity<CourseEntity> findById(@PathVariable int id){
-
     return ResponseEntity.ok(courseService.findById(id));
   }
 

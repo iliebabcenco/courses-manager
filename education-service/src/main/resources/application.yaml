@@ -1,0 +1,11 @@
+server:
+  port: 8081
+spring:
+  data:
+    mongodb:
+      database: 'courses-manager'
+  security:
+    filter:
+      order: 10
+
+insertTestData: true

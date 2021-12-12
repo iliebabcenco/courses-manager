@@ -20,6 +20,12 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+            <version>3.0.5</version>
+        </dependency>
+
+        <dependency>
             <groupId>md.ilie.coursesmanager</groupId>
             <artifactId>users-service</artifactId>
             <version>0.0.1-SNAPSHOT</version>
