@@ -1,15 +1,19 @@
 package md.ilie.coursesmanager.gateway.controller;
 
 import lombok.AllArgsConstructor;
+import md.ilie.coursesmanager.educationservice.entity.CourseEntity;
+import md.ilie.coursesmanager.gateway.client.EducationServiceClient;
 import md.ilie.coursesmanager.gateway.client.UserServiceClient;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import java.util.List;
 
 @AllArgsConstructor
 @RestController
 public class AuthController {
 
-    private UserServiceClient userServiceClient;
+    private EducationServiceClient educationServiceClient;
 
     @GetMapping("/check")
     public String checker() {
@@ -17,9 +21,8 @@ public class AuthController {
         return "success-checked!";
     }
 
-    @GetMapping("/users")
-    public String getAllUsers() {
-        userServiceClient.getAllUsers();
-        return "RECEIVED ALL USERS!!!";
+    @GetMapping("/gateway/courses")
+    public ResponseEntity<List<CourseEntity>> getAllCourses() {
+        return educationServiceClient.findAll();
     }
 }

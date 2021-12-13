@@ -1,11 +1,9 @@
-package md.ilie.coursesmanager.educationservice.service;
+package md.ilie.coursesmanager.gateway.service;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import md.ilie.coursesmanager.educationservice.client.UserServiceClient;
-import md.ilie.coursesmanager.userservice.config.firebase.FirebaseAuthenticationToken;
+import md.ilie.coursesmanager.gateway.client.UserServiceClient;
 import md.ilie.coursesmanager.userservice.entity.UserEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
