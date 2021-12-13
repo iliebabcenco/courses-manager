@@ -8,11 +8,13 @@ import md.ilie.coursesmanager.userservice.config.firebase.FirebaseTokenHolder;
 import md.ilie.coursesmanager.userservice.entity.RoleEnum;
 import md.ilie.coursesmanager.userservice.entity.UserEntity;
 import md.ilie.coursesmanager.educationservice.service.UserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.HashMap;
 import java.util.List;
@@ -33,23 +35,22 @@ public class FirebaseAuthenticationProvider implements AuthenticationProvider {
     if (!supports(authentication.getClass())) {
       return null;
     }
-    md.ilie.coursesmanager.userservice.config.firebase.FirebaseAuthenticationToken authenticationToken = (md.ilie.coursesmanager.userservice.config.firebase.FirebaseAuthenticationToken) authentication;
-    UserDetails details = userService.loadUserByEmail(authenticationToken.getName());
+    FirebaseAuthenticationToken authenticationToken = (FirebaseAuthenticationToken) authentication;
     FirebaseTokenHolder holder = (FirebaseTokenHolder) authentication.getCredentials();
-    List<RoleEnum> roles = List.of(RoleEnum.USER);
-    if (details == null) {
-      UserEntity user = firebaseTokenHolderToUserEntity(holder, roles);
-
+    List<RoleEnum> roles = ((List<String>) holder.getClaims().get("roles"))
+      .stream().map(RoleEnum::valueOf).collect(Collectors.toList());;
+    if (roles.isEmpty()) {
+      roles = List.of(RoleEnum.USER);
       Map<String, Object> claims = new HashMap<>();
       claims.put("roles", List.of(RoleEnum.USER.getAuthority()));
       FirebaseAuth.getInstance().setCustomUserClaims(holder.getUid(), claims);
-      details = userService.createUser(user);
-    } else {
-      roles = ((List<String>) holder.getClaims().get("roles"))
-        .stream().map(RoleEnum::valueOf).collect(Collectors.toList());
     }
-
-    authenticationToken = new md.ilie.coursesmanager.userservice.config.firebase.FirebaseAuthenticationToken(details, authentication.getCredentials(),
+    UserEntity user = firebaseTokenHolderToUserEntity(holder, roles);
+    UserDetails details = userService.registerOrGetUser(user);
+    if (details == null) {
+      throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid user!");
+    }
+    authenticationToken = new FirebaseAuthenticationToken(details, authentication.getCredentials(),
       roles);
     return authenticationToken;
   }

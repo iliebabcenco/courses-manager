@@ -27,14 +27,8 @@ public class UserService implements UserDetailsService {
         return usersClient.loadUserByEmail(email).getBody();
     }
 
-    public UserEntity createUser(UserEntity userEntity) throws UsernameNotFoundException {
-        return usersClient.createUser(userEntity).getBody();
-    }
-
-    public FirebaseAuthenticationToken loadAuthByToken(String token) throws UsernameNotFoundException {
-        FirebaseAuthenticationToken authenticationToken = usersClient.loadAuthByToken(token).getBody();
-        log.info("FirebaseAuthenticationToken in UserService: "+authenticationToken);
-        return authenticationToken;
+    public UserEntity registerOrGetUser(UserEntity userEntity) throws UsernameNotFoundException {
+        return usersClient.registerUser(userEntity).getBody();
     }
 
 

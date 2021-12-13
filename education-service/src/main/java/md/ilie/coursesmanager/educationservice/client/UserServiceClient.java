@@ -25,7 +25,7 @@ public interface UserServiceClient {
   @GetMapping("/users/{username}")
   ResponseEntity<UserDetails> loadUserByUsername(@PathVariable("username") String username);
 
-  @GetMapping("/users/auth")
-  ResponseEntity<FirebaseAuthenticationToken> loadAuthByToken(@RequestHeader("Authorization") String token);
+  @PostMapping("/users/register")
+  ResponseEntity<UserEntity> registerUser(@RequestBody UserEntity userEntity);
 
 }

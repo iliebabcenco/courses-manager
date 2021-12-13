@@ -49,14 +49,6 @@ public class UserController {
     }
   }
 
-  //    @GetMapping("/{username}")
-  //    public ResponseEntity<UserDetails> loadUserByUsername(@PathVariable String username) {
-  //        try {
-  //            return ResponseEntity.ok(service.loadUserByUsername(username));
-  //        } catch (Exception e) {
-  //            return ResponseEntity.notFound().build();
-  //        }
-  //    }
 
   @GetMapping("/{email}")
   public ResponseEntity<UserDetails> loadUserByEmail(@PathVariable String email) {
@@ -66,14 +58,5 @@ public class UserController {
       return ResponseEntity.notFound().build();
     }
   }
-
-  //    @GetMapping("/auth")
-  //    public ResponseEntity<FirebaseAuthenticationToken> loadUserFromToken(@RequestHeader("Authorization") String token) {
-  //        try {
-  //            return ResponseEntity.ok(service.loadAuthFromToken());
-  //        } catch (Exception e) {
-  //            return ResponseEntity.notFound().build();
-  //        }
-  //    }
 
 }
