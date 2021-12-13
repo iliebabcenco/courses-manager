@@ -41,10 +41,6 @@ public class FirebaseTokenFilter extends OncePerRequestFilter {
         FirebaseToken decodedToken = null;
         try {
             String token = authenticationHeader.substring(7);
-            Authentication authentication = (FirebaseAuthenticationToken) userService.loadAuthByToken(authenticationHeader);
-            UserDetails userDetails = new UserEntity();
-//            userDetails.get
-            System.out.println(authentication.getCredentials());
             decodedToken = FirebaseAuth.getInstance().verifyIdToken(token);
         } catch (FirebaseAuthException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Error! " + e.getMessage());

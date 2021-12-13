@@ -37,18 +37,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     http = http.cors().and().csrf().disable();
     http = http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and();
     http = http.exceptionHandling().authenticationEntryPoint(
-        (request, response, ex) -> {
-          response.sendError(
-            HttpServletResponse.SC_BAD_REQUEST,
-            ex.getMessage());
-        }).and();
+      (request, response, ex) -> {
+        response.sendError(
+          HttpServletResponse.SC_BAD_REQUEST,
+          ex.getMessage());
+      }).and();
 
     http
-            .addFilterBefore(firebaseTokenFilter, UsernamePasswordAuthenticationFilter.class)
-            .authorizeRequests()
-            .antMatchers(HttpMethod.GET, "/users/**").hasAuthority(RoleEnum.USER.getAuthority())
-            .antMatchers("/users/**").hasAuthority(RoleEnum.ADMIN.getAuthority())
-            .anyRequest().authenticated();
+      .addFilterBefore(firebaseTokenFilter, UsernamePasswordAuthenticationFilter.class)
+      .authorizeRequests()
+      .antMatchers("/users/register").permitAll()
+      .antMatchers(HttpMethod.GET, "/users/**").hasAuthority(RoleEnum.USER.getAuthority())
+      .antMatchers("/users/**").hasAuthority(RoleEnum.ADMIN.getAuthority())
+
+      .anyRequest().authenticated();
   }
 
   @Bean

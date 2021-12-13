@@ -13,7 +13,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,7 +40,7 @@ public class FirebaseAuthenticationProvider implements AuthenticationProvider {
       Map<String, Object> claims = new HashMap<>();
       claims.put("roles", List.of(RoleEnum.USER.getAuthority()));
       FirebaseAuth.getInstance().setCustomUserClaims(holder.getUid(), claims);
-      details = userService.createUser(user);
+      details = userService.registerUser(user);
     } else {
       roles = ((List<String>) holder.getClaims().get("roles"))
         .stream().map(RoleEnum::valueOf).collect(Collectors.toList());

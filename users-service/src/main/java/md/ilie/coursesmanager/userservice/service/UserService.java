@@ -22,8 +22,12 @@ public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
 
-    public UserEntity createUser(UserEntity userEntity) {
-        return userRepository.save(userEntity);
+    public UserEntity registerUser(UserEntity userEntity) {
+        UserEntity resultUser = userRepository.findByEmail(userEntity.getEmail());
+        if (resultUser == null) {
+            resultUser = userRepository.save(userEntity);
+        }
+        return resultUser;
     }
 
     public UserEntity getUser(Integer id) {
