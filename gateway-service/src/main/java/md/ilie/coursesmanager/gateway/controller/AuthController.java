@@ -23,6 +23,6 @@ public class AuthController {
 
     @GetMapping("/gateway/courses")
     public ResponseEntity<List<CourseEntity>> getAllCourses() {
-        return educationServiceClient.findAll();
+        return educationServiceClient.findAllCourses();
     }
 }

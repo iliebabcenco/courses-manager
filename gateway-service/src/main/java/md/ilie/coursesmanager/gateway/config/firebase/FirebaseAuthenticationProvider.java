@@ -5,6 +5,7 @@ import static md.ilie.coursesmanager.userservice.utils.UserEntityMapper.firebase
 import com.google.firebase.auth.FirebaseAuth;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
+import md.ilie.coursesmanager.gateway.client.EducationServiceFeignInterceptor;
 import md.ilie.coursesmanager.gateway.service.UserService;
 import md.ilie.coursesmanager.userservice.config.firebase.FirebaseAuthenticationToken;
 import md.ilie.coursesmanager.userservice.config.firebase.FirebaseTokenHolder;
@@ -14,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
@@ -37,7 +39,7 @@ public class FirebaseAuthenticationProvider implements AuthenticationProvider {
     FirebaseAuthenticationToken authenticationToken = (FirebaseAuthenticationToken) authentication;
     FirebaseTokenHolder holder = (FirebaseTokenHolder) authentication.getCredentials();
     List<RoleEnum> roles = ((List<String>) holder.getClaims().get("roles"))
-      .stream().map(RoleEnum::valueOf).collect(Collectors.toList());;
+      .stream().map(RoleEnum::valueOf).collect(Collectors.toList());
     if (roles.isEmpty()) {
       roles = List.of(RoleEnum.USER);
       Map<String, Object> claims = new HashMap<>();
@@ -49,7 +51,7 @@ public class FirebaseAuthenticationProvider implements AuthenticationProvider {
     if (details == null) {
       throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid user!");
     }
-    authenticationToken = new FirebaseAuthenticationToken(details, authentication.getCredentials(),
+    authenticationToken = new FirebaseAuthenticationToken(details, holder,
       roles);
     return authenticationToken;
   }

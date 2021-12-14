@@ -9,7 +9,7 @@ import java.util.List;
 @FeignClient(name = "education-service", url = "localhost:8083")
 public interface EducationServiceClient {
 
-  @GetMapping
-  ResponseEntity<List<CourseEntity>> findAll();
+  @GetMapping("/courses")
+  ResponseEntity<List<CourseEntity>> findAllCourses();
 
 }
