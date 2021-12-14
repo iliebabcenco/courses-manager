@@ -30,7 +30,7 @@ public class UserService implements UserDetailsService {
         return resultUser;
     }
 
-    public UserEntity getUser(Integer id) {
+    public UserEntity findById(Integer id) {
         return userRepository.findById(id).orElseThrow(
           () -> new UsernameNotFoundException("Could not find user: [" + id + "]"));
     }

@@ -42,14 +42,21 @@ public class CourseController {
 
   @GetMapping("/{id}")
   public ResponseEntity<CourseEntity> findById(@PathVariable int id){
+
     return ResponseEntity.ok(courseService.findById(id));
   }
 
   @DeleteMapping("/{id}")
   public ResponseEntity<String> remove(@PathVariable int id){
-
     courseService.delete(id);
+
     return ResponseEntity.ok("Successfully deleted");
+  }
+
+  @GetMapping("/users/{id}/courses")
+  ResponseEntity<List<CourseEntity>> getCoursesByUserId(@PathVariable int id) {
+
+    return ResponseEntity.ok(courseService.getCoursesByUserId(id));
   }
 
 }

@@ -1,0 +1,21 @@
+1. Should start or GraphQL?
+2. Relationship in nosql
+
+ADMIN:
+
+1. all courses, CRUD
+2. all lessons from a course, CRUD
+3. users CRUD, set roles
+
+MANAGER:
+
+1. all lessons from a course, CRUD
+2. one course Update, Read
+3. lessons from specific course CRUD
+4. marks from a specific course
+
+USER:
+
+1. all students from a course all marks from a course
+2. all user's comments CRUD
+3. read lessons, course, use content

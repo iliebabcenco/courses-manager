@@ -50,4 +50,8 @@ public class CourseService {
         throw new NoSuchElementException("Could not find course: [" + id + "]");
     }
 
+  public List<CourseEntity> getCoursesByUserId(int id) {
+
+      return repository.findCourseEntitiesByTeacherId(id);
+  }
 }

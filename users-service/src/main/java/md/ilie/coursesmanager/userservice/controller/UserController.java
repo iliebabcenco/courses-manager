@@ -22,8 +22,8 @@ public class UserController {
   private UserService service;
 
   @GetMapping("/{id}")
-  public ResponseEntity<UserEntity> getUser(@PathVariable() Integer id) {
-    return ResponseEntity.ok(service.getUser(id));
+  public ResponseEntity<UserEntity> findById(@PathVariable() Integer id) {
+    return ResponseEntity.ok(service.findById(id));
   }
 
   @GetMapping
@@ -49,6 +49,14 @@ public class UserController {
     }
   }
 
+  @PatchMapping("/upgrade/{id}")
+  public ResponseEntity<UserEntity> upgradeToAdmin(@PathVariable Integer id, @RequestBody UserEntity userEntity) {
+    try {
+        return ResponseEntity.ok(service.updateUser(id, userEntity));
+    } catch (Exception e) {
+        return ResponseEntity.notFound().build();
+    }
+  }
 
   @GetMapping("/{email}")
   public ResponseEntity<UserDetails> loadUserByEmail(@PathVariable String email) {
