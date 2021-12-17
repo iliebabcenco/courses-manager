@@ -22,8 +22,10 @@ public class UserController {
   private UserService service;
 
   @GetMapping("/{id}")
-  public ResponseEntity<UserEntity> findById(@PathVariable() Integer id) {
-    return ResponseEntity.ok(service.findById(id));
+  public ResponseEntity<UserEntity> findById(@PathVariable("id") Integer id) {
+    UserEntity user = service.findById(id);
+    System.out.println("User found :"+user);
+    return ResponseEntity.ok(user);
   }
 
   @GetMapping
@@ -55,15 +57,6 @@ public class UserController {
         return ResponseEntity.ok(service.updateUser(id, userEntity));
     } catch (Exception e) {
         return ResponseEntity.notFound().build();
-    }
-  }
-
-  @GetMapping("/{email}")
-  public ResponseEntity<UserDetails> loadUserByEmail(@PathVariable String email) {
-    try {
-      return ResponseEntity.ok(service.loadUserByEmail(email));
-    } catch (Exception e) {
-      return ResponseEntity.notFound().build();
     }
   }
 

@@ -35,12 +35,6 @@ public class FirebaseTokenFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
         log.info("Entering doFilterInternal from FirebaseTokenFilter");
         String authenticationHeader = request.getHeader("Authorization");
-        Iterator<String> stringIterator = request.getHeaderNames().asIterator();
-        System.out.println("\n\n\n BEFORE WHILE");
-        while (stringIterator.hasNext()){
-            System.out.println("header: "+stringIterator.next());
-        }
-        log.info("header "+authenticationHeader);
         if (authenticationHeader == null || !authenticationHeader.startsWith("Bearer "))
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Missing token!");
         FirebaseToken decodedToken = null;

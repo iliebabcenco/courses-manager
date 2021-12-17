@@ -17,7 +17,6 @@ import java.util.List;
 
 @Controller
 @AllArgsConstructor
-@RequestMapping("/courses")
 public class CourseController {
 
   private final CourseService courseService;
@@ -28,7 +27,7 @@ public class CourseController {
     return ResponseEntity.ok(courseService.save(courseEntity));
   }
 
-  @PatchMapping("/{id}")
+  @PatchMapping("/courses/{id}")
   public ResponseEntity<CourseEntity> update(@PathVariable int id, @RequestBody CourseEntity courseEntity){
 
     return ResponseEntity.ok(courseService.update(id, courseEntity));
@@ -40,13 +39,13 @@ public class CourseController {
     return ResponseEntity.ok(courseService.findAll());
   }
 
-  @GetMapping("/{id}")
+  @GetMapping("/courses/{id}")
   public ResponseEntity<CourseEntity> findById(@PathVariable int id){
 
     return ResponseEntity.ok(courseService.findById(id));
   }
 
-  @DeleteMapping("/{id}")
+  @DeleteMapping("/courses/{id}")
   public ResponseEntity<String> remove(@PathVariable int id){
     courseService.delete(id);
 
@@ -55,8 +54,9 @@ public class CourseController {
 
   @GetMapping("/users/{id}/courses")
   ResponseEntity<List<CourseEntity>> getCoursesByUserId(@PathVariable int id) {
-
-    return ResponseEntity.ok(courseService.getCoursesByUserId(id));
+    List<CourseEntity> courses = courseService.getCoursesByUserId(id);
+    System.out.println("Courses found: "+courses);
+    return ResponseEntity.ok(courses);
   }
 
 }

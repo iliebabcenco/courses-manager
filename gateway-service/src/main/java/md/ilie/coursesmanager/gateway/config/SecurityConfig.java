@@ -50,7 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
       //                .authenticationProvider(firebaseProvider)
       .authorizeRequests()
 //      .antMatchers(HttpMethod.GET, "/courses/**").permitAll()
-      .antMatchers("/users/**").hasAuthority(RoleEnum.ADMIN.getAuthority())
+//      .antMatchers("/users/**").hasAuthority(RoleEnum.ADMIN.getAuthority())
       .anyRequest().authenticated();
   }
 
