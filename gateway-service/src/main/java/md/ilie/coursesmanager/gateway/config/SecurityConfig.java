@@ -1,10 +1,9 @@
 package md.ilie.coursesmanager.gateway.config;
 
 import lombok.AllArgsConstructor;
-import md.ilie.coursesmanager.gateway.service.UserService;
 import md.ilie.coursesmanager.gateway.config.firebase.FirebaseAuthenticationProvider;
 import md.ilie.coursesmanager.gateway.config.firebase.FirebaseTokenFilter;
-import md.ilie.coursesmanager.userservice.entity.RoleEnum;
+import md.ilie.coursesmanager.gateway.service.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -39,19 +38,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     http = http.cors().and().csrf().disable();
     http = http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and();
     http = http.exceptionHandling().authenticationEntryPoint(
-      (request, response, ex) -> {
-        response.sendError(
-          HttpServletResponse.SC_BAD_REQUEST,
-          ex.getMessage());
-      }).and();
+        (request, response, ex) -> {
+          response.sendError(
+              HttpServletResponse.SC_BAD_REQUEST,
+              ex.getMessage());
+        }).and();
 
     http
-      .addFilterBefore(firebaseTokenFilter, UsernamePasswordAuthenticationFilter.class)
-      //                .authenticationProvider(firebaseProvider)
-      .authorizeRequests()
-//      .antMatchers(HttpMethod.GET, "/courses/**").permitAll()
-//      .antMatchers("/users/**").hasAuthority(RoleEnum.ADMIN.getAuthority())
-      .anyRequest().authenticated();
+        .addFilterBefore(firebaseTokenFilter, UsernamePasswordAuthenticationFilter.class)
+        //                .authenticationProvider(firebaseProvider)
+        .authorizeRequests()
+        .antMatchers(HttpMethod.POST, "/users/register").permitAll()
+        //      .antMatchers("/users/**").hasAuthority(RoleEnum.ADMIN.getAuthority())
+        .anyRequest().authenticated();
   }
 
   @Bean

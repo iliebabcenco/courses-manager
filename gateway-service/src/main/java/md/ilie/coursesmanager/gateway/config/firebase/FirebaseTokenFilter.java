@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
+import org.springframework.util.AntPathMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.server.ResponseStatusException;
 import javax.servlet.FilterChain;
@@ -25,35 +26,41 @@ import java.io.IOException;
 @Slf4j
 public class FirebaseTokenFilter extends OncePerRequestFilter {
 
-    private final EducationServiceFeignInterceptor educationServiceFeignInterceptor;
+  private final EducationServiceFeignInterceptor educationServiceFeignInterceptor;
 
-    @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-            throws ServletException, IOException {
-        log.info("Entering doFilterInternal from FirebaseTokenFilter");
-        String authenticationHeader = request.getHeader("Authorization");
-        if (authenticationHeader == null || !authenticationHeader.startsWith("Bearer "))
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Missing token!");
-        FirebaseToken decodedToken = null;
-        String token = null;
-        try {
-            token = authenticationHeader.substring(7);
-            decodedToken = FirebaseAuth.getInstance().verifyIdToken(token);
-        } catch (FirebaseAuthException e) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Error! " + e.getMessage());
-        }
-        if (decodedToken == null) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid token!");
-        }
-        Authentication auth = getAuthentication(decodedToken);
-        educationServiceFeignInterceptor.setToken(token);
-        SecurityContextHolder.getContext().setAuthentication(auth);
-        filterChain.doFilter(request, response);
+  @Override
+  protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+      throws ServletException, IOException {
+    log.info("Entering doFilterInternal from FirebaseTokenFilter");
+    String authenticationHeader = request.getHeader("Authorization");
+    if (authenticationHeader == null || !authenticationHeader.startsWith("Bearer "))
+      throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Missing token!");
+    FirebaseToken decodedToken = null;
+    String token = null;
+    try {
+      token = authenticationHeader.substring(7);
+      decodedToken = FirebaseAuth.getInstance().verifyIdToken(token);
+    } catch (FirebaseAuthException e) {
+      throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Error! " + e.getMessage());
     }
+    if (decodedToken == null) {
+      throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid token!");
+    }
+    Authentication auth = getAuthentication(decodedToken);
+    educationServiceFeignInterceptor.setToken(token);
+    SecurityContextHolder.getContext().setAuthentication(auth);
+    filterChain.doFilter(request, response);
+  }
 
-    private Authentication getAuthentication(FirebaseToken decodedToken) {
-        assert decodedToken != null;
-        return new FirebaseAuthenticationToken(decodedToken.getEmail(), new FirebaseTokenHolder(decodedToken));
-    }
+  private Authentication getAuthentication(FirebaseToken decodedToken) {
+    assert decodedToken != null;
+    return new FirebaseAuthenticationToken(decodedToken.getEmail(), new FirebaseTokenHolder(decodedToken));
+  }
+
+  @Override
+  protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+    AntPathMatcher pathMatcher = new AntPathMatcher();
+    return pathMatcher.match("/users/register", request.getServletPath());
+  }
 
 }

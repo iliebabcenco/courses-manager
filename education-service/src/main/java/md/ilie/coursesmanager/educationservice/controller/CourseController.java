@@ -3,7 +3,6 @@ package md.ilie.coursesmanager.educationservice.controller;
 import lombok.AllArgsConstructor;
 import md.ilie.coursesmanager.educationservice.entity.CourseEntity;
 import md.ilie.coursesmanager.educationservice.service.CourseService;
-import md.ilie.coursesmanager.educationservice.util.exception.ResourceNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 
 @Controller

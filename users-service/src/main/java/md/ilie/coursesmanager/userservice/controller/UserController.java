@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import md.ilie.coursesmanager.userservice.entity.UserEntity;
 import md.ilie.coursesmanager.userservice.service.UserService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,7 +23,7 @@ public class UserController {
   @GetMapping("/{id}")
   public ResponseEntity<UserEntity> findById(@PathVariable("id") Integer id) {
     UserEntity user = service.findById(id);
-    System.out.println("User found :"+user);
+    System.out.println("User found :" + user);
     return ResponseEntity.ok(user);
   }
 
@@ -54,9 +53,9 @@ public class UserController {
   @PatchMapping("/upgrade/{id}")
   public ResponseEntity<UserEntity> upgradeToAdmin(@PathVariable Integer id, @RequestBody UserEntity userEntity) {
     try {
-        return ResponseEntity.ok(service.updateUser(id, userEntity));
+      return ResponseEntity.ok(service.updateUser(id, userEntity));
     } catch (Exception e) {
-        return ResponseEntity.notFound().build();
+      return ResponseEntity.notFound().build();
     }
   }
 

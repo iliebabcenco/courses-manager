@@ -1,6 +1,7 @@
 package md.ilie.coursesmanager.gateway.client;
 
 import md.ilie.coursesmanager.educationservice.entity.CourseEntity;
+import md.ilie.coursesmanager.educationservice.entity.LessonEntity;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,5 +25,12 @@ public interface EducationServiceClient {
 
   @GetMapping("/users/{id}/courses")
   ResponseEntity<List<CourseEntity>> getCoursesByUserId(@PathVariable("id") int id);
+
+  @GetMapping("/users/{id}/courses")
+  ResponseEntity<List<LessonEntity>> findLessonsByUserId(@PathVariable("id") int userId);
+
+  @GetMapping("/users/{userId}/courses/{courseId}/lessons")
+  ResponseEntity<List<LessonEntity>> findLessonsByUserIdAndCourseId(@PathVariable("userId") int userId,
+    @PathVariable("courseId") int courseId);
 
 }

@@ -7,15 +7,26 @@ ADMIN:
 2. all lessons from a course, CRUD
 3. users CRUD, set roles
 
-MANAGER:
+MANAGER(TEACHER):
 
 1. all lessons from a course, CRUD
-2. one course Update, Read
+2. one course Create, Update, Read
 3. lessons from specific course CRUD
 4. marks from a specific course
 
-USER:
+USER(STUDENT):
 
 1. all students from a course all marks from a course
 2. all user's comments CRUD
 3. read lessons, course, use content
+
+
+USER
+
+as a user I want to get
+   - all my courses
+   - specific course
+   - all my marks and course
+   - all lessons from a course
+   - specific lesson from a course
+   - all the comments from a lessons or a course

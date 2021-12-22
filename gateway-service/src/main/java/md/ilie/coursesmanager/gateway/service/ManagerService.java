@@ -2,6 +2,7 @@ package md.ilie.coursesmanager.gateway.service;
 
 import lombok.AllArgsConstructor;
 import md.ilie.coursesmanager.educationservice.entity.CourseEntity;
+import md.ilie.coursesmanager.educationservice.entity.LessonEntity;
 import md.ilie.coursesmanager.gateway.client.EducationServiceClient;
 import md.ilie.coursesmanager.gateway.client.UserServiceClient;
 import org.springframework.http.ResponseEntity;
@@ -38,4 +39,13 @@ public class ManagerService {
     return userCourses;
   }
 
+  public List<LessonEntity> findLessonsByUserId(int userId) {
+
+    return educationServiceClient.findLessonsByUserId(userId).getBody();
+  }
+
+  public List<LessonEntity> findLessonsByUserIdAndCourseId(int userId, int courseId) {
+
+    return educationServiceClient.findLessonsByUserIdAndCourseId(userId, courseId).getBody();
+  }
 }

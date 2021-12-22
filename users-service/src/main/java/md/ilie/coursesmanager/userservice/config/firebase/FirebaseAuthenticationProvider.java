@@ -11,7 +11,6 @@ import md.ilie.coursesmanager.userservice.service.UserService;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import java.util.HashMap;
 import java.util.List;
@@ -31,7 +30,7 @@ public class FirebaseAuthenticationProvider implements AuthenticationProvider {
       return null;
     }
     FirebaseAuthenticationToken authenticationToken = (FirebaseAuthenticationToken) authentication;
-    UserDetails details = userService.loadUserByEmail(authenticationToken.getName());
+    UserEntity details = userService.loadUserByEmail(authenticationToken.getName());
     FirebaseTokenHolder holder = (FirebaseTokenHolder) authentication.getCredentials();
     List<RoleEnum> roles = List.of(RoleEnum.USER);
     if (details == null) {
@@ -41,13 +40,14 @@ public class FirebaseAuthenticationProvider implements AuthenticationProvider {
       claims.put("roles", List.of(RoleEnum.USER.getAuthority()));
       FirebaseAuth.getInstance().setCustomUserClaims(holder.getUid(), claims);
       details = userService.registerUser(user);
+      claims.put("id", details.getId());
     } else {
       roles = ((List<String>) holder.getClaims().get("roles"))
-        .stream().map(RoleEnum::valueOf).collect(Collectors.toList());
+          .stream().map(RoleEnum::valueOf).collect(Collectors.toList());
     }
 
     authenticationToken = new FirebaseAuthenticationToken(details, authentication.getCredentials(),
-      roles);
+        roles);
     return authenticationToken;
   }
 

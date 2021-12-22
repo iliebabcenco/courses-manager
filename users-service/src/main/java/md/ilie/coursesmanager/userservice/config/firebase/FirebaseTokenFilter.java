@@ -8,7 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
-import org.springframework.util.AntPathMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.server.ResponseStatusException;
 import javax.servlet.FilterChain;
@@ -23,7 +22,7 @@ public class FirebaseTokenFilter extends OncePerRequestFilter {
 
   @Override
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-    throws ServletException, IOException {
+      throws ServletException, IOException {
     String authenticationHeader = request.getHeader("Authorization");
     if (authenticationHeader == null || !authenticationHeader.startsWith("Bearer "))
       throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Missing token!");
@@ -47,9 +46,9 @@ public class FirebaseTokenFilter extends OncePerRequestFilter {
     return new FirebaseAuthenticationToken(decodedToken.getEmail(), new FirebaseTokenHolder(decodedToken));
   }
 
-  @Override
-  protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
-    AntPathMatcher pathMatcher = new AntPathMatcher();
-    return pathMatcher.match("/users/register", request.getServletPath());
-  }
+  //  @Override
+  //  protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+  //    AntPathMatcher pathMatcher = new AntPathMatcher();
+  //    return pathMatcher.match("/users/register", request.getServletPath());
+  //  }
 }

@@ -3,7 +3,10 @@ package md.ilie.coursesmanager.educationservice.service;
 import lombok.AllArgsConstructor;
 import md.ilie.coursesmanager.educationservice.entity.LessonEntity;
 import md.ilie.coursesmanager.educationservice.repository.LessonRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -46,6 +49,17 @@ public class LessonService {
             repository.save(lessonEntity);
         }
         throw new NoSuchElementException("Could not find lesson: [" + id + "]");
+    }
+
+    public List<LessonEntity> findLessonsByUserId(int userId) {
+
+        return repository.findLessonsByTeacherIdOrStudentId(userId);
+    }
+
+    public ResponseEntity<List<LessonEntity>> findLessonsByUserIdAndCourseId(int userId, int courseId) {
+
+        return null;
+
     }
     
 }
