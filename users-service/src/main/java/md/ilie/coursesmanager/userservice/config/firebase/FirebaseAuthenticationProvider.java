@@ -35,12 +35,12 @@ public class FirebaseAuthenticationProvider implements AuthenticationProvider {
     List<RoleEnum> roles = List.of(RoleEnum.USER);
     if (details == null) {
       UserEntity user = firebaseTokenHolderToUserEntity(holder, roles);
-
+      details = userService.registerUser(user);
       Map<String, Object> claims = new HashMap<>();
       claims.put("roles", List.of(RoleEnum.USER.getAuthority()));
-      FirebaseAuth.getInstance().setCustomUserClaims(holder.getUid(), claims);
-      details = userService.registerUser(user);
       claims.put("id", details.getId());
+      FirebaseAuth.getInstance().setCustomUserClaims(holder.getUid(), claims);
+
     } else {
       roles = ((List<String>) holder.getClaims().get("roles"))
           .stream().map(RoleEnum::valueOf).collect(Collectors.toList());

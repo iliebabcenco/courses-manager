@@ -58,7 +58,7 @@ public class FirebaseTokenFilter extends OncePerRequestFilter {
   }
 
   @Override
-  protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+  protected boolean shouldNotFilter(HttpServletRequest request) {
     AntPathMatcher pathMatcher = new AntPathMatcher();
     return pathMatcher.match("/users/register", request.getServletPath());
   }

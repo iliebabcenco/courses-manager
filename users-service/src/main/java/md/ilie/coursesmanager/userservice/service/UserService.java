@@ -25,6 +25,7 @@ public class UserService implements UserDetailsService {
     if (resultUser == null) {
       resultUser = userRepository.save(userEntity);
     }
+
     return resultUser;
   }
 
@@ -36,6 +37,7 @@ public class UserService implements UserDetailsService {
   public List<UserEntity> getAllUsers() {
     List<UserEntity> usersList = new ArrayList<>();
     userRepository.findAll().forEach(usersList::add);
+
     return usersList;
   }
 
