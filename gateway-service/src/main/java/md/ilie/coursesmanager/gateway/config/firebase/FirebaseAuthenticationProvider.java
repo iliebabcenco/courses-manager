@@ -33,10 +33,12 @@ public class FirebaseAuthenticationProvider implements AuthenticationProvider {
     List<RoleEnum> roles = ((List<String>) holder.getClaims().get("roles"))
         .stream().map(RoleEnum::valueOf).collect(Collectors.toList());
     UserEntity userDetails = firebaseTokenHolderToUserEntity(holder, roles);
-    BigDecimal userId = (BigDecimal) holder.getClaims().get("id");
+    BigDecimal userId = ((BigDecimal) holder.getClaims().get("id"));
+
     if (userDetails == null || userId == null) {
       throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid user! please register as a new user.");
     }
+    userDetails.setId(userId.intValue());
     authenticationToken = new FirebaseAuthenticationToken(userDetails, holder, roles);
     return authenticationToken;
   }

@@ -53,7 +53,6 @@ public class CourseController {
   @GetMapping("/users/{id}/courses")
   ResponseEntity<List<CourseEntity>> getCoursesByUserId(@PathVariable int id) {
     List<CourseEntity> courses = courseService.getCoursesByUserId(id);
-    System.out.println("Courses found: "+courses);
     return ResponseEntity.ok(courses);
   }
 

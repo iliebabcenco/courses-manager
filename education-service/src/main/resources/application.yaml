@@ -9,3 +9,7 @@ spring:
       order: 10
 
 insertTestData: true
+
+spring.security.ignored: /**
+spring.security.basic.enabled: false
+spring.management.security.enabled: false
