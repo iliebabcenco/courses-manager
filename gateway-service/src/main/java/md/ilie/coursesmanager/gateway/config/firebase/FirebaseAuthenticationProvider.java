@@ -2,6 +2,9 @@ package md.ilie.coursesmanager.gateway.config.firebase;
 
 import static md.ilie.coursesmanager.userservice.utils.UserEntityMapper.firebaseTokenHolderToUserEntity;
 
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import md.ilie.coursesmanager.userservice.config.firebase.FirebaseAuthenticationToken;
@@ -14,8 +17,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Component
@@ -32,7 +33,8 @@ public class FirebaseAuthenticationProvider implements AuthenticationProvider {
     List<RoleEnum> roles = ((List<String>) holder.getClaims().get("roles"))
         .stream().map(RoleEnum::valueOf).collect(Collectors.toList());
     UserEntity userDetails = firebaseTokenHolderToUserEntity(holder, roles);
-    if (userDetails == null || userDetails.getId() == null) {
+    BigDecimal userId = (BigDecimal) holder.getClaims().get("id");
+    if (userDetails == null || userId == null) {
       throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid user! please register as a new user.");
     }
     authenticationToken = new FirebaseAuthenticationToken(userDetails, holder, roles);

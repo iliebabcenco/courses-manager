@@ -1,0 +1,1 @@
+1. Update registration logic, removed security filters for it, added checks for user record.
