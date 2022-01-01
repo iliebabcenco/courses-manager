@@ -1,17 +1,17 @@
 package md.ilie.coursesmanager.userservice.controller;
 
+import java.util.List;
 import lombok.AllArgsConstructor;
 import md.ilie.coursesmanager.userservice.entity.UserEntity;
 import md.ilie.coursesmanager.userservice.service.UserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import java.util.List;
 
 @RestController
 //@RequestMapping("/users")
@@ -32,13 +32,16 @@ public class UserController {
     return ResponseEntity.ok(service.getAllUsers());
   }
 
-  @PreAuthorize("#userEntity.email == authentication.principal.email")
   @PostMapping("/users/register")
-  public ResponseEntity<UserEntity> registerUser(@RequestBody UserEntity userEntity) {
+  public ResponseEntity<?> registerUser(@RequestBody UserEntity userEntity) {
     try {
-      return ResponseEntity.ok(service.registerUser(userEntity));
+      return ResponseEntity
+          .status(HttpStatus.CREATED)
+          .body(service.registerUser(userEntity));
     } catch (Exception e) {
-      return ResponseEntity.notFound().build();
+      return ResponseEntity
+          .status(HttpStatus.BAD_REQUEST)
+          .body(e.getMessage());
     }
   }
 
