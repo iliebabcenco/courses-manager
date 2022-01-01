@@ -5,7 +5,7 @@ import feign.RequestTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
-public class EducationServiceFeignInterceptor implements RequestInterceptor {
+public class TokenFeignInterceptor implements RequestInterceptor {
 
   private String token;
 

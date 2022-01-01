@@ -5,7 +5,7 @@ import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseToken;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import md.ilie.coursesmanager.gateway.client.EducationServiceFeignInterceptor;
+import md.ilie.coursesmanager.gateway.client.TokenFeignInterceptor;
 import md.ilie.coursesmanager.userservice.config.firebase.FirebaseAuthenticationToken;
 import md.ilie.coursesmanager.userservice.config.firebase.FirebaseTokenHolder;
 import org.springframework.http.HttpStatus;
@@ -26,7 +26,7 @@ import java.io.IOException;
 @Slf4j
 public class FirebaseTokenFilter extends OncePerRequestFilter {
 
-  private final EducationServiceFeignInterceptor educationServiceFeignInterceptor;
+  private final TokenFeignInterceptor tokenFeignInterceptor;
 
   @Override
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -35,8 +35,8 @@ public class FirebaseTokenFilter extends OncePerRequestFilter {
     String authenticationHeader = request.getHeader("Authorization");
     if (authenticationHeader == null || !authenticationHeader.startsWith("Bearer "))
       throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Missing token!");
-    FirebaseToken decodedToken = null;
-    String token = null;
+    FirebaseToken decodedToken;
+    String token;
     try {
       token = authenticationHeader.substring(7);
       decodedToken = FirebaseAuth.getInstance().verifyIdToken(token);
@@ -47,7 +47,7 @@ public class FirebaseTokenFilter extends OncePerRequestFilter {
       throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid token!");
     }
     Authentication auth = getAuthentication(decodedToken);
-    educationServiceFeignInterceptor.setToken(token);
+    tokenFeignInterceptor.setToken(token);
     SecurityContextHolder.getContext().setAuthentication(auth);
     filterChain.doFilter(request, response);
   }
