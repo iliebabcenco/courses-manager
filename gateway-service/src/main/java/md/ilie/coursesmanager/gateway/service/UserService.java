@@ -27,9 +27,9 @@ public class UserService implements UserDetailsService {
   public UserEntity registerOrGetUser(UserEntity userEntity) throws UsernameNotFoundException {
 
     UserEntity user = usersClient.registerUser(userEntity).getBody();
-    assert user != null;
-    Authentication auth = new FirebaseAuthenticationToken(user.getEmail(), user, user.getAuthorities());
-    SecurityContextHolder.getContext().setAuthentication(auth);
+//    assert user != null;
+//    Authentication auth = new FirebaseAuthenticationToken(user.getEmail(), user, user.getAuthorities());
+//    SecurityContextHolder.getContext().setAuthentication(auth);
 
     return user;
   }

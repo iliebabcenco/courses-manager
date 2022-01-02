@@ -1,6 +1,7 @@
 package md.ilie.coursesmanager.userservice.service;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.UserRecord;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,22 +31,35 @@ public class UserService implements UserDetailsService {
     if (userRepository.findByEmail(userEntity.getEmail()) != null) {
       throw new Exception("User already exists!");
     }
-    UserRecord userFromFirebase = FirebaseAuth.getInstance().getUserByEmail(userEntity.getEmail());
-    userEntity.setAuthorities(List.of(USER_ROLE));
-    userEntity.setUid(userFromFirebase.getUid());
-    UserEntity userFromDb = userRepository.save(userEntity);
-    setClaims(userFromDb, userFromFirebase);
 
-    return userFromDb;
+    createFirebaseUser(userEntity);
+
+    return userRepository.save(userEntity);
   }
 
-  @SneakyThrows
-  private void setClaims(UserEntity user, UserRecord userFromFirebase) {
+  private void createFirebaseUser(UserEntity userEntity) {
+
+    UserRecord.CreateRequest request = new UserRecord.CreateRequest()
+        .setEmail(userEntity.getEmail())
+        .setPassword(userEntity.getPassword())
+//        .setPhoneNumber(userEntity.getPhoneNumber())
+        .setDisplayName(userEntity.getUsername())
+//        .setPhotoUrl(userEntity.getPicture())
+        .setDisabled(false);
+
     Map<String, Object> claims = new HashMap<>();
     claims.put("roles", List.of(USER_ROLE.getAuthority()));
-    claims.put("id", user.getId());
+    claims.put("id", userEntity.getId());
 
-    FirebaseAuth.getInstance().setCustomUserClaims(userFromFirebase.getUid(), claims);
+    UserRecord userRecord = null;
+    try {
+      userRecord = FirebaseAuth.getInstance().createUser(request);
+      userEntity.setUid(userRecord.getUid());
+      FirebaseAuth.getInstance().setCustomUserClaims(userRecord.getUid(), claims);
+    } catch (FirebaseAuthException e) {
+      e.printStackTrace();
+    }
+
 
   }
 

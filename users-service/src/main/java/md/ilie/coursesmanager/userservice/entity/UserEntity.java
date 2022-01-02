@@ -30,8 +30,9 @@ public class UserEntity implements UserDetails {
   private String phoneNumber;
   private boolean isEmailVerified;
   private String picture;
-  @Transient
-  @JsonIgnore
+
+//  @JsonIgnore
+//  @Transient
   private String password;
 
   @Transient
@@ -44,7 +45,7 @@ public class UserEntity implements UserDetails {
 
   @Override
   public String getPassword() {
-    return null;
+    return password;
   }
 
   @Override
