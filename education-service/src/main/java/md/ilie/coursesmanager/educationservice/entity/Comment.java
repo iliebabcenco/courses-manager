@@ -11,11 +11,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Setter
 @Builder
 @Document(collection = "comments")
-public class CommentEntity {
+public class Comment {
 
-    @Id
-    private Integer id;
-    private String content;
-    private UserEntity user;
+  @Id
+  private Integer id;
+  private String content;
+  private UserEntity user;
 
 }

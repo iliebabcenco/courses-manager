@@ -1,7 +1,7 @@
 package md.ilie.coursesmanager.educationservice.controller;
 
 import lombok.AllArgsConstructor;
-import md.ilie.coursesmanager.educationservice.entity.MarkEntity;
+import md.ilie.coursesmanager.educationservice.entity.Mark;
 import md.ilie.coursesmanager.educationservice.service.MarkService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -22,29 +22,29 @@ public class MarkController {
   private final MarkService markService;
 
   @PostMapping
-  public ResponseEntity<MarkEntity> create(@RequestBody MarkEntity markEntity) {
+  public ResponseEntity<Mark> create(@RequestBody Mark markEntity) {
 
-    MarkEntity createdMarkEntity = markService.save(markEntity);
+    Mark createdMarkEntity = markService.save(markEntity);
 
     return ResponseEntity.ok(createdMarkEntity);
   }
 
   @PatchMapping("/{id}")
-  public ResponseEntity<MarkEntity> update(@PathVariable int id, @RequestBody MarkEntity markEntity) {
+  public ResponseEntity<Mark> update(@PathVariable int id, @RequestBody Mark markEntity) {
 
-    MarkEntity updatedMarkEntity = markService.update(id, markEntity);
+    Mark updatedMarkEntity = markService.update(id, markEntity);
 
     return ResponseEntity.ok(updatedMarkEntity);
   }
 
   @GetMapping
-  public ResponseEntity<List<MarkEntity>> findAll() {
+  public ResponseEntity<List<Mark>> findAll() {
 
     return ResponseEntity.ok(markService.findAll());
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<MarkEntity> findById(@PathVariable int id) {
+  public ResponseEntity<Mark> findById(@PathVariable int id) {
 
     return ResponseEntity.ok(markService.findById(id));
   }

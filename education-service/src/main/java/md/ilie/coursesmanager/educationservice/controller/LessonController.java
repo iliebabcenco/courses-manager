@@ -1,7 +1,7 @@
 package md.ilie.coursesmanager.educationservice.controller;
 
 import lombok.AllArgsConstructor;
-import md.ilie.coursesmanager.educationservice.entity.LessonEntity;
+import md.ilie.coursesmanager.educationservice.entity.Lesson;
 import md.ilie.coursesmanager.educationservice.service.LessonService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -22,29 +22,29 @@ public class LessonController {
   private final LessonService lessonService;
 
   @PostMapping
-  public ResponseEntity<LessonEntity> create(@RequestBody LessonEntity lessonEntity) {
+  public ResponseEntity<Lesson> create(@RequestBody Lesson lessonEntity) {
 
-    LessonEntity createdLessonEntity = lessonService.save(lessonEntity);
+    Lesson createdLessonEntity = lessonService.save(lessonEntity);
 
     return ResponseEntity.ok(createdLessonEntity);
   }
 
   @PatchMapping("/{id}")
-  public ResponseEntity<LessonEntity> update(@PathVariable int id, @RequestBody LessonEntity lessonEntity) {
+  public ResponseEntity<Lesson> update(@PathVariable int id, @RequestBody Lesson lessonEntity) {
 
-    LessonEntity updatedLessonEntity = lessonService.update(id, lessonEntity);
+    Lesson updatedLessonEntity = lessonService.update(id, lessonEntity);
 
     return ResponseEntity.ok(updatedLessonEntity);
   }
 
   @GetMapping
-  public ResponseEntity<List<LessonEntity>> findAll() {
+  public ResponseEntity<List<Lesson>> findAll() {
 
     return ResponseEntity.ok(lessonService.findAll());
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<LessonEntity> findById(@PathVariable int id) {
+  public ResponseEntity<Lesson> findById(@PathVariable int id) {
 
     return ResponseEntity.ok(lessonService.findById(id));
   }
@@ -57,15 +57,15 @@ public class LessonController {
   }
 
   @GetMapping("/users/{id}/lessons")
-  public ResponseEntity<List<LessonEntity>> findLessonsByUserId(@PathVariable("id") int userId) {
+  public ResponseEntity<List<Lesson>> findLessonsByUserId(@PathVariable("id") int userId) {
 
     return ResponseEntity.ok(lessonService.findLessonsByUserId(userId));
 
   }
 
   @GetMapping("/users/{userId}/courses/{courseId}/lessons")
-  public ResponseEntity<List<LessonEntity>> findLessonsByUserIdAndCourseId(@PathVariable("userId") int userId,
-    @PathVariable("courseId") int courseId) {
+  public ResponseEntity<List<Lesson>> findLessonsByUserIdAndCourseId(@PathVariable("userId") int userId,
+      @PathVariable("courseId") int courseId) {
 
     return ResponseEntity.ok(lessonService.findLessonsByUserId(userId));
   }

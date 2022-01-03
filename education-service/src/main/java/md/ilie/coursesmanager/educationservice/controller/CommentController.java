@@ -1,7 +1,7 @@
 package md.ilie.coursesmanager.educationservice.controller;
 
 import lombok.AllArgsConstructor;
-import md.ilie.coursesmanager.educationservice.entity.CommentEntity;
+import md.ilie.coursesmanager.educationservice.entity.Comment;
 import md.ilie.coursesmanager.educationservice.service.CommentService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -22,35 +22,35 @@ public class CommentController {
   private final CommentService commentService;
 
   @PostMapping
-  public ResponseEntity<CommentEntity> create(@RequestBody CommentEntity commentEntity){
+  public ResponseEntity<Comment> create(@RequestBody Comment commentEntity) {
 
-    CommentEntity createdCommentEntity = commentService.save(commentEntity);
+    Comment createdCommentEntity = commentService.save(commentEntity);
 
     return ResponseEntity.ok(createdCommentEntity);
   }
 
   @PatchMapping("/{id}")
-  public ResponseEntity<CommentEntity> update(@PathVariable int id, @RequestBody CommentEntity commentEntity){
+  public ResponseEntity<Comment> update(@PathVariable int id, @RequestBody Comment commentEntity) {
 
-    CommentEntity updatedCommentEntity = commentService.update(id, commentEntity);
+    Comment updatedCommentEntity = commentService.update(id, commentEntity);
 
     return ResponseEntity.ok(updatedCommentEntity);
   }
 
   @GetMapping
-  public ResponseEntity<List<CommentEntity>> findAll(){
+  public ResponseEntity<List<Comment>> findAll() {
 
     return ResponseEntity.ok(commentService.findAll());
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<CommentEntity> findById(@PathVariable int id){
+  public ResponseEntity<Comment> findById(@PathVariable int id) {
 
     return ResponseEntity.ok(commentService.findById(id));
   }
 
   @DeleteMapping("/{id}")
-  public ResponseEntity<String> remove(@PathVariable int id){
+  public ResponseEntity<String> remove(@PathVariable int id) {
 
     commentService.delete(id);
     return ResponseEntity.ok("Successfully deleted");

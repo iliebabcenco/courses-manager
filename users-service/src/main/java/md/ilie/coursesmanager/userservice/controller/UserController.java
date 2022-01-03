@@ -24,7 +24,7 @@ public class UserController {
   @GetMapping("/{id}")
   public ResponseEntity<UserEntity> findById(@PathVariable("id") Integer id) {
     UserEntity user = service.findById(id);
-    System.out.println("User found :" + user);
+
     return ResponseEntity.ok(user);
   }
 

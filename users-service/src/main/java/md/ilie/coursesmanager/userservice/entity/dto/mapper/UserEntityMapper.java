@@ -1,4 +1,4 @@
-package md.ilie.coursesmanager.userservice.service;
+package md.ilie.coursesmanager.userservice.entity.dto.mapper;
 
 import java.util.List;
 import md.ilie.coursesmanager.userservice.entity.RoleEnum;

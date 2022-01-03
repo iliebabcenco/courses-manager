@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import md.ilie.coursesmanager.userservice.entity.RoleEnum;
 import md.ilie.coursesmanager.userservice.entity.UserEntity;
 import md.ilie.coursesmanager.userservice.entity.dto.UserEntityDto;
+import md.ilie.coursesmanager.userservice.entity.dto.mapper.UserEntityMapper;
 import md.ilie.coursesmanager.userservice.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

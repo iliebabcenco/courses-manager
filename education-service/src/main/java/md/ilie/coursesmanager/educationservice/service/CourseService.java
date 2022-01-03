@@ -1,57 +1,62 @@
 package md.ilie.coursesmanager.educationservice.service;
 
-import lombok.AllArgsConstructor;
-import md.ilie.coursesmanager.educationservice.entity.CourseEntity;
-import md.ilie.coursesmanager.educationservice.repository.CourseRepository;
-import org.springframework.stereotype.Service;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
+import lombok.AllArgsConstructor;
+import md.ilie.coursesmanager.educationservice.entity.Course;
+import md.ilie.coursesmanager.educationservice.entity.dto.CourseDto;
+import md.ilie.coursesmanager.educationservice.entity.dto.mapper.EducationServiceMapper;
+import md.ilie.coursesmanager.educationservice.repository.CourseRepository;
+import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
 public class CourseService {
 
-    private final CourseRepository repository;
+  private final CourseRepository repository;
+  private final EducationServiceMapper mapper;
 
-    public List<CourseEntity> findAllCoursesByIds(Integer... ids) {
-        List<CourseEntity> coursesList = new ArrayList<>();
-        repository.findAllById(Arrays.asList(ids)).forEach(coursesList::add);
-        return coursesList;
+  public List<CourseDto> findAll() {
+
+    List<Course> courseEntities = repository.findAll();
+
+    return mapper.toCourseDtoList(courseEntities);
+  }
+
+  public CourseDto findById(int id) {
+
+    Course course = repository.findById(id).orElseThrow(
+        () -> new NoSuchElementException("Could not find course: [" + id + "]"));
+
+    return mapper.toCourseDto(course);
+  }
+
+  public CourseDto save(Course courseEntity) {
+
+    Course course = repository.save(courseEntity);
+
+    return mapper.toCourseDto(course);
+  }
+
+  public void delete(int id) {
+
+    repository.deleteById(id);
+  }
+
+  public CourseDto update(int id, Course courseEntity) {
+
+    Course course;
+    if (repository.existsById(id)) {
+      course = repository.save(courseEntity);
+      return mapper.toCourseDto(course);
     }
+    throw new NoSuchElementException("Could not find course: [" + id + "]");
+  }
 
-    public List<CourseEntity> findAll() {
-        List<CourseEntity> coursesList = new ArrayList<>();
-        repository.findAll().forEach(coursesList::add);
-        return coursesList;
-    }
+  public List<CourseDto> getCoursesByUserId(Integer id) {
 
-    public CourseEntity findById(int id) {
-        return repository.findById(id).orElseThrow(
-          () -> new NoSuchElementException("Could not find course: [" + id + "]"));
-    }
+    List<Course> courseEntities = repository.getUserCourses(id);
 
-    public CourseEntity save(CourseEntity courseEntity) {
-
-        return repository.save(courseEntity);
-    }
-
-    public void delete(int id) {
-
-        repository.deleteById(id);
-    }
-
-    public CourseEntity update(int id, CourseEntity courseEntity) {
-
-        if (repository.existsById(id)) {
-            repository.save(courseEntity);
-        }
-        throw new NoSuchElementException("Could not find course: [" + id + "]");
-    }
-
-  public List<CourseEntity> getCoursesByUserId(int id) {
-
-      return repository.findCourseEntitiesByTeacherId(id);
+    return mapper.toCourseDtoList(courseEntities);
   }
 }

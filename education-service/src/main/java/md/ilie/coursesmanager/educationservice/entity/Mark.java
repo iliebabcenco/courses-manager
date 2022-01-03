@@ -11,11 +11,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Getter
 @Setter
 @Document(collection = "marks")
-public class MarkEntity {
+public class Mark {
 
-    @Id
-    private Integer id;
-    private Integer value;
-    private StudentEntity student;
+  @Id
+  private Integer id;
+  private Integer value;
+  private StudentEntity student;
 
 }

@@ -1,9 +1,9 @@
 package md.ilie.coursesmanager.educationservice.repository;
 
 
-import md.ilie.coursesmanager.educationservice.entity.CommentEntity;
+import md.ilie.coursesmanager.educationservice.entity.Comment;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 //@Repository
-public interface CommentRepository extends MongoRepository<CommentEntity, Integer> {
+public interface CommentRepository extends MongoRepository<Comment, Integer> {
 }
