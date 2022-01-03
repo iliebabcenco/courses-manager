@@ -1,21 +1,15 @@
 package md.ilie.coursesmanager.userservice.config.firebase;
 
-import static md.ilie.coursesmanager.userservice.utils.UserEntityMapper.firebaseTokenHolderToUserEntity;
-
-import com.google.firebase.auth.FirebaseAuth;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
-import md.ilie.coursesmanager.userservice.entity.RoleEnum;
 import md.ilie.coursesmanager.userservice.entity.UserEntity;
 import md.ilie.coursesmanager.userservice.service.UserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import org.springframework.web.server.ResponseStatusException;
 
 @AllArgsConstructor
 @Component
@@ -32,22 +26,11 @@ public class FirebaseAuthenticationProvider implements AuthenticationProvider {
     FirebaseAuthenticationToken authenticationToken = (FirebaseAuthenticationToken) authentication;
     UserEntity details = userService.loadUserByEmail(authenticationToken.getName());
     FirebaseTokenHolder holder = (FirebaseTokenHolder) authentication.getCredentials();
-    List<RoleEnum> roles = List.of(RoleEnum.USER);
     if (details == null) {
-      UserEntity user = firebaseTokenHolderToUserEntity(holder, roles);
-      details = userService.registerUser(user);
-      Map<String, Object> claims = new HashMap<>();
-      claims.put("roles", List.of(RoleEnum.USER.getAuthority()));
-      claims.put("id", details.getId());
-      FirebaseAuth.getInstance().setCustomUserClaims(holder.getUid(), claims);
-
-    } else {
-      roles = ((List<String>) holder.getClaims().get("roles"))
-          .stream().map(RoleEnum::valueOf).collect(Collectors.toList());
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User " + holder.getEmail() + " is not registered!");
     }
 
-    authenticationToken = new FirebaseAuthenticationToken(details, authentication.getCredentials(),
-        roles);
+    authenticationToken = new FirebaseAuthenticationToken(details.getEmail(), details, details.getAuthorities());
     return authenticationToken;
   }
 

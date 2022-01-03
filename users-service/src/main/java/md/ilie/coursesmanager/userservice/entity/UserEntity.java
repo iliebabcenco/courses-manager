@@ -1,13 +1,23 @@
 package md.ilie.coursesmanager.userservice.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
-import javax.persistence.*;
 import java.util.Collection;
 import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
 @Getter
@@ -25,14 +35,13 @@ public class UserEntity implements UserDetails {
 
   private String uid;
   private String username;
-  @Column(unique=true)
+  @Column(unique = true)
   private String email;
   private String phoneNumber;
   private boolean isEmailVerified;
   private String picture;
 
-//  @JsonIgnore
-//  @Transient
+  @Transient
   private String password;
 
   @Transient

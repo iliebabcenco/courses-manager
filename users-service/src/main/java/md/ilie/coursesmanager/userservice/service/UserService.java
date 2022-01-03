@@ -7,11 +7,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import lombok.AllArgsConstructor;
-import lombok.SneakyThrows;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import md.ilie.coursesmanager.userservice.entity.RoleEnum;
 import md.ilie.coursesmanager.userservice.entity.UserEntity;
+import md.ilie.coursesmanager.userservice.entity.dto.UserEntityDto;
 import md.ilie.coursesmanager.userservice.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -19,22 +19,24 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Slf4j
 public class UserService implements UserDetailsService {
 
   private final UserRepository userRepository;
   private static final RoleEnum USER_ROLE = RoleEnum.USER;
+  private final UserEntityMapper mapper;
 
-  public UserEntity registerUser(UserEntity userEntity) throws Exception {
+  public UserEntityDto registerUser(UserEntity userEntity) throws Exception {
 
     if (userRepository.findByEmail(userEntity.getEmail()) != null) {
       throw new Exception("User already exists!");
     }
 
-    createFirebaseUser(userEntity);
-
-    return userRepository.save(userEntity);
+    UserEntity persistedUser = userRepository.save(userEntity);
+    createFirebaseUser(persistedUser);
+    persistedUser.setAuthorities(List.of(USER_ROLE));
+    return mapper.toUserEntityDto(persistedUser);
   }
 
   private void createFirebaseUser(UserEntity userEntity) {
@@ -42,16 +44,16 @@ public class UserService implements UserDetailsService {
     UserRecord.CreateRequest request = new UserRecord.CreateRequest()
         .setEmail(userEntity.getEmail())
         .setPassword(userEntity.getPassword())
-//        .setPhoneNumber(userEntity.getPhoneNumber())
+        //        .setPhoneNumber(userEntity.getPhoneNumber())
         .setDisplayName(userEntity.getUsername())
-//        .setPhotoUrl(userEntity.getPicture())
+        //        .setPhotoUrl(userEntity.getPicture())
         .setDisabled(false);
 
     Map<String, Object> claims = new HashMap<>();
     claims.put("roles", List.of(USER_ROLE.getAuthority()));
     claims.put("id", userEntity.getId());
 
-    UserRecord userRecord = null;
+    UserRecord userRecord;
     try {
       userRecord = FirebaseAuth.getInstance().createUser(request);
       userEntity.setUid(userRecord.getUid());
@@ -59,7 +61,6 @@ public class UserService implements UserDetailsService {
     } catch (FirebaseAuthException e) {
       e.printStackTrace();
     }
-
 
   }
 
