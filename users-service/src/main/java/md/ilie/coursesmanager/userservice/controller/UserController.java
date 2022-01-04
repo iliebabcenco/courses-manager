@@ -2,7 +2,9 @@ package md.ilie.coursesmanager.userservice.controller;
 
 import java.util.List;
 import lombok.AllArgsConstructor;
+import md.ilie.coursesmanager.userservice.entity.RoleEnum;
 import md.ilie.coursesmanager.userservice.entity.UserEntity;
+import md.ilie.coursesmanager.userservice.entity.dto.UserEntityDto;
 import md.ilie.coursesmanager.userservice.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -55,10 +57,10 @@ public class UserController {
     }
   }
 
-  @PatchMapping("/upgrade/{id}")
-  public ResponseEntity<UserEntity> upgradeToAdmin(@PathVariable Integer id, @RequestBody UserEntity userEntity) {
+  @PatchMapping("/update-roles/{id}")
+  public ResponseEntity<UserEntityDto> updateUserRoles(@PathVariable Integer id, @RequestBody List<RoleEnum> roles) {
     try {
-      return ResponseEntity.ok(service.updateUser(id, userEntity));
+      return ResponseEntity.ok(service.updateUserRoles(id, roles));
     } catch (Exception e) {
       return ResponseEntity.notFound().build();
     }

@@ -32,7 +32,7 @@ public class CourseController {
     return ResponseEntity.ok(courseService.update(id, courseEntity));
   }
 
-  @GetMapping
+  @GetMapping("/courses")
   public ResponseEntity<List<CourseDto>> findAll() {
 
     return ResponseEntity.ok(courseService.findAll());

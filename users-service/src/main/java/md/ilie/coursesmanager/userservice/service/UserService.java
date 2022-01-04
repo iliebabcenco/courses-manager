@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import md.ilie.coursesmanager.userservice.entity.RoleEnum;
@@ -14,6 +15,7 @@ import md.ilie.coursesmanager.userservice.entity.UserEntity;
 import md.ilie.coursesmanager.userservice.entity.dto.UserEntityDto;
 import md.ilie.coursesmanager.userservice.entity.dto.mapper.UserEntityMapper;
 import md.ilie.coursesmanager.userservice.repository.UserRepository;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -33,36 +35,31 @@ public class UserService implements UserDetailsService {
     if (userRepository.findByEmail(userEntity.getEmail()) != null) {
       throw new Exception("User already exists!");
     }
-
+    UserRecord firebaseUser = createFirebaseRecordUser(userEntity);
+    userEntity.setUid(firebaseUser.getUid());
     UserEntity persistedUser = userRepository.save(userEntity);
-    createFirebaseUser(persistedUser);
     persistedUser.setAuthorities(List.of(USER_ROLE));
+    setDefaultClaims(persistedUser);
+
     return mapper.toUserEntityDto(persistedUser);
   }
 
-  private void createFirebaseUser(UserEntity userEntity) {
-
+  private UserRecord createFirebaseRecordUser(UserEntity userEntity) throws FirebaseAuthException {
     UserRecord.CreateRequest request = new UserRecord.CreateRequest()
         .setEmail(userEntity.getEmail())
         .setPassword(userEntity.getPassword())
-        //        .setPhoneNumber(userEntity.getPhoneNumber())
         .setDisplayName(userEntity.getUsername())
-        //        .setPhotoUrl(userEntity.getPicture())
         .setDisabled(false);
 
+    return FirebaseAuth.getInstance().createUser(request);
+  }
+
+  private void setDefaultClaims(UserEntity user) throws FirebaseAuthException {
     Map<String, Object> claims = new HashMap<>();
-    claims.put("roles", List.of(USER_ROLE.getAuthority()));
-    claims.put("id", userEntity.getId());
-
-    UserRecord userRecord;
-    try {
-      userRecord = FirebaseAuth.getInstance().createUser(request);
-      userEntity.setUid(userRecord.getUid());
-      FirebaseAuth.getInstance().setCustomUserClaims(userRecord.getUid(), claims);
-    } catch (FirebaseAuthException e) {
-      e.printStackTrace();
-    }
-
+    claims.put("roles",
+        user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()));
+    claims.put("id", user.getId());
+    FirebaseAuth.getInstance().setCustomUserClaims(user.getUid(), claims);
   }
 
   public UserEntity findById(Integer id) {
@@ -83,6 +80,25 @@ public class UserService implements UserDetailsService {
       return userRepository.save(userEntity);
     }
     throw new Exception();
+
+  }
+
+  public UserEntityDto updateUserRoles(Integer id, List<RoleEnum> roles) throws FirebaseAuthException {
+
+    UserEntity user = userRepository.findById(id).orElseThrow(
+        () -> new UsernameNotFoundException("Could not find user: [" + id + "]"));
+    ((List<RoleEnum>) user.getAuthorities()).addAll(roles);
+    updateFirebaseUserRoles(user.getUid(), roles);
+
+    return mapper.toUserEntityDto(user);
+  }
+
+  private void updateFirebaseUserRoles(String uid, List<RoleEnum> roles) throws FirebaseAuthException {
+
+    Map<String, Object> claims = new HashMap<>();
+    List<String> strRoles = roles.stream().map(RoleEnum::getAuthority).collect(Collectors.toList());
+    claims.put("roles", strRoles);
+    FirebaseAuth.getInstance().setCustomUserClaims(uid, claims);
 
   }
 
