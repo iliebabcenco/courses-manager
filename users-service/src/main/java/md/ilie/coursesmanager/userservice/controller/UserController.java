@@ -4,10 +4,10 @@ import java.util.List;
 import lombok.AllArgsConstructor;
 import md.ilie.coursesmanager.userservice.entity.RoleEnum;
 import md.ilie.coursesmanager.userservice.entity.UserEntity;
-import md.ilie.coursesmanager.userservice.entity.dto.UserEntityDto;
 import md.ilie.coursesmanager.userservice.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -57,12 +57,16 @@ public class UserController {
     }
   }
 
+  @PreAuthorize("hasAuthority('ADMIN')")
   @PatchMapping("/update-roles/{id}")
-  public ResponseEntity<UserEntityDto> updateUserRoles(@PathVariable Integer id, @RequestBody List<RoleEnum> roles) {
+  public ResponseEntity<?> updateUserRoles(@PathVariable("id") Integer id,
+      @RequestBody List<RoleEnum> roles) {
     try {
       return ResponseEntity.ok(service.updateUserRoles(id, roles));
     } catch (Exception e) {
-      return ResponseEntity.notFound().build();
+      return ResponseEntity
+          .status(HttpStatus.NOT_FOUND)
+          .body(e.getMessage());
     }
   }
 
