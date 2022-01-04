@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/users-service")
 @AllArgsConstructor
 public class UserController {
 
@@ -58,12 +58,13 @@ public class UserController {
   }
 
   @PreAuthorize("hasAuthority('ADMIN')")
-  @PatchMapping("/update-roles/{id}")
+  @PatchMapping("/upgrade-roles/{id}")
   public ResponseEntity<?> updateUserRoles(@PathVariable("id") Integer id,
       @RequestBody List<RoleEnum> roles) {
     try {
       return ResponseEntity.ok(service.updateUserRoles(id, roles));
     } catch (Exception e) {
+      e.printStackTrace();
       return ResponseEntity
           .status(HttpStatus.NOT_FOUND)
           .body(e.getMessage());

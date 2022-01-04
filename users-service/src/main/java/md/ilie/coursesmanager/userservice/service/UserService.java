@@ -87,18 +87,30 @@ public class UserService implements UserDetailsService {
 
     UserEntity user = userRepository.findById(id).orElseThrow(
         () -> new UsernameNotFoundException("Could not find user: [" + id + "]"));
-    ((List<RoleEnum>) user.getAuthorities()).addAll(roles);
-    updateFirebaseUserRoles(user.getUid(), roles);
+
+    updateFirebaseUserRoles(user, roles);
 
     return mapper.toUserEntityDto(user);
   }
 
-  private void updateFirebaseUserRoles(String uid, List<RoleEnum> roles) throws FirebaseAuthException {
+  private void updateFirebaseUserRoles(UserEntity user, List<RoleEnum> roles) throws FirebaseAuthException {
 
+    UserRecord firebaseUser = FirebaseAuth.getInstance().getUser(user.getUid());
+
+    List<String> existingRoles = ((List<String>) firebaseUser.getCustomClaims().get("roles"));
+
+    roles.forEach(role -> {
+          if (!existingRoles.contains(role.getAuthority())) {
+            existingRoles.add(role.getAuthority());
+          }
+        }
+    );
+
+    user.setAuthorities(existingRoles.stream().map(RoleEnum::valueOf).collect(Collectors.toList()));
     Map<String, Object> claims = new HashMap<>();
-    List<String> strRoles = roles.stream().map(RoleEnum::getAuthority).collect(Collectors.toList());
-    claims.put("roles", strRoles);
-    FirebaseAuth.getInstance().setCustomUserClaims(uid, claims);
+    claims.put("roles", existingRoles);
+    claims.put("id", user.getId());
+    FirebaseAuth.getInstance().setCustomUserClaims(user.getUid(), claims);
 
   }
 

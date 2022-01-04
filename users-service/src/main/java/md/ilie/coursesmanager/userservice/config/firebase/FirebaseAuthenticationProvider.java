@@ -1,7 +1,13 @@
 package md.ilie.coursesmanager.userservice.config.firebase;
 
+import static md.ilie.coursesmanager.userservice.utils.UserEntityMapper.firebaseTokenHolderToUserEntity;
+
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
+import md.ilie.coursesmanager.userservice.entity.RoleEnum;
 import md.ilie.coursesmanager.userservice.entity.UserEntity;
 import md.ilie.coursesmanager.userservice.service.UserService;
 import org.springframework.http.HttpStatus;
@@ -23,14 +29,18 @@ public class FirebaseAuthenticationProvider implements AuthenticationProvider {
     if (!supports(authentication.getClass())) {
       return null;
     }
-    FirebaseAuthenticationToken authenticationToken = (FirebaseAuthenticationToken) authentication;
-    UserEntity details = userService.loadUserByEmail(authenticationToken.getName());
+    FirebaseAuthenticationToken authenticationToken;
     FirebaseTokenHolder holder = (FirebaseTokenHolder) authentication.getCredentials();
-    if (details == null) {
-      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User " + holder.getEmail() + " is not registered!");
-    }
+    List<RoleEnum> roles = ((List<String>) holder.getClaims().get("roles"))
+        .stream().map(RoleEnum::valueOf).collect(Collectors.toList());
+    UserEntity userDetails = firebaseTokenHolderToUserEntity(holder, roles);
+    BigDecimal userId = ((BigDecimal) holder.getClaims().get("id"));
 
-    authenticationToken = new FirebaseAuthenticationToken(details.getEmail(), details, details.getAuthorities());
+    if (userDetails == null || userId == null) {
+      throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid user! please register as a new user.");
+    }
+    userDetails.setId(userId.intValue());
+    authenticationToken = new FirebaseAuthenticationToken(userDetails, holder, roles);
     return authenticationToken;
   }
 

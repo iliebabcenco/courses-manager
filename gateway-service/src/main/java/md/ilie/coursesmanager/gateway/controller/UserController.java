@@ -23,18 +23,17 @@ public class UserController {
   private final UserService userService;
 
   @PostMapping("/register")
-  public ResponseEntity<UserEntityDto> registerUser(@RequestBody UserEntity user) {
+  public ResponseEntity<UserEntityDto> registerrUser(@RequestBody UserEntity user) {
 
     return ResponseEntity.ok(userService.registerOrGetUser(user));
   }
 
   @PreAuthorize("hasAuthority('ADMIN')")
-  @PatchMapping("/update-roles/{id}")
-  public ResponseEntity<?> updateUserRoles(@PathVariable("id") Integer id,
+  @PatchMapping("/{id}/upgrade-roles")
+  public ResponseEntity<?> updateUsersRoles(@PathVariable("id") Integer id,
       @RequestBody List<RoleEnum> roles) {
 
     return ResponseEntity.ok(userService.updateUserRoles(id, roles));
-
   }
 
 }

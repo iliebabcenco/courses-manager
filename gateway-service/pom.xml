@@ -32,6 +32,13 @@
     </dependencyManagement>
 
     <dependencies>
+
+        <dependency>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-okhttp</artifactId>
+            <version>10.2.0</version>
+        </dependency>
+
         <dependency>
             <groupId>md.ilie.coursesmanager</groupId>
             <artifactId>education-service</artifactId>

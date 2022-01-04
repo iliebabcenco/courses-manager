@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import md.ilie.coursesmanager.gateway.client.TokenFeignInterceptor;
 import md.ilie.coursesmanager.userservice.config.firebase.FirebaseAuthenticationToken;
 import md.ilie.coursesmanager.userservice.config.firebase.FirebaseTokenHolder;
 import org.springframework.http.HttpStatus;
@@ -24,6 +25,8 @@ import org.springframework.web.server.ResponseStatusException;
 @AllArgsConstructor
 @Slf4j
 public class FirebaseTokenFilter extends OncePerRequestFilter {
+
+  private TokenFeignInterceptor interceptor;
 
   @Override
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -45,6 +48,7 @@ public class FirebaseTokenFilter extends OncePerRequestFilter {
     }
     Authentication auth = getAuthentication(decodedToken);
     SecurityContextHolder.getContext().setAuthentication(auth);
+    interceptor.setToken(token);
     filterChain.doFilter(request, response);
   }
 
