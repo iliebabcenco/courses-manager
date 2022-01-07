@@ -23,7 +23,7 @@ public class UserController {
   private final UserService userService;
 
   @PostMapping("/register")
-  public ResponseEntity<UserEntityDto> registerrUser(@RequestBody UserEntity user) {
+  public ResponseEntity<UserEntityDto> registerUser(@RequestBody UserEntity user) {
 
     return ResponseEntity.ok(userService.registerOrGetUser(user));
   }
