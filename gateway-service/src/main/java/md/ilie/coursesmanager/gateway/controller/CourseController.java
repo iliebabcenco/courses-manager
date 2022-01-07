@@ -21,25 +21,28 @@ public class CourseController {
 
   @GetMapping("/courses")
   public ResponseEntity<List<CourseDto>> getAllCourses() {
+
     return courseService.findAllCourses();
   }
 
   @PreAuthorize("#userId == authentication.principal.id")
   @GetMapping("/users/{id}/courses")
   public ResponseEntity<List<CourseDto>> getUserCourses(@PathVariable("id") int userId) {
+
     return ResponseEntity.ok(courseService.findUserCourses(userId));
   }
 
   @PostMapping("/courses")
-  @PreAuthorize("hasAuthority('MANAGER')")
+  @PreAuthorize("hasAnyAuthority('MANAGER', 'ADMIN')")
   public ResponseEntity<CourseDto> createCourse(@RequestBody Course course) {
+
     return courseService.createCourse(course);
   }
 
   @GetMapping
   public ResponseEntity<CourseDto> getCourse(@RequestBody Course course) {
+
     return courseService.createCourse(course);
   }
-
 
 }

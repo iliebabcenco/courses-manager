@@ -20,7 +20,7 @@ public class CourseController {
 
   private final CourseService courseService;
 
-  @PostMapping
+  @PostMapping("/courses")
   public ResponseEntity<CourseDto> create(@RequestBody Course courseEntity) {
 
     return ResponseEntity.ok(courseService.save(courseEntity));
