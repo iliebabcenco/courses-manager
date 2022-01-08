@@ -1,9 +1,9 @@
 package md.ilie.coursesmanager.userservice.controller;
 
-import java.util.List;
 import lombok.AllArgsConstructor;
 import md.ilie.coursesmanager.userservice.entity.RoleEnum;
 import md.ilie.coursesmanager.userservice.entity.UserEntity;
+import md.ilie.coursesmanager.userservice.entity.dto.UserEntityDto;
 import md.ilie.coursesmanager.userservice.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/users-service")
@@ -49,7 +51,7 @@ public class UserController {
   }
 
   @PatchMapping("/{id}")
-  public ResponseEntity<UserEntity> updateUser(@PathVariable Integer id, @RequestBody UserEntity userEntity) {
+  public ResponseEntity<UserEntityDto> updateUser(@PathVariable Integer id, @RequestBody UserEntity userEntity) {
     try {
       return ResponseEntity.ok(service.updateUser(id, userEntity));
     } catch (Exception e) {
@@ -60,7 +62,7 @@ public class UserController {
   @PreAuthorize("hasAuthority('ADMIN')")
   @PatchMapping("/upgrade-roles/{id}")
   public ResponseEntity<?> updateUserRoles(@PathVariable("id") Integer id,
-      @RequestBody List<RoleEnum> roles) {
+                                           @RequestBody List<RoleEnum> roles) {
     try {
       return ResponseEntity.ok(service.updateUserRoles(id, roles));
     } catch (Exception e) {

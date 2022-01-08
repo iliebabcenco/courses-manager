@@ -1,6 +1,5 @@
 package md.ilie.coursesmanager.educationservice.controller;
 
-import java.util.List;
 import lombok.AllArgsConstructor;
 import md.ilie.coursesmanager.educationservice.entity.Course;
 import md.ilie.coursesmanager.educationservice.entity.dto.CourseDto;
@@ -13,6 +12,8 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+
+import java.util.List;
 
 @Controller
 @AllArgsConstructor
@@ -52,7 +53,7 @@ public class CourseController {
   }
 
   @GetMapping("/users/{id}/courses")
-  ResponseEntity<List<CourseDto>> getCoursesByUserId(@PathVariable int id) {
+  public ResponseEntity<List<CourseDto>> getCoursesByUserId(@PathVariable int id) {
 
     return ResponseEntity.ok(courseService.getCoursesByUserId(id));
   }

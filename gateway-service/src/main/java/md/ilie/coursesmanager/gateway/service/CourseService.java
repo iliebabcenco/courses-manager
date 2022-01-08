@@ -1,6 +1,5 @@
 package md.ilie.coursesmanager.gateway.service;
 
-import java.util.List;
 import lombok.AllArgsConstructor;
 import md.ilie.coursesmanager.educationservice.entity.Course;
 import md.ilie.coursesmanager.educationservice.entity.dto.CourseDto;
@@ -8,25 +7,42 @@ import md.ilie.coursesmanager.gateway.client.EducationServiceClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @AllArgsConstructor
 @Service
 public class CourseService {
 
   private final EducationServiceClient educationServiceClient;
 
-  public List<CourseDto> findUserCourses(int userId) {
-
-    return educationServiceClient.getCoursesByUserId(userId).getBody();
-  }
-
-  public ResponseEntity<List<CourseDto>> findAllCourses() {
+  public ResponseEntity<List<CourseDto>> findAll() {
 
     return educationServiceClient.findAllCourses();
   }
 
-  public ResponseEntity<CourseDto> createCourse(Course course) {
+  public ResponseEntity<CourseDto> findById(int id) {
 
-    return educationServiceClient.createCourse(course);
+    return educationServiceClient.findCourseById(id);
+  }
+
+  public ResponseEntity<CourseDto> create(Course courseEntity) {
+
+    return educationServiceClient.createCourse(courseEntity);
+  }
+
+  public ResponseEntity<String> delete(int id) {
+
+    return educationServiceClient.remove(id);
+  }
+
+  public ResponseEntity<CourseDto> update(int id, Course courseEntity) {
+
+    return educationServiceClient.update(id, courseEntity);
+  }
+
+  public ResponseEntity<List<CourseDto>> getCoursesByUserId(Integer id) {
+
+    return educationServiceClient.getCoursesByUserId(id);
   }
 
 

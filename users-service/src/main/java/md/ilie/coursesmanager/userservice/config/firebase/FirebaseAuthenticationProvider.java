@@ -21,8 +21,6 @@ import org.springframework.web.server.ResponseStatusException;
 @Component
 public class FirebaseAuthenticationProvider implements AuthenticationProvider {
 
-  private final UserService userService;
-
   @SneakyThrows
   @Override
   public Authentication authenticate(Authentication authentication) throws AuthenticationException {

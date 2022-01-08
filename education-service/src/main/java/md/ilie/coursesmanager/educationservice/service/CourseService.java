@@ -48,8 +48,10 @@ public class CourseService {
     Course course;
     if (repository.existsById(id)) {
       course = repository.save(courseEntity);
+
       return mapper.toCourseDto(course);
     }
+
     throw new NoSuchElementException("Could not find course: [" + id + "]");
   }
 
