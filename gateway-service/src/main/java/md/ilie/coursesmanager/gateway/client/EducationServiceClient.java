@@ -20,7 +20,7 @@ public interface EducationServiceClient {
   ResponseEntity<CourseDto> createCourse(@RequestBody Course courseEntity);
 
   @PatchMapping("/courses/{id}")
-  ResponseEntity<CourseDto> update(@PathVariable int id, @RequestBody Course courseEntity);
+  ResponseEntity<CourseDto> update(@PathVariable("id") int id, @RequestBody Course courseEntity);
 
   @GetMapping("/courses")
   ResponseEntity<List<CourseDto>> findAllCourses();
@@ -29,9 +29,9 @@ public interface EducationServiceClient {
   ResponseEntity<CourseDto> findCourseById(@PathVariable("id") int id);
 
   @DeleteMapping("/courses/{id}")
-  ResponseEntity<String> remove(@PathVariable int id);
+  ResponseEntity<String> remove(@PathVariable("id") int id);
 
   @GetMapping("/users/{id}/courses")
-  ResponseEntity<List<CourseDto>> getCoursesByUserId(@PathVariable int id);
+  ResponseEntity<List<CourseDto>> getCoursesByUserId(@PathVariable("id") int id);
 
 }

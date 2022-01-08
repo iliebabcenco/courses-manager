@@ -1,13 +1,14 @@
 package md.ilie.coursesmanager.educationservice.util;
 
-import java.time.LocalDate;
-import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import md.ilie.coursesmanager.educationservice.entity.Comment;
 import md.ilie.coursesmanager.educationservice.entity.Course;
 import md.ilie.coursesmanager.educationservice.entity.Lesson;
 import md.ilie.coursesmanager.educationservice.entity.Mark;
+import md.ilie.coursesmanager.educationservice.service.CommentService;
 import md.ilie.coursesmanager.educationservice.service.CourseService;
+import md.ilie.coursesmanager.educationservice.service.LessonService;
+import md.ilie.coursesmanager.educationservice.service.MarkService;
 import md.ilie.coursesmanager.userservice.entity.StudentEntity;
 import md.ilie.coursesmanager.userservice.entity.TeacherEntity;
 import md.ilie.coursesmanager.userservice.entity.UserEntity;
@@ -15,18 +16,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+import java.util.List;
+
 @Slf4j
 @Component
 public class InsertTestData {
 
   @Autowired
-  private CourseService service;
+  private CourseService courseService;
+  @Autowired
+  private LessonService lessonService;
+  @Autowired
+  private MarkService markService;
+  @Autowired
+  private CommentService commentService;
 
   @Value("${insertTestData}")
   boolean insertData;
 
   public void insertTestData() {
-    if (service.findAll().isEmpty() && this.insertData) {
+    if (courseService.findAll().isEmpty() && this.insertData) {
       log.info("Inserting test data...");
       insertFirstCourse();
       insertSecondCourse();
@@ -55,13 +65,13 @@ public class InsertTestData {
         .students(List.of(student1, student2, student3))
         .build();
 
-    Mark mark1 = createMark(course, student1, 2);
-    Mark mark2 = createMark(course, student2, 4);
-    Mark mark3 = createMark(course, student3, 3);
-    Mark mark4 = createMark(course, student1, 5);
+    Mark mark1 = createMark(student1, 2);
+    Mark mark2 = createMark(student2, 4);
+    Mark mark3 = createMark(student3, 3);
+    Mark mark4 = createMark(student1, 5);
     course.setMarks(List.of(mark1, mark2, mark3, mark4));
 
-    service.save(course);
+    courseService.save(course);
   }
 
   private void insertSecondCourse() {
@@ -84,14 +94,14 @@ public class InsertTestData {
         .students(List.of(student1, student2, student3))
         .build();
 
-    Mark mark1 = createMark(course, student1, 5);
-    Mark mark3 = createMark(course, student3, 7);
+    Mark mark1 = createMark(student1, 5);
+    Mark mark3 = createMark(student3, 7);
     course.setMarks(List.of(mark1, mark3));
     course.setLessons(List.of(lesson1));
     course.setComments(List.of(comment1));
     lesson1.setComments(List.of(comment3));
 
-    service.save(course);
+    courseService.save(course);
   }
 
   private void insertFirstCourse() {
@@ -117,15 +127,15 @@ public class InsertTestData {
         .students(List.of(student1, student2, student3))
         .build();
 
-    Mark mark1 = createMark(course, student1, 8);
-    Mark mark2 = createMark(course, student2, 7);
-    Mark mark3 = createMark(course, student3, 10);
+    Mark mark1 = createMark(student1, 8);
+    Mark mark2 = createMark(student2, 7);
+    Mark mark3 = createMark(student3, 10);
     course.setMarks(List.of(mark1, mark2, mark3));
     course.setLessons(List.of(lesson1, lesson2));
     course.setComments(List.of(comment1, comment2));
     lesson1.setComments(List.of(comment3));
 
-    service.save(course);
+    courseService.save(course);
   }
 
   public TeacherEntity createTeacher(String param) {
@@ -144,35 +154,34 @@ public class InsertTestData {
     return student;
   }
 
-  public Mark createMark(Course course, StudentEntity student, Integer value) {
+  public Mark createMark(StudentEntity student, Integer value) {
 
-    return Mark
+    return markService.save(Mark
         .builder()
         .id(value)
         .student(student)
-        //                .course(course)
         .value(value)
-        .build();
+        .build());
   }
 
   public Lesson createLesson(Integer value) {
 
-    return Lesson
+    return lessonService.save(Lesson
         .builder()
         .id(value)
         .name("Lesson " + value)
         .content("Full descriptino for lesson " + value)
-        .build();
+        .build());
   }
 
   public Comment createComment(Integer value, UserEntity user) {
 
-    return Comment
+    return commentService.save(Comment
         .builder()
         .id(value)
         .content("Content " + value)
         .user(user)
-        .build();
+        .build());
   }
 
 
