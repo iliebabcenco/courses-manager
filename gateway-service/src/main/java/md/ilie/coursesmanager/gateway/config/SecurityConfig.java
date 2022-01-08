@@ -27,6 +27,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   private FirebaseTokenFilter firebaseTokenFilter;
   private FirebaseAuthenticationProvider firebaseProvider;
 
+  private static final String[] AUTH_WHITELIST = {
+      // -- Swagger UI v2
+      "/v2/api-docs",
+      "/swagger-resources",
+      "/swagger-resources/**",
+      "/configuration/ui",
+      "/configuration/security",
+      "/swagger-ui.html",
+      "/webjars/**",
+      // -- Swagger UI v3 (OpenAPI)
+      "/v3/api-docs/**",
+      "/swagger-ui/**"
+      // other public endpoints of your API may be appended to this array
+  };
+
   @Override
   protected void configure(AuthenticationManagerBuilder auth) throws Exception {
     auth.userDetailsService(userService);
@@ -49,6 +64,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         //                .authenticationProvider(firebaseProvider)
         .authorizeRequests()
         .antMatchers(HttpMethod.POST, "/users/register").permitAll()
+        .antMatchers(AUTH_WHITELIST).permitAll()
         //      .antMatchers("/users/**").hasAuthority(RoleEnum.ADMIN.getAuthority())
         .anyRequest().authenticated();
   }
