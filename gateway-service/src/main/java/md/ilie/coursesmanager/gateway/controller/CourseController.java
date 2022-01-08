@@ -25,7 +25,7 @@ public class CourseController {
   private CourseService courseService;
 
   @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
-  @PostMapping("")
+  @PostMapping
   public ResponseEntity<CourseDto> create(@RequestBody Course courseEntity) {
 
     return courseService.create(courseEntity);
@@ -38,7 +38,7 @@ public class CourseController {
     return courseService.update(id, courseEntity);
   }
 
-  @GetMapping("")
+  @GetMapping
   public ResponseEntity<List<CourseDto>> findAll() {
 
     return courseService.findAll();
@@ -55,6 +55,20 @@ public class CourseController {
   public ResponseEntity<String> remove(@PathVariable int id) {
 
     return courseService.delete(id);
+  }
+
+  @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
+  @PatchMapping("/{courseId}/teacher/{teacherId}")
+  public ResponseEntity<CourseDto> setTeacherToCourse(@PathVariable Integer courseId, @PathVariable Integer teacherId) {
+
+    return courseService.setTeacherToCourse(courseId, teacherId);
+  }
+
+  @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
+  @PatchMapping("/{courseId}/student/{studentId}")
+  public ResponseEntity<CourseDto> addStudentToCourse(@PathVariable Integer courseId, @PathVariable Integer studentId) {
+
+    return courseService.addStudentToCourse(courseId, studentId);
   }
 
 
