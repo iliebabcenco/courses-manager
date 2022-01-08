@@ -7,6 +7,9 @@ import md.ilie.coursesmanager.educationservice.entity.Course;
 import md.ilie.coursesmanager.educationservice.entity.dto.CourseDto;
 import md.ilie.coursesmanager.educationservice.entity.dto.mapper.EducationServiceMapper;
 import md.ilie.coursesmanager.educationservice.repository.CourseRepository;
+import md.ilie.coursesmanager.userservice.entity.StudentEntity;
+import md.ilie.coursesmanager.userservice.entity.TeacherEntity;
+import md.ilie.coursesmanager.userservice.entity.UserEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -60,5 +63,24 @@ public class CourseService {
     List<Course> courseEntities = repository.getUserCourses(id);
 
     return mapper.toCourseDtoList(courseEntities);
+  }
+
+  public CourseDto setTeacherToCourse(Integer courseId, TeacherEntity teacher) {
+
+    Course course = repository.findById(courseId).orElseThrow(
+        () -> new NoSuchElementException("Could not find course: [" + courseId + "]"));
+    course.setTeacher(teacher);
+
+    return mapper.toCourseDto(repository.save(course));
+  }
+
+  public CourseDto addStudentToCourse(Integer courseId, StudentEntity student) {
+
+    Course course = repository.findById(courseId).orElseThrow(
+        () -> new NoSuchElementException("Could not find course: [" + courseId + "]"));
+    course.getStudents().add(student);
+
+    return mapper.toCourseDto(repository.save(course));
+
   }
 }

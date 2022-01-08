@@ -56,18 +56,4 @@ public class LessonController {
     return ResponseEntity.ok("Successfully deleted");
   }
 
-  @GetMapping("/users/{id}/lessons")
-  public ResponseEntity<List<Lesson>> findLessonsByUserId(@PathVariable("id") int userId) {
-
-    return ResponseEntity.ok(lessonService.findLessonsByUserId(userId));
-
-  }
-
-  @GetMapping("/users/{userId}/courses/{courseId}/lessons")
-  public ResponseEntity<List<Lesson>> findLessonsByUserIdAndCourseId(@PathVariable("userId") int userId,
-      @PathVariable("courseId") int courseId) {
-
-    return ResponseEntity.ok(lessonService.findLessonsByUserId(userId));
-  }
-
 }

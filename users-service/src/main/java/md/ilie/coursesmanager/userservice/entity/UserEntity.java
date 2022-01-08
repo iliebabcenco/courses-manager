@@ -31,21 +31,21 @@ public class UserEntity implements UserDetails {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Integer id;
+  protected Integer id;
 
-  private String uid;
-  private String username;
+  protected String uid;
+  protected String username;
   @Column(unique = true)
-  private String email;
-  private String phoneNumber;
-  private boolean isEmailVerified;
-  private String picture;
+  protected String email;
+  protected String phoneNumber;
+  protected boolean isEmailVerified;
+  protected String picture;
 
   @Transient
   private String password;
 
   @Transient
-  private List<RoleEnum> authorities;
+  protected List<RoleEnum> authorities;
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -4,16 +4,22 @@ import lombok.AllArgsConstructor;
 import md.ilie.coursesmanager.educationservice.entity.Course;
 import md.ilie.coursesmanager.educationservice.entity.dto.CourseDto;
 import md.ilie.coursesmanager.gateway.client.EducationServiceClient;
+import md.ilie.coursesmanager.gateway.client.UserServiceClient;
+import md.ilie.coursesmanager.userservice.entity.StudentEntity;
+import md.ilie.coursesmanager.userservice.entity.TeacherEntity;
+import md.ilie.coursesmanager.userservice.entity.UserEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @AllArgsConstructor
 @Service
 public class CourseService {
 
   private final EducationServiceClient educationServiceClient;
+  private final UserServiceClient userServiceClient;
 
   public ResponseEntity<List<CourseDto>> findAll() {
 
@@ -45,5 +51,26 @@ public class CourseService {
     return educationServiceClient.getCoursesByUserId(id);
   }
 
+  public ResponseEntity<CourseDto> setTeacherToCourse(Integer courseId, Integer teacherId) {
+
+    UserEntity user = userServiceClient.findById(teacherId).getBody();
+    if (user == null) {
+      throw new NoSuchElementException("Could not find teacher: [" + teacherId + "]");
+    }
+    TeacherEntity teacher = new TeacherEntity(user);
+
+    return educationServiceClient.setTeacherToCourse(courseId, teacher);
+  }
+
+  public ResponseEntity<CourseDto> addStudentToCourse(Integer courseId, Integer studentId) {
+
+    UserEntity user = userServiceClient.findById(studentId).getBody();
+    if (user == null) {
+      throw new NoSuchElementException("Could not find student: [" + studentId + "]");
+    }
+    StudentEntity student = new StudentEntity(user);
+
+    return educationServiceClient.addStudentToCourse(courseId, student);
+  }
 
 }

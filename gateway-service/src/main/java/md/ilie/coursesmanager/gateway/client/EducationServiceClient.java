@@ -2,6 +2,8 @@ package md.ilie.coursesmanager.gateway.client;
 
 import md.ilie.coursesmanager.educationservice.entity.Course;
 import md.ilie.coursesmanager.educationservice.entity.dto.CourseDto;
+import md.ilie.coursesmanager.userservice.entity.StudentEntity;
+import md.ilie.coursesmanager.userservice.entity.TeacherEntity;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -33,5 +35,11 @@ public interface EducationServiceClient {
 
   @GetMapping("/users/{id}/courses")
   ResponseEntity<List<CourseDto>> getCoursesByUserId(@PathVariable("id") int id);
+
+  @PatchMapping("/courses/{courseId}/teacher")
+  ResponseEntity<CourseDto> setTeacherToCourse(@PathVariable("courseId") Integer courseId, @RequestBody TeacherEntity teacher);
+
+  @PatchMapping("/courses/{courseId}/student")
+  ResponseEntity<CourseDto> addStudentToCourse(@PathVariable("courseId") Integer courseId, @RequestBody StudentEntity student);
 
 }

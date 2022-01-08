@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import md.ilie.coursesmanager.educationservice.entity.Course;
 import md.ilie.coursesmanager.educationservice.entity.dto.CourseDto;
 import md.ilie.coursesmanager.educationservice.service.CourseService;
+import md.ilie.coursesmanager.userservice.entity.StudentEntity;
+import md.ilie.coursesmanager.userservice.entity.TeacherEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -57,5 +59,18 @@ public class CourseController {
 
     return ResponseEntity.ok(courseService.getCoursesByUserId(id));
   }
+
+  @PatchMapping("/courses/{courseId}/teacher")
+  public ResponseEntity<CourseDto> setTeacherToCourse(@PathVariable Integer courseId, @RequestBody TeacherEntity teacher) {
+
+    return ResponseEntity.ok(courseService.setTeacherToCourse(courseId, teacher));
+  }
+
+  @PatchMapping("/courses/{courseId}/student")
+  public ResponseEntity<CourseDto> addStudentToCourse(@PathVariable Integer courseId, @RequestBody StudentEntity student) {
+
+    return ResponseEntity.ok(courseService.addStudentToCourse(courseId, student));
+  }
+
 
 }

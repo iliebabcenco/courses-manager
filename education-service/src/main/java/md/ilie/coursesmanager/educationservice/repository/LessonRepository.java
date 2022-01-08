@@ -8,7 +8,4 @@ import java.util.List;
 
 public interface LessonRepository extends MongoRepository<Lesson, Integer> {
 
-  @Query(value = "{ 'students': { $elemMatch: { 'id' : ?0 } }}")
-  List<Lesson> findLessonsByTeacherIdOrStudentId(int userId);
-
 }

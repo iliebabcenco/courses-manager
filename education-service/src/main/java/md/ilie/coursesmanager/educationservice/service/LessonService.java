@@ -49,15 +49,4 @@ public class LessonService {
     throw new NoSuchElementException("Could not find lesson: [" + id + "]");
   }
 
-  public List<Lesson> findLessonsByUserId(int userId) {
-
-    return repository.findLessonsByTeacherIdOrStudentId(userId);
-  }
-
-  public ResponseEntity<List<Lesson>> findLessonsByUserIdAndCourseId(int userId, int courseId) {
-
-    return null;
-
-  }
-
 }
