@@ -42,6 +42,7 @@ public class CommentService {
     if (repository.existsById(id)) {
       repository.save(commentEntity);
     }
+
     throw new NoSuchElementException("Could not find comment: [" + id + "]");
   }
 

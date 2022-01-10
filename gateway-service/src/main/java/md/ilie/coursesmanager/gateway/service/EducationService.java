@@ -3,6 +3,7 @@ package md.ilie.coursesmanager.gateway.service;
 import lombok.AllArgsConstructor;
 import md.ilie.coursesmanager.educationservice.entity.Course;
 import md.ilie.coursesmanager.educationservice.entity.dto.CourseDto;
+import md.ilie.coursesmanager.educationservice.entity.dto.LessonDto;
 import md.ilie.coursesmanager.gateway.client.EducationServiceClient;
 import md.ilie.coursesmanager.gateway.client.UserServiceClient;
 import md.ilie.coursesmanager.userservice.entity.StudentEntity;
@@ -16,7 +17,7 @@ import java.util.NoSuchElementException;
 
 @AllArgsConstructor
 @Service
-public class CourseService {
+public class EducationService {
 
   private final EducationServiceClient educationServiceClient;
   private final UserServiceClient userServiceClient;
@@ -73,4 +74,9 @@ public class CourseService {
     return educationServiceClient.addStudentToCourse(courseId, student);
   }
 
+  public ResponseEntity<List<LessonDto>> getLessonsByUserId(int userId) {
+
+    return  null;
+
+  }
 }

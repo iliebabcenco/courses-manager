@@ -3,7 +3,7 @@ package md.ilie.coursesmanager.gateway.controller;
 import lombok.AllArgsConstructor;
 import md.ilie.coursesmanager.educationservice.entity.Course;
 import md.ilie.coursesmanager.educationservice.entity.dto.CourseDto;
-import md.ilie.coursesmanager.gateway.service.CourseService;
+import md.ilie.coursesmanager.gateway.service.EducationService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,7 +22,7 @@ import java.util.List;
 @RestController
 public class CourseController {
 
-  private CourseService courseService;
+  private EducationService courseService;
 
   @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
   @PostMapping

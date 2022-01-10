@@ -2,6 +2,8 @@ package md.ilie.coursesmanager.gateway.controller;
 
 import lombok.AllArgsConstructor;
 import md.ilie.coursesmanager.educationservice.entity.dto.CourseDto;
+import md.ilie.coursesmanager.educationservice.entity.dto.LessonDto;
+import md.ilie.coursesmanager.gateway.service.EducationService;
 import md.ilie.coursesmanager.gateway.service.UserService;
 import md.ilie.coursesmanager.userservice.entity.RoleEnum;
 import md.ilie.coursesmanager.userservice.entity.UserEntity;
@@ -24,6 +26,7 @@ import java.util.List;
 public class UserController {
 
   private final UserService userService;
+  private final EducationService educationService;
 
   @PostMapping("/register")
   public ResponseEntity<UserEntityDto> registerUser(@RequestBody UserEntity user) {
@@ -36,6 +39,20 @@ public class UserController {
   public ResponseEntity<?> updateUsersRoles(@PathVariable("id") Integer id, @RequestBody List<RoleEnum> roles) {
 
     return ResponseEntity.ok(userService.updateUserRoles(id, roles));
+  }
+
+  @PreAuthorize("#userId == authentication.principal.id")
+  @GetMapping("/{id}/courses")
+  public ResponseEntity<List<CourseDto>> getUserCourses(@PathVariable("id") int userId) {
+
+    return educationService.getCoursesByUserId(userId);
+  }
+
+  @PreAuthorize("#userId == authentication.principal.id")
+  @GetMapping("/{id}/lessons")
+  public ResponseEntity<List<LessonDto>> getUserLessons(@PathVariable("id") int userId) {
+
+    return educationService.getLessonsByUserId(userId);
   }
 
 }
