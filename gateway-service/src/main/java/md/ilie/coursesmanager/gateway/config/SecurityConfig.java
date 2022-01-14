@@ -1,5 +1,6 @@
 package md.ilie.coursesmanager.gateway.config;
 
+import javax.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import md.ilie.coursesmanager.gateway.config.firebase.FirebaseAuthenticationProvider;
 import md.ilie.coursesmanager.gateway.config.firebase.FirebaseTokenFilter;
@@ -15,7 +16,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import javax.servlet.http.HttpServletResponse;
 
 @EnableWebSecurity
 @Configuration
@@ -63,6 +63,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .addFilterBefore(firebaseTokenFilter, UsernamePasswordAuthenticationFilter.class)
         //                .authenticationProvider(firebaseProvider)
         .authorizeRequests()
+        .antMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
         .antMatchers(HttpMethod.POST, "/users/register").permitAll()
         .antMatchers(AUTH_WHITELIST).permitAll()
         //      .antMatchers("/users/**").hasAuthority(RoleEnum.ADMIN.getAuthority())

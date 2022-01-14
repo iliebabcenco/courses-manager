@@ -4,3 +4,6 @@ spring:
       order: 10
 server:
   port: 8081
+
+springdoc:
+  packagesToScan: md.ilie.coursesmanager.gateway.controller

@@ -1,6 +1,8 @@
 package md.ilie.coursesmanager.educationservice.entity;
 
 
+import java.time.LocalDate;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -10,10 +12,7 @@ import md.ilie.coursesmanager.userservice.entity.StudentEntity;
 import md.ilie.coursesmanager.userservice.entity.TeacherEntity;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -29,11 +28,14 @@ public class Course {
   private String description;
   private LocalDate startDate;
   private LocalDate endDate;
-  private List<StudentEntity> students = new ArrayList<>();
-  private TeacherEntity teacher;
-  private List<Mark> marks;
 
+  private List<StudentEntity> students;
+  private TeacherEntity teacher;
+  @DocumentReference
+  private List<Mark> marks;
+  @DocumentReference
   private List<Lesson> lessons;
+  @DocumentReference
   private List<Comment> comments;
 
 }

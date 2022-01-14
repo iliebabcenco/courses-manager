@@ -11,19 +11,17 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 @FeignClient(name = "users-service", url = "localhost:8082")
-@RequestMapping("/users-service")
 public interface UserServiceClient {
 
-  @PostMapping("/register")
+  @PostMapping("/users-service/register")
   ResponseEntity<UserEntityDto> registerUser(@RequestBody UserEntity userEntity);
 
-  @GetMapping("/{id}")
+  @GetMapping("/users-service/{id}")
   ResponseEntity<UserEntity> findById(@PathVariable("id") Integer id);
 
-  @PatchMapping("/upgrade-roles/{id}")
+  @PatchMapping("/users-service/upgrade-roles/{id}")
   ResponseEntity<UserEntityDto> updateUserRoles(@PathVariable("id") Integer id, @RequestBody List<RoleEnum> roles);
 
 }
