@@ -1,5 +1,7 @@
 package md.ilie.coursesmanager.gateway.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.AllArgsConstructor;
 import md.ilie.coursesmanager.educationservice.entity.dto.CourseDto;
 import md.ilie.coursesmanager.educationservice.entity.dto.LessonDto;
@@ -34,6 +36,7 @@ public class UserController {
     return ResponseEntity.ok(userService.registerOrGetUser(user));
   }
 
+  @Operation(security = @SecurityRequirement(name = "bearerAuth"))
   @PreAuthorize("hasAuthority('ADMIN')")
   @PatchMapping("/{id}/upgrade-roles")
   public ResponseEntity<?> updateUsersRoles(@PathVariable("id") Integer id, @RequestBody List<RoleEnum> roles) {
@@ -41,6 +44,7 @@ public class UserController {
     return ResponseEntity.ok(userService.updateUserRoles(id, roles));
   }
 
+  @Operation(security = @SecurityRequirement(name = "bearerAuth"))
   @PreAuthorize("#userId == authentication.principal.id")
   @GetMapping("/{id}/courses")
   public ResponseEntity<List<CourseDto>> getUserCourses(@PathVariable("id") int userId) {
@@ -48,6 +52,7 @@ public class UserController {
     return educationService.getCoursesByUserId(userId);
   }
 
+  @Operation(security = @SecurityRequirement(name = "bearerAuth"))
   @PreAuthorize("#userId == authentication.principal.id")
   @GetMapping("/{id}/lessons")
   public ResponseEntity<List<LessonDto>> getUserLessons(@PathVariable("id") int userId) {

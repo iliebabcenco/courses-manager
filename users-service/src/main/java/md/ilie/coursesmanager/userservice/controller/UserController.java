@@ -24,19 +24,6 @@ public class UserController {
 
   private UserService service;
 
-  @GetMapping("/{id}")
-  public ResponseEntity<UserEntity> findById(@PathVariable("id") Integer id) {
-    UserEntity user = service.findById(id);
-
-    return ResponseEntity.ok(user);
-  }
-
-  @PreAuthorize("hasAuthority('ADMIN')")
-  @GetMapping
-  public ResponseEntity<List<UserEntity>> getAllUsers() {
-    return ResponseEntity.ok(service.getAllUsers());
-  }
-
   @PostMapping("/register")
   public ResponseEntity<?> registerUser(@RequestBody UserEntity userEntity) {
     try {
@@ -50,13 +37,37 @@ public class UserController {
     }
   }
 
+  @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER') || #id == authentication.principal.id")
+  @GetMapping("/{id}")
+  public ResponseEntity<?> findById(@PathVariable("id") Integer id) {
+    try {
+      return ResponseEntity
+          .status(HttpStatus.OK)
+          .body(service.findById(id));
+    } catch (Exception e) {
+      return ResponseEntity
+          .status(HttpStatus.NOT_FOUND)
+          .body(e.getMessage());
+    }
+  }
+
+  @PreAuthorize("hasAuthority('ADMIN')")
+  @GetMapping
+  public ResponseEntity<List<UserEntity>> getAllUsers() {
+    return ResponseEntity.ok(service.getAllUsers());
+  }
+
   @PreAuthorize("hasAuthority('ADMIN')")
   @PatchMapping("/{id}")
-  public ResponseEntity<UserEntityDto> updateUser(@PathVariable Integer id, @RequestBody UserEntity userEntity) {
+  public ResponseEntity<?> updateUser(@PathVariable Integer id, @RequestBody UserEntity userEntity) {
     try {
-      return ResponseEntity.ok(service.updateUser(id, userEntity));
+      return ResponseEntity
+          .status(HttpStatus.OK)
+          .body(service.updateUser(id, userEntity));
     } catch (Exception e) {
-      return ResponseEntity.notFound().build();
+      return ResponseEntity
+          .status(HttpStatus.BAD_REQUEST)
+          .body(e.getMessage());
     }
   }
 

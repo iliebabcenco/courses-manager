@@ -1,5 +1,7 @@
 package md.ilie.coursesmanager.gateway.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.AllArgsConstructor;
 import md.ilie.coursesmanager.educationservice.entity.Course;
 import md.ilie.coursesmanager.educationservice.entity.dto.CourseDto;
@@ -24,6 +26,7 @@ public class CourseController {
 
   private EducationService courseService;
 
+  @Operation(security = @SecurityRequirement(name = "bearerAuth"))
   @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
   @PostMapping
   public ResponseEntity<CourseDto> create(@RequestBody Course courseEntity) {
@@ -31,6 +34,7 @@ public class CourseController {
     return courseService.create(courseEntity);
   }
 
+  @Operation(security = @SecurityRequirement(name = "bearerAuth"))
   @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
   @PatchMapping("/{id}")
   public ResponseEntity<CourseDto> update(@PathVariable int id, @RequestBody Course courseEntity) {
@@ -38,18 +42,21 @@ public class CourseController {
     return courseService.update(id, courseEntity);
   }
 
+  @Operation(security = @SecurityRequirement(name = "bearerAuth"))
   @GetMapping
   public ResponseEntity<List<CourseDto>> findAll() {
 
     return courseService.findAll();
   }
 
+  @Operation(security = @SecurityRequirement(name = "bearerAuth"))
   @GetMapping("/{id}")
   public ResponseEntity<CourseDto> findById(@PathVariable int id) {
 
     return courseService.findById(id);
   }
 
+  @Operation(security = @SecurityRequirement(name = "bearerAuth"))
   @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
   @DeleteMapping("/{id}")
   public ResponseEntity<String> remove(@PathVariable int id) {
@@ -57,6 +64,7 @@ public class CourseController {
     return courseService.delete(id);
   }
 
+  @Operation(security = @SecurityRequirement(name = "bearerAuth"))
   @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
   @PatchMapping("/{courseId}/teacher/{teacherId}")
   public ResponseEntity<CourseDto> setTeacherToCourse(@PathVariable Integer courseId, @PathVariable Integer teacherId) {
@@ -64,6 +72,7 @@ public class CourseController {
     return courseService.setTeacherToCourse(courseId, teacherId);
   }
 
+  @Operation(security = @SecurityRequirement(name = "bearerAuth"))
   @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
   @PatchMapping("/{courseId}/student/{studentId}")
   public ResponseEntity<CourseDto> addStudentToCourse(@PathVariable Integer courseId, @PathVariable Integer studentId) {
