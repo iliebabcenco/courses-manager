@@ -34,4 +34,10 @@ public class UserService implements UserDetailsService {
 
     return usersClient.updateUserRoles(id, roles).getBody();
   }
+
+  public UserEntityDto findUserById(int userId) {
+
+    return usersClient.findById(userId).getBody();
+  }
+
 }

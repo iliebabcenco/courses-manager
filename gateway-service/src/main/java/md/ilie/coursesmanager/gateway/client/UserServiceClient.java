@@ -19,7 +19,7 @@ public interface UserServiceClient {
   ResponseEntity<UserEntityDto> registerUser(@RequestBody UserEntity userEntity);
 
   @GetMapping("/users-service/{id}")
-  ResponseEntity<UserEntity> findById(@PathVariable("id") Integer id);
+  ResponseEntity<UserEntityDto> findById(@PathVariable("id") Integer id);
 
   @GetMapping("/users-service")
   ResponseEntity<List<UserEntityDto>> findAll();

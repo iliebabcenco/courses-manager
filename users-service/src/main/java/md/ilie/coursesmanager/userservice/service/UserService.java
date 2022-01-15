@@ -3,6 +3,11 @@ package md.ilie.coursesmanager.userservice.service;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.UserRecord;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import md.ilie.coursesmanager.userservice.entity.RoleEnum;
@@ -15,12 +20,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -45,10 +44,10 @@ public class UserService implements UserDetailsService {
     return mapper.toUserEntityDto(persistedUser);
   }
 
-  public UserEntity findById(Integer id) {
+  public UserEntityDto findById(Integer id) {
 
-    return userRepository.findById(id).orElseThrow(
-        () -> new UsernameNotFoundException("Could not find user: [" + id + "]"));
+    return mapper.toUserEntityDto(userRepository.findById(id).orElseThrow(
+        () -> new UsernameNotFoundException("Could not find user: [" + id + "]")));
   }
 
   public List<UserEntityDto> getAllUsers() {

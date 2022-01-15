@@ -1,5 +1,6 @@
 package md.ilie.coursesmanager.userservice.controller;
 
+import java.util.List;
 import lombok.AllArgsConstructor;
 import md.ilie.coursesmanager.userservice.entity.RoleEnum;
 import md.ilie.coursesmanager.userservice.entity.UserEntity;
@@ -16,8 +17,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/users-service")
@@ -39,7 +38,7 @@ public class UserController {
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<UserEntity> findById(@PathVariable("id") Integer id) {
+  public ResponseEntity<UserEntityDto> findById(@PathVariable("id") Integer id) {
     return ResponseEntity
         .status(HttpStatus.OK)
         .body(service.findById(id));
@@ -63,7 +62,7 @@ public class UserController {
           .body(service.updateUser(id, userEntity));
     } catch (Exception e) {
       throw new ResponseStatusException(
-          HttpStatus.BAD_REQUEST, "Error while registering new user!", e);
+          HttpStatus.BAD_REQUEST, "Error while updating user!", e);
     }
   }
 
@@ -74,7 +73,7 @@ public class UserController {
       return ResponseEntity.ok(service.updateUserRoles(id, roles));
     } catch (Exception e) {
       throw new ResponseStatusException(
-          HttpStatus.BAD_REQUEST, "Error while registering new user!", e);
+          HttpStatus.BAD_REQUEST, "Error while updating roles!", e);
     }
   }
 

@@ -2,6 +2,7 @@ package md.ilie.coursesmanager.gateway.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import md.ilie.coursesmanager.educationservice.entity.dto.CourseDto;
 import md.ilie.coursesmanager.educationservice.entity.dto.LessonDto;
@@ -20,8 +21,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/users")
 @AllArgsConstructor
@@ -39,7 +38,8 @@ public class UserController {
   @Operation(security = @SecurityRequirement(name = "bearerAuth"))
   @PreAuthorize("hasAuthority('ADMIN')")
   @PatchMapping("/{id}/upgrade-roles")
-  public ResponseEntity<?> updateUsersRoles(@PathVariable("id") Integer id, @RequestBody List<RoleEnum> roles) {
+  public ResponseEntity<UserEntityDto> updateUsersRoles(@PathVariable("id") Integer id,
+      @RequestBody List<RoleEnum> roles) {
 
     return ResponseEntity.ok(userService.updateUserRoles(id, roles));
   }
@@ -58,6 +58,13 @@ public class UserController {
   public ResponseEntity<List<LessonDto>> getUserLessons(@PathVariable("id") int userId) {
 
     return educationService.getLessonsByUserId(userId);
+  }
+
+  @Operation(security = @SecurityRequirement(name = "bearerAuth"))
+  @GetMapping("/{id}")
+  public ResponseEntity<UserEntityDto> findUserById(@PathVariable("id") int userId) {
+
+    return ResponseEntity.ok(userService.findUserById(userId));
   }
 
 }

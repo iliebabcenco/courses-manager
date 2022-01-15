@@ -1,11 +1,11 @@
 package md.ilie.coursesmanager.userservice.entity;
 
-import lombok.*;
-import lombok.experimental.SuperBuilder;
-import org.apache.catalina.User;
-
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import md.ilie.coursesmanager.userservice.entity.dto.UserEntityDto;
 
 @Entity
 @Getter
@@ -14,12 +14,12 @@ import javax.persistence.Table;
 @Table(name = "teachers")
 public class TeacherEntity extends UserEntity {
 
-  public TeacherEntity(UserEntity user) {
-    this.id = user.id;
-    this.email = user.email;
-    this.phoneNumber = user.phoneNumber;
-    this.picture = user.picture;
-    this.username = user.username;
+  public TeacherEntity(UserEntityDto user) {
+    this.id = user.getId();
+    this.email = user.getEmail();
+    this.phoneNumber = user.getPhoneNumber();
+    this.picture = user.getPicture();
+    this.username = user.getUsername();
   }
 
 }
