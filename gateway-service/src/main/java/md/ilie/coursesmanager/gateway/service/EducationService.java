@@ -76,7 +76,7 @@ public class EducationService {
 
   public ResponseEntity<List<LessonDto>> getLessonsByUserId(int userId) {
 
-    return  null;
+    return null;
 
   }
 }

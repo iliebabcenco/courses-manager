@@ -21,6 +21,9 @@ public interface UserServiceClient {
   @GetMapping("/users-service/{id}")
   ResponseEntity<UserEntity> findById(@PathVariable("id") Integer id);
 
+  @GetMapping("/users-service")
+  ResponseEntity<List<UserEntityDto>> findAll();
+
   @PatchMapping("/users-service/upgrade-roles/{id}")
   ResponseEntity<UserEntityDto> updateUserRoles(@PathVariable("id") Integer id, @RequestBody List<RoleEnum> roles);
 

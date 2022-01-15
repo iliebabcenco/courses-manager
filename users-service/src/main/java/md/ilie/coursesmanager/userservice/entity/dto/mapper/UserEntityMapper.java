@@ -13,6 +13,7 @@ public interface UserEntityMapper {
 
   @Mapping(target = "authorities", source = "userEntity", qualifiedByName = "mapAuthorities")
   UserEntityDto toUserEntityDto(UserEntity userEntity);
+  List<UserEntityDto> toUserEntityDtos(List<UserEntity> userEntities);
 
   @Named("mapAuthorities")
   default List<RoleEnum> mapAuthorities(UserEntity userEntity) {

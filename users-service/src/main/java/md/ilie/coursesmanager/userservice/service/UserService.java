@@ -51,11 +51,11 @@ public class UserService implements UserDetailsService {
         () -> new UsernameNotFoundException("Could not find user: [" + id + "]"));
   }
 
-  public List<UserEntity> getAllUsers() {
+  public List<UserEntityDto> getAllUsers() {
     List<UserEntity> usersList = new ArrayList<>();
     userRepository.findAll().forEach(usersList::add);
 
-    return usersList;
+    return mapper.toUserEntityDtos(usersList);
   }
 
   public UserEntityDto updateUser(Integer id, UserEntity userEntity) throws Exception {

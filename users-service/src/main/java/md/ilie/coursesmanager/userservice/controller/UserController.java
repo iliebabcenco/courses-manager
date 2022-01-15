@@ -1,6 +1,5 @@
 package md.ilie.coursesmanager.userservice.controller;
 
-import java.util.List;
 import lombok.AllArgsConstructor;
 import md.ilie.coursesmanager.userservice.entity.RoleEnum;
 import md.ilie.coursesmanager.userservice.entity.UserEntity;
@@ -16,6 +15,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/users-service")
@@ -25,63 +27,54 @@ public class UserController {
   private UserService service;
 
   @PostMapping("/register")
-  public ResponseEntity<?> registerUser(@RequestBody UserEntity userEntity) {
+  public ResponseEntity<UserEntityDto> registerUser(@RequestBody UserEntity userEntity) {
     try {
       return ResponseEntity
           .status(HttpStatus.CREATED)
           .body(service.registerUser(userEntity));
     } catch (Exception e) {
-      return ResponseEntity
-          .status(HttpStatus.BAD_REQUEST)
-          .body(e.getMessage());
+      throw new ResponseStatusException(
+          HttpStatus.BAD_REQUEST, "Error while registering new user!", e);
     }
   }
 
-  @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER') || #id == authentication.principal.id")
   @GetMapping("/{id}")
-  public ResponseEntity<?> findById(@PathVariable("id") Integer id) {
-    try {
-      return ResponseEntity
-          .status(HttpStatus.OK)
-          .body(service.findById(id));
-    } catch (Exception e) {
-      return ResponseEntity
-          .status(HttpStatus.NOT_FOUND)
-          .body(e.getMessage());
-    }
+  public ResponseEntity<UserEntity> findById(@PathVariable("id") Integer id) {
+    return ResponseEntity
+        .status(HttpStatus.OK)
+        .body(service.findById(id));
   }
 
   @PreAuthorize("hasAuthority('ADMIN')")
   @GetMapping
-  public ResponseEntity<List<UserEntity>> getAllUsers() {
-    return ResponseEntity.ok(service.getAllUsers());
+  public ResponseEntity<List<UserEntityDto>> getAllUsers() {
+    return ResponseEntity
+        .status(HttpStatus.OK)
+        .body(service.getAllUsers());
   }
 
-  @PreAuthorize("hasAuthority('ADMIN')")
+  @PreAuthorize("hasAuthority('ADMIN') || #id == authentication.principal.id")
   @PatchMapping("/{id}")
-  public ResponseEntity<?> updateUser(@PathVariable Integer id, @RequestBody UserEntity userEntity) {
+  public ResponseEntity<UserEntityDto> updateUser(@PathVariable Integer id, @RequestBody UserEntity userEntity) {
+
     try {
       return ResponseEntity
           .status(HttpStatus.OK)
           .body(service.updateUser(id, userEntity));
     } catch (Exception e) {
-      return ResponseEntity
-          .status(HttpStatus.BAD_REQUEST)
-          .body(e.getMessage());
+      throw new ResponseStatusException(
+          HttpStatus.BAD_REQUEST, "Error while registering new user!", e);
     }
   }
 
   @PreAuthorize("hasAuthority('ADMIN')")
   @PatchMapping("/upgrade-roles/{id}")
-  public ResponseEntity<?> updateUserRoles(@PathVariable("id") Integer id,
-      @RequestBody List<RoleEnum> roles) {
+  public ResponseEntity<?> updateUserRoles(@PathVariable("id") Integer id, @RequestBody List<RoleEnum> roles) {
     try {
       return ResponseEntity.ok(service.updateUserRoles(id, roles));
     } catch (Exception e) {
-      e.printStackTrace();
-      return ResponseEntity
-          .status(HttpStatus.NOT_FOUND)
-          .body(e.getMessage());
+      throw new ResponseStatusException(
+          HttpStatus.BAD_REQUEST, "Error while registering new user!", e);
     }
   }
 
