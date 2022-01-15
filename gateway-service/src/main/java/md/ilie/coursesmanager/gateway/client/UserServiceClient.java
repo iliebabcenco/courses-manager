@@ -18,6 +18,9 @@ public interface UserServiceClient {
   @PostMapping("/users-service/register")
   ResponseEntity<UserEntityDto> registerUser(@RequestBody UserEntity userEntity);
 
+  @PostMapping("/users-service/register-admin")
+  ResponseEntity<UserEntityDto> registerAdminTest(@RequestBody UserEntity userEntity);
+
   @GetMapping("/users-service/{id}")
   ResponseEntity<UserEntityDto> findById(@PathVariable("id") Integer id);
 

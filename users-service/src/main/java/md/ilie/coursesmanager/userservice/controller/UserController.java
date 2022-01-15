@@ -37,6 +37,18 @@ public class UserController {
     }
   }
 
+  @PostMapping("/register-admin")
+  public ResponseEntity<UserEntityDto> registerAdminTest(@RequestBody UserEntity userEntity) {
+    try {
+      return ResponseEntity
+          .status(HttpStatus.CREATED)
+          .body(service.registerAdmin(userEntity));
+    } catch (Exception e) {
+      throw new ResponseStatusException(
+          HttpStatus.BAD_REQUEST, "Error while registering new user!", e);
+    }
+  }
+
   @GetMapping("/{id}")
   public ResponseEntity<UserEntityDto> findById(@PathVariable("id") Integer id) {
     return ResponseEntity

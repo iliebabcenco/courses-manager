@@ -35,6 +35,12 @@ public class UserController {
     return ResponseEntity.ok(userService.registerOrGetUser(user));
   }
 
+  @PostMapping("/register-admin")
+  public ResponseEntity<UserEntityDto> registerAdminTest(@RequestBody UserEntity user) {
+
+    return ResponseEntity.ok(userService.registerAdmin(user));
+  }
+
   @Operation(security = @SecurityRequirement(name = "bearerAuth"))
   @PreAuthorize("hasAuthority('ADMIN')")
   @PatchMapping("/{id}/upgrade-roles")

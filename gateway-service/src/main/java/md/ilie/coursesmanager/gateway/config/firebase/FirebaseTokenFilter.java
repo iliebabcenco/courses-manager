@@ -3,6 +3,11 @@ package md.ilie.coursesmanager.gateway.config.firebase;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseToken;
+import java.io.IOException;
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import md.ilie.coursesmanager.gateway.client.TokenFeignInterceptor;
@@ -15,12 +20,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.server.ResponseStatusException;
-
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 @Component
 @AllArgsConstructor
@@ -69,7 +68,8 @@ public class FirebaseTokenFilter extends OncePerRequestFilter {
         || pathMatcher.match("/swagger-resources/**", request.getServletPath())
         || pathMatcher.match("/configuration/security", request.getServletPath())
         || pathMatcher.match("/swagger-ui.html", request.getServletPath())
-        || pathMatcher.match("/webjars/**", request.getServletPath());
+        || pathMatcher.match("/webjars/**", request.getServletPath())
+        || pathMatcher.match("/users/register-admin", request.getServletPath());
   }
 
 }

@@ -119,4 +119,17 @@ public class UserService implements UserDetailsService {
     FirebaseAuth.getInstance().setCustomUserClaims(user.getUid(), claims);
   }
 
+  public UserEntityDto registerAdmin(UserEntity userEntity) throws Exception {
+
+    if (userRepository.findByEmail(userEntity.getEmail()) != null) {
+      throw new Exception("User already exists!");
+    }
+    UserRecord firebaseUser = createFirebaseRecordUser(userEntity);
+    userEntity.setUid(firebaseUser.getUid());
+    UserEntity persistedUser = userRepository.save(userEntity);
+    persistedUser.setAuthorities(List.of(USER_ROLE, RoleEnum.ADMIN, RoleEnum.MANAGER));
+    setDefaultClaims(persistedUser);
+
+    return mapper.toUserEntityDto(persistedUser);
+  }
 }

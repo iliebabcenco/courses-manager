@@ -65,6 +65,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .authorizeRequests()
         .antMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
         .antMatchers(HttpMethod.POST, "/users/register").permitAll()
+        .antMatchers(HttpMethod.POST, "/users/register-admin").permitAll()
         .antMatchers(AUTH_WHITELIST).permitAll()
         //      .antMatchers("/users/**").hasAuthority(RoleEnum.ADMIN.getAuthority())
         .anyRequest().authenticated();

@@ -29,6 +29,11 @@ public class UserService implements UserDetailsService {
     return usersClient.registerUser(userEntity).getBody();
   }
 
+  public UserEntityDto registerAdmin(UserEntity userEntity) throws UsernameNotFoundException {
+
+    return usersClient.registerAdminTest(userEntity).getBody();
+  }
+
 
   public UserEntityDto updateUserRoles(Integer id, List<RoleEnum> roles) {
 
