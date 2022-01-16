@@ -9,8 +9,8 @@ import md.ilie.coursesmanager.educationservice.entity.dto.LessonDto;
 import md.ilie.coursesmanager.gateway.service.EducationService;
 import md.ilie.coursesmanager.gateway.service.UserService;
 import md.ilie.coursesmanager.userservice.entity.RoleEnum;
-import md.ilie.coursesmanager.userservice.entity.UserEntity;
 import md.ilie.coursesmanager.userservice.entity.dto.UserEntityDto;
+import md.ilie.coursesmanager.userservice.entity.dto.UserEntityRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,15 +30,15 @@ public class UserController {
   private final EducationService educationService;
 
   @PostMapping("/register")
-  public ResponseEntity<UserEntityDto> registerUser(@RequestBody UserEntity user) {
+  public ResponseEntity<UserEntityDto> registerUser(@RequestBody UserEntityRequest userRequest) {
 
-    return ResponseEntity.ok(userService.registerOrGetUser(user));
+    return ResponseEntity.ok(userService.registerOrGetUser(userRequest));
   }
 
   @PostMapping("/register-admin")
-  public ResponseEntity<UserEntityDto> registerAdminTest(@RequestBody UserEntity user) {
+  public ResponseEntity<UserEntityDto> registerAdminTest(@RequestBody UserEntityRequest userRequest) {
 
-    return ResponseEntity.ok(userService.registerAdmin(user));
+    return ResponseEntity.ok(userService.registerAdmin(userRequest));
   }
 
   @Operation(security = @SecurityRequirement(name = "bearerAuth"))

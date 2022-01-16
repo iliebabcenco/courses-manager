@@ -5,8 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import md.ilie.coursesmanager.gateway.client.UserServiceClient;
 import md.ilie.coursesmanager.userservice.entity.RoleEnum;
-import md.ilie.coursesmanager.userservice.entity.UserEntity;
 import md.ilie.coursesmanager.userservice.entity.dto.UserEntityDto;
+import md.ilie.coursesmanager.userservice.entity.dto.UserEntityRequest;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -24,12 +24,12 @@ public class UserService implements UserDetailsService {
     return null;
   }
 
-  public UserEntityDto registerOrGetUser(UserEntity userEntity) throws UsernameNotFoundException {
+  public UserEntityDto registerOrGetUser(UserEntityRequest userEntity) throws UsernameNotFoundException {
 
     return usersClient.registerUser(userEntity).getBody();
   }
 
-  public UserEntityDto registerAdmin(UserEntity userEntity) throws UsernameNotFoundException {
+  public UserEntityDto registerAdmin(UserEntityRequest userEntity) throws UsernameNotFoundException {
 
     return usersClient.registerAdminTest(userEntity).getBody();
   }

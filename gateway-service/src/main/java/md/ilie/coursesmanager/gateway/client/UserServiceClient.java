@@ -2,8 +2,8 @@ package md.ilie.coursesmanager.gateway.client;
 
 import java.util.List;
 import md.ilie.coursesmanager.userservice.entity.RoleEnum;
-import md.ilie.coursesmanager.userservice.entity.UserEntity;
 import md.ilie.coursesmanager.userservice.entity.dto.UserEntityDto;
+import md.ilie.coursesmanager.userservice.entity.dto.UserEntityRequest;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 public interface UserServiceClient {
 
   @PostMapping("/users-service/register")
-  ResponseEntity<UserEntityDto> registerUser(@RequestBody UserEntity userEntity);
+  ResponseEntity<UserEntityDto> registerUser(@RequestBody UserEntityRequest userEntity);
 
   @PostMapping("/users-service/register-admin")
-  ResponseEntity<UserEntityDto> registerAdminTest(@RequestBody UserEntity userEntity);
+  ResponseEntity<UserEntityDto> registerAdminTest(@RequestBody UserEntityRequest userEntity);
 
   @GetMapping("/users-service/{id}")
   ResponseEntity<UserEntityDto> findById(@PathVariable("id") Integer id);

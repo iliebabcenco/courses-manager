@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import md.ilie.coursesmanager.userservice.entity.RoleEnum;
 import md.ilie.coursesmanager.userservice.entity.UserEntity;
 import md.ilie.coursesmanager.userservice.entity.dto.UserEntityDto;
+import md.ilie.coursesmanager.userservice.entity.dto.UserEntityRequest;
 import md.ilie.coursesmanager.userservice.entity.dto.mapper.UserEntityMapper;
 import md.ilie.coursesmanager.userservice.repository.UserRepository;
 import org.springframework.security.core.GrantedAuthority;
@@ -30,8 +31,9 @@ public class UserService implements UserDetailsService {
   private static final RoleEnum USER_ROLE = RoleEnum.USER;
   private final UserEntityMapper mapper;
 
-  public UserEntityDto registerUser(UserEntity userEntity) throws Exception {
+  public UserEntityDto registerUser(UserEntityRequest userEntityRequest) throws Exception {
 
+    UserEntity userEntity = mapper.toUserEntity(userEntityRequest);
     if (userRepository.findByEmail(userEntity.getEmail()) != null) {
       throw new Exception("User already exists!");
     }
@@ -57,9 +59,10 @@ public class UserService implements UserDetailsService {
     return mapper.toUserEntityDtos(usersList);
   }
 
-  public UserEntityDto updateUser(Integer id, UserEntity userEntity) throws Exception {
+  public UserEntityDto updateUser(Integer id, UserEntityRequest userEntityRequest) throws Exception {
     if (userRepository.existsById(id)) {
-      return mapper.toUserEntityDto(userRepository.save(userEntity));
+      UserEntity user = mapper.toUserEntity(userEntityRequest);
+      return mapper.toUserEntityDto(userRepository.save(user));
     }
     throw new Exception();
 
@@ -119,8 +122,9 @@ public class UserService implements UserDetailsService {
     FirebaseAuth.getInstance().setCustomUserClaims(user.getUid(), claims);
   }
 
-  public UserEntityDto registerAdmin(UserEntity userEntity) throws Exception {
+  public UserEntityDto registerAdmin(UserEntityRequest userEntityRequest) throws Exception {
 
+    UserEntity userEntity = mapper.toUserEntity(userEntityRequest);
     if (userRepository.findByEmail(userEntity.getEmail()) != null) {
       throw new Exception("User already exists!");
     }

@@ -3,8 +3,8 @@ package md.ilie.coursesmanager.userservice.controller;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import md.ilie.coursesmanager.userservice.entity.RoleEnum;
-import md.ilie.coursesmanager.userservice.entity.UserEntity;
 import md.ilie.coursesmanager.userservice.entity.dto.UserEntityDto;
+import md.ilie.coursesmanager.userservice.entity.dto.UserEntityRequest;
 import md.ilie.coursesmanager.userservice.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +26,7 @@ public class UserController {
   private UserService service;
 
   @PostMapping("/register")
-  public ResponseEntity<UserEntityDto> registerUser(@RequestBody UserEntity userEntity) {
+  public ResponseEntity<UserEntityDto> registerUser(@RequestBody UserEntityRequest userEntity) {
     try {
       return ResponseEntity
           .status(HttpStatus.CREATED)
@@ -38,7 +38,7 @@ public class UserController {
   }
 
   @PostMapping("/register-admin")
-  public ResponseEntity<UserEntityDto> registerAdminTest(@RequestBody UserEntity userEntity) {
+  public ResponseEntity<UserEntityDto> registerAdminTest(@RequestBody UserEntityRequest userEntity) {
     try {
       return ResponseEntity
           .status(HttpStatus.CREATED)
@@ -66,8 +66,7 @@ public class UserController {
 
   @PreAuthorize("hasAuthority('ADMIN') || #id == authentication.principal.id")
   @PatchMapping("/{id}")
-  public ResponseEntity<UserEntityDto> updateUser(@PathVariable Integer id, @RequestBody UserEntity userEntity) {
-
+  public ResponseEntity<UserEntityDto> updateUser(@PathVariable Integer id, @RequestBody UserEntityRequest userEntity) {
     try {
       return ResponseEntity
           .status(HttpStatus.OK)
