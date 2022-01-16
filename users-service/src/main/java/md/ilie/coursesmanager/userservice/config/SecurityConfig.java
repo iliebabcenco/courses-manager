@@ -48,7 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .addFilterBefore(firebaseTokenFilter, UsernamePasswordAuthenticationFilter.class)
         .authorizeRequests()
         .antMatchers(HttpMethod.POST, "/users-service/register").permitAll()
-        .antMatchers(HttpMethod.POST, "/users/register-admin").permitAll()
+        .antMatchers(HttpMethod.POST, "/users-service/register-admin").permitAll()
         //      .antMatchers("/users/register").permitAll()
         //        .antMatchers(HttpMethod.GET, "/users/**").hasAuthority(RoleEnum.USER.getAuthority())
         //        .antMatchers("/users/**").hasAuthority(RoleEnum.ADMIN.getAuthority())
