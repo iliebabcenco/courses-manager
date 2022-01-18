@@ -1,6 +1,10 @@
 package md.ilie.coursesmanager.educationservice.entity;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import md.ilie.coursesmanager.userservice.entity.StudentEntity;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -17,5 +21,6 @@ public class Mark {
   private Integer id;
   private Integer value;
   private StudentEntity student;
+  private Course course;
 
 }
