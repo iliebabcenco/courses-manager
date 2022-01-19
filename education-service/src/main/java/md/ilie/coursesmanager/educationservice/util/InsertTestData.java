@@ -30,7 +30,7 @@ public class InsertTestData {
 
   @Autowired
   private MarkService markService;
-  
+
   @Autowired
   private CommentService commentService;
 
@@ -192,7 +192,6 @@ public class InsertTestData {
 
     return commentService.save(Comment
         .builder()
-        .id(value)
         .content("Content " + value)
         .user(user)
         .build());
