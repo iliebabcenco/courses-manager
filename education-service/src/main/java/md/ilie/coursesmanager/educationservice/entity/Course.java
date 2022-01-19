@@ -2,6 +2,7 @@ package md.ilie.coursesmanager.educationservice.entity;
 
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -32,5 +33,27 @@ public class Course {
   private List<Mark> marks;
   private List<Lesson> lessons;
   private List<Comment> comments;
+
+  public void addMarks(List<Mark> marksToAdd) {
+    if (marks == null) {
+      marks = new ArrayList<>();
+    }
+    marks.addAll(marksToAdd);
+    marksToAdd.forEach(mark -> {
+      mark.setCourseId(this.getId());
+      mark.setCourseName(this.getName());
+    });
+  }
+
+  public void addLessons(List<Lesson> lessonsToAdd) {
+    if (lessons == null) {
+      lessons = new ArrayList<>();
+    }
+    lessons.addAll(lessonsToAdd);
+    lessonsToAdd.forEach(lesson -> {
+      lesson.setCourseId(this.getId());
+      lesson.setCourseName(this.getName());
+    });
+  }
 
 }

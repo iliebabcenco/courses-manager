@@ -1,5 +1,7 @@
 package md.ilie.coursesmanager.educationservice.util;
 
+import java.time.LocalDate;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import md.ilie.coursesmanager.educationservice.entity.Comment;
 import md.ilie.coursesmanager.educationservice.entity.Course;
@@ -16,19 +18,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
-import java.util.List;
-
 @Slf4j
 @Component
 public class InsertTestData {
 
   @Autowired
   private CourseService courseService;
+
   @Autowired
   private LessonService lessonService;
+
   @Autowired
   private MarkService markService;
+  
   @Autowired
   private CommentService commentService;
 
@@ -69,8 +71,12 @@ public class InsertTestData {
     Mark mark2 = createMark(student2, 4);
     Mark mark3 = createMark(student3, 3);
     Mark mark4 = createMark(student1, 5);
-    course.setMarks(List.of(mark1, mark2, mark3, mark4));
+    course.addMarks(List.of(mark1, mark2, mark3, mark4));
 
+    markService.save(mark1);
+    markService.save(mark2);
+    markService.save(mark3);
+    markService.save(mark4);
     courseService.save(course);
   }
 
@@ -96,11 +102,14 @@ public class InsertTestData {
 
     Mark mark1 = createMark(student1, 5);
     Mark mark3 = createMark(student3, 7);
-    course.setMarks(List.of(mark1, mark3));
-    course.setLessons(List.of(lesson1));
+    course.addMarks(List.of(mark1, mark3));
+    course.addLessons(List.of(lesson1));
     course.setComments(List.of(comment1));
     lesson1.setComments(List.of(comment3));
 
+    markService.save(mark1);
+    markService.save(mark3);
+    lessonService.save(lesson1);
     courseService.save(course);
   }
 
@@ -130,11 +139,16 @@ public class InsertTestData {
     Mark mark1 = createMark(student1, 8);
     Mark mark2 = createMark(student2, 7);
     Mark mark3 = createMark(student3, 10);
-    course.setMarks(List.of(mark1, mark2, mark3));
-    course.setLessons(List.of(lesson1, lesson2));
+    course.addMarks(List.of(mark1, mark2, mark3));
+    course.addLessons(List.of(lesson1, lesson2));
     course.setComments(List.of(comment1, comment2));
     lesson1.setComments(List.of(comment3));
 
+    markService.save(mark1);
+    markService.save(mark2);
+    markService.save(mark3);
+    lessonService.save(lesson1);
+    lessonService.save(lesson2);
     courseService.save(course);
   }
 
@@ -156,22 +170,22 @@ public class InsertTestData {
 
   public Mark createMark(StudentEntity student, Integer value) {
 
-    return markService.save(Mark
+    return Mark
         .builder()
         .id(value)
         .student(student)
         .value(value)
-        .build());
+        .build();
   }
 
   public Lesson createLesson(Integer value) {
 
-    return lessonService.save(Lesson
+    return Lesson
         .builder()
         .id(value)
         .name("Lesson " + value)
         .content("Full descriptino for lesson " + value)
-        .build());
+        .build();
   }
 
   public Comment createComment(Integer value, UserEntity user) {
