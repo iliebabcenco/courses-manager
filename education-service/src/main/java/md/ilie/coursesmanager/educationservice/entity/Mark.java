@@ -21,6 +21,7 @@ public class Mark {
   private Integer id;
   private Integer value;
   private StudentEntity student;
-  private Course course;
+  private Integer courseId;
+  private String courseName;
 
 }

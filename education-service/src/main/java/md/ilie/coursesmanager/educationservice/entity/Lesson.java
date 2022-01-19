@@ -24,5 +24,7 @@ public class Lesson {
   private String content;
   private List<Comment> comments;
   private List<StudentEntity> students;
+  private Integer courseId;
+  private String courseName;
 
 }

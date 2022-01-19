@@ -1,14 +1,13 @@
 package md.ilie.coursesmanager.educationservice.service;
 
-import lombok.AllArgsConstructor;
-import md.ilie.coursesmanager.educationservice.entity.Lesson;
-import md.ilie.coursesmanager.educationservice.repository.LessonRepository;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
+import lombok.AllArgsConstructor;
+import md.ilie.coursesmanager.educationservice.entity.Lesson;
+import md.ilie.coursesmanager.educationservice.repository.LessonRepository;
+import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor

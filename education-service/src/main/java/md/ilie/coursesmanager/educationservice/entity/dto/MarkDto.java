@@ -16,5 +16,7 @@ public class MarkDto {
   private Integer id;
   private Integer value;
   private UserDto student;
+  private Integer courseId;
+  private String courseName;
 
 }

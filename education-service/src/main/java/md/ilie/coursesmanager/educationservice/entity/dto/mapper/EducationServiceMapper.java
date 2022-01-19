@@ -12,7 +12,6 @@ import md.ilie.coursesmanager.educationservice.entity.dto.MarkDto;
 import md.ilie.coursesmanager.educationservice.entity.dto.UserDto;
 import md.ilie.coursesmanager.userservice.entity.UserEntity;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface EducationServiceMapper {
@@ -23,8 +22,6 @@ public interface EducationServiceMapper {
 
   CourseDto toCourseDto(Course course);
 
-  @Mapping(target = "courseName", source = "lesson.course.name")
-  @Mapping(target = "courseId", source = "lesson.course.id")
   LessonDto toLessonDto(Lesson lesson);
 
   MarkDto toMarkDto(Mark mark);
