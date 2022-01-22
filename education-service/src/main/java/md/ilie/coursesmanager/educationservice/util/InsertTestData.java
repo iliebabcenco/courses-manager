@@ -11,6 +11,7 @@ import md.ilie.coursesmanager.educationservice.service.CommentService;
 import md.ilie.coursesmanager.educationservice.service.CourseService;
 import md.ilie.coursesmanager.educationservice.service.LessonService;
 import md.ilie.coursesmanager.educationservice.service.MarkService;
+import md.ilie.coursesmanager.educationservice.util.mongo.SequenceGeneratorService;
 import md.ilie.coursesmanager.userservice.entity.StudentEntity;
 import md.ilie.coursesmanager.userservice.entity.TeacherEntity;
 import md.ilie.coursesmanager.userservice.entity.UserEntity;
@@ -33,6 +34,9 @@ public class InsertTestData {
 
   @Autowired
   private CommentService commentService;
+
+  @Autowired
+  private SequenceGeneratorService sequenceGeneratorService;
 
   @Value("${insertTestData}")
   boolean insertData;
@@ -192,6 +196,7 @@ public class InsertTestData {
 
     return commentService.save(Comment
         .builder()
+        .id(sequenceGeneratorService.generateSequence(Comment.SEQUENCE_NAME))
         .content("Content " + value)
         .user(user)
         .build());

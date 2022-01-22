@@ -15,7 +15,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Setter
 @Builder
 @Document(collection = "comments")
-public class Comment {
+public class Comment implements MongoEntity {
 
   @Id
   private Integer id;
