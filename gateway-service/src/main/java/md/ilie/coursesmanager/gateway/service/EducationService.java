@@ -11,7 +11,6 @@ import md.ilie.coursesmanager.gateway.client.UserServiceClient;
 import md.ilie.coursesmanager.userservice.entity.StudentEntity;
 import md.ilie.coursesmanager.userservice.entity.TeacherEntity;
 import md.ilie.coursesmanager.userservice.entity.dto.UserEntityDto;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @AllArgsConstructor
@@ -21,37 +20,37 @@ public class EducationService {
   private final EducationServiceClient educationServiceClient;
   private final UserServiceClient userServiceClient;
 
-  public ResponseEntity<List<CourseDto>> findAll() {
+  public List<CourseDto> findAll() {
 
-    return educationServiceClient.findAllCourses();
+    return educationServiceClient.findAllCourses().getBody();
   }
 
-  public ResponseEntity<CourseDto> findById(int id) {
+  public CourseDto findById(int id) {
 
-    return educationServiceClient.findCourseById(id);
+    return educationServiceClient.findCourseById(id).getBody();
   }
 
-  public ResponseEntity<CourseDto> create(Course courseEntity) {
+  public CourseDto create(Course courseEntity) {
 
-    return educationServiceClient.createCourse(courseEntity);
+    return educationServiceClient.createCourse(courseEntity).getBody();
   }
 
-  public ResponseEntity<String> delete(int id) {
+  public String delete(int id) {
 
-    return educationServiceClient.remove(id);
+    return educationServiceClient.remove(id).getBody();
   }
 
-  public ResponseEntity<CourseDto> update(int id, Course courseEntity) {
+  public CourseDto update(int id, Course courseEntity) {
 
-    return educationServiceClient.update(id, courseEntity);
+    return educationServiceClient.update(id, courseEntity).getBody();
   }
 
-  public ResponseEntity<List<CourseDto>> getCoursesByUserId(Integer id) {
+  public List<CourseDto> getCoursesByUserId(Integer id) {
 
-    return educationServiceClient.getCoursesByUserId(id);
+    return educationServiceClient.getCoursesByUserId(id).getBody();
   }
 
-  public ResponseEntity<CourseDto> setTeacherToCourse(Integer courseId, Integer teacherId) {
+  public CourseDto setTeacherToCourse(Integer courseId, Integer teacherId) {
 
     UserEntityDto user = userServiceClient.findById(teacherId).getBody();
     if (user == null) {
@@ -59,10 +58,10 @@ public class EducationService {
     }
     TeacherEntity teacher = new TeacherEntity(user);
 
-    return educationServiceClient.setTeacherToCourse(courseId, teacher);
+    return educationServiceClient.setTeacherToCourse(courseId, teacher).getBody();
   }
 
-  public ResponseEntity<CourseDto> addStudentToCourse(Integer courseId, Integer studentId) {
+  public CourseDto addStudentToCourse(Integer courseId, Integer studentId) {
 
     UserEntityDto user = userServiceClient.findById(studentId).getBody();
     if (user == null) {
@@ -70,10 +69,10 @@ public class EducationService {
     }
     StudentEntity student = new StudentEntity(user);
 
-    return educationServiceClient.addStudentToCourse(courseId, student);
+    return educationServiceClient.addStudentToCourse(courseId, student).getBody();
   }
 
-  public ResponseEntity<List<LessonDto>> getLessonsByUserId(int userId) {
+  public List<LessonDto> getLessonsByUserId(int userId) {
 
     return null;
 

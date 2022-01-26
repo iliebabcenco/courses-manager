@@ -45,23 +45,33 @@ public class UserController {
           .body(service.registerAdmin(userEntity));
     } catch (Exception e) {
       throw new ResponseStatusException(
-          HttpStatus.BAD_REQUEST, "Error while registering new user!", e);
+          HttpStatus.BAD_REQUEST, "Error while registering new admin!", e);
     }
   }
 
   @GetMapping("/{id}")
   public ResponseEntity<UserEntityDto> findById(@PathVariable("id") Integer id) {
-    return ResponseEntity
-        .status(HttpStatus.OK)
-        .body(service.findById(id));
+    try {
+      return ResponseEntity
+          .status(HttpStatus.OK)
+          .body(service.findById(id));
+    } catch (Exception e) {
+      throw new ResponseStatusException(
+          HttpStatus.BAD_REQUEST, "No such user", e);
+    }
   }
 
   @PreAuthorize("hasAuthority('ADMIN')")
   @GetMapping
   public ResponseEntity<List<UserEntityDto>> getAllUsers() {
-    return ResponseEntity
-        .status(HttpStatus.OK)
-        .body(service.getAllUsers());
+    try {
+      return ResponseEntity
+          .status(HttpStatus.OK)
+          .body(service.getAllUsers());
+    } catch (Exception e) {
+      throw new ResponseStatusException(
+          HttpStatus.BAD_REQUEST, "No users found!", e);
+    }
   }
 
   @PreAuthorize("hasAuthority('ADMIN') || #id == authentication.principal.id")
