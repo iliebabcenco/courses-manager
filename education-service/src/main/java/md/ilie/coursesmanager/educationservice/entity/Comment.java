@@ -5,7 +5,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import md.ilie.coursesmanager.userservice.entity.UserEntity;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -20,6 +19,7 @@ public class Comment implements MongoEntity {
   @Id
   private Integer id;
   private String content;
-  private UserEntity user;
+  private String userId;
+  private String userName;
 
 }

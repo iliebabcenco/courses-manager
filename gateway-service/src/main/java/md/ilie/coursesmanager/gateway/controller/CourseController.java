@@ -4,9 +4,11 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import java.util.List;
 import lombok.AllArgsConstructor;
+import md.ilie.coursesmanager.educationservice.entity.Comment;
 import md.ilie.coursesmanager.educationservice.entity.Course;
+import md.ilie.coursesmanager.educationservice.entity.Mark;
 import md.ilie.coursesmanager.educationservice.entity.dto.CourseDto;
-import md.ilie.coursesmanager.gateway.service.EducationService;
+import md.ilie.coursesmanager.gateway.service.CourseService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -25,7 +27,7 @@ import org.springframework.web.server.ResponseStatusException;
 @RestController
 public class CourseController {
 
-  private EducationService courseService;
+  private final CourseService courseService;
 
   @Operation(security = @SecurityRequirement(name = "bearerAuth"))
   @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
@@ -120,6 +122,34 @@ public class CourseController {
     } catch (Exception e) {
       throw new ResponseStatusException(
           HttpStatus.BAD_REQUEST, "Error while adding student to course", e);
+    }
+  }
+
+  @Operation(security = @SecurityRequirement(name = "bearerAuth"))
+  @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
+  @PatchMapping("/courses/{courseId}/mark")
+  public ResponseEntity<CourseDto> addMarkToCourse(@PathVariable("courseId") Integer courseId, @RequestBody Mark mark) {
+    try {
+      return ResponseEntity
+          .status(HttpStatus.OK)
+          .body(courseService.addMarkToCourse(courseId, mark));
+    } catch (Exception e) {
+      throw new ResponseStatusException(
+          HttpStatus.BAD_REQUEST, "Error while adding mark to course", e);
+    }
+  }
+
+  @Operation(security = @SecurityRequirement(name = "bearerAuth"))
+  @PatchMapping("/courses/{courseId}/mark")
+  public ResponseEntity<CourseDto> addCommentToCourse(@PathVariable("courseId") Integer courseId, @RequestBody
+      Comment comment) {
+    try {
+      return ResponseEntity
+          .status(HttpStatus.OK)
+          .body(courseService.addCommentToCourse(courseId, comment));
+    } catch (Exception e) {
+      throw new ResponseStatusException(
+          HttpStatus.BAD_REQUEST, "Error while adding comment to course", e);
     }
   }
 

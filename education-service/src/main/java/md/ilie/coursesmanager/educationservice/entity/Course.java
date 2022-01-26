@@ -39,10 +39,13 @@ public class Course implements MongoEntity {
       marks = new ArrayList<>();
     }
     marks.addAll(marksToAdd);
-    marksToAdd.forEach(mark -> {
-      mark.setCourseId(this.getId());
-      mark.setCourseName(this.getName());
-    });
+  }
+
+  public void addStudents(List<StudentEntity> studentsToAdd) {
+    if (students == null) {
+      students = new ArrayList<>();
+    }
+    students.addAll(studentsToAdd);
   }
 
   public void addLessons(List<Lesson> lessonsToAdd) {

@@ -6,7 +6,7 @@ import java.util.List;
 import lombok.AllArgsConstructor;
 import md.ilie.coursesmanager.educationservice.entity.dto.CourseDto;
 import md.ilie.coursesmanager.educationservice.entity.dto.LessonDto;
-import md.ilie.coursesmanager.gateway.service.EducationService;
+import md.ilie.coursesmanager.gateway.service.CourseService;
 import md.ilie.coursesmanager.gateway.service.UserService;
 import md.ilie.coursesmanager.userservice.entity.RoleEnum;
 import md.ilie.coursesmanager.userservice.entity.dto.UserEntityDto;
@@ -29,7 +29,7 @@ import org.springframework.web.server.ResponseStatusException;
 public class UserController {
 
   private final UserService userService;
-  private final EducationService educationService;
+  private final CourseService courseService;
 
   @PostMapping("/register")
   public ResponseEntity<UserEntityDto> registerUser(@RequestBody UserEntityRequest userRequest) {
@@ -77,7 +77,7 @@ public class UserController {
     try {
       return ResponseEntity
           .status(HttpStatus.OK)
-          .body(educationService.getCoursesByUserId(userId));
+          .body(courseService.getCoursesByUserId(userId));
     } catch (Exception e) {
       throw new ResponseStatusException(
           HttpStatus.BAD_REQUEST, "Error getting courses for such user", e);
@@ -91,7 +91,7 @@ public class UserController {
     try {
       return ResponseEntity
           .status(HttpStatus.OK)
-          .body(educationService.getLessonsByUserId(userId));
+          .body(courseService.getLessonsByUserId(userId));
     } catch (Exception e) {
       throw new ResponseStatusException(
           HttpStatus.BAD_REQUEST, "Error getting lessons for such user", e);

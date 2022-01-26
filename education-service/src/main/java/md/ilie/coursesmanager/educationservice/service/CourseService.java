@@ -5,6 +5,7 @@ import java.util.NoSuchElementException;
 import lombok.AllArgsConstructor;
 import md.ilie.coursesmanager.educationservice.entity.Comment;
 import md.ilie.coursesmanager.educationservice.entity.Course;
+import md.ilie.coursesmanager.educationservice.entity.Mark;
 import md.ilie.coursesmanager.educationservice.entity.dto.CourseDto;
 import md.ilie.coursesmanager.educationservice.entity.dto.mapper.EducationServiceMapper;
 import md.ilie.coursesmanager.educationservice.repository.CourseRepository;
@@ -81,9 +82,27 @@ public class CourseService {
 
     Course course = repository.findById(courseId).orElseThrow(
         () -> new NoSuchElementException("Could not find course: [" + courseId + "]"));
-    course.getStudents().add(student);
+    course.addStudents(List.of(student));
 
     return mapper.toCourseDto(repository.save(course));
 
+  }
+
+  public CourseDto addCommentToCourse(Integer courseId, Comment comment) {
+
+    Course course = repository.findById(courseId).orElseThrow(
+        () -> new NoSuchElementException("Could not find course: [" + courseId + "]"));
+    course.getComments().add(comment);
+
+    return mapper.toCourseDto(repository.save(course));
+  }
+
+  public CourseDto addMarkToCourse(Integer courseId, Mark mark) {
+
+    Course course = repository.findById(courseId).orElseThrow(
+        () -> new NoSuchElementException("Could not find course: [" + courseId + "]"));
+    course.addMarks(List.of(mark));
+
+    return mapper.toCourseDto(repository.save(course));
   }
 }

@@ -3,7 +3,9 @@ package md.ilie.coursesmanager.gateway.service;
 import java.util.List;
 import java.util.NoSuchElementException;
 import lombok.AllArgsConstructor;
+import md.ilie.coursesmanager.educationservice.entity.Comment;
 import md.ilie.coursesmanager.educationservice.entity.Course;
+import md.ilie.coursesmanager.educationservice.entity.Mark;
 import md.ilie.coursesmanager.educationservice.entity.dto.CourseDto;
 import md.ilie.coursesmanager.educationservice.entity.dto.LessonDto;
 import md.ilie.coursesmanager.gateway.client.EducationServiceClient;
@@ -15,7 +17,7 @@ import org.springframework.stereotype.Service;
 
 @AllArgsConstructor
 @Service
-public class EducationService {
+public class CourseService {
 
   private final EducationServiceClient educationServiceClient;
   private final UserServiceClient userServiceClient;
@@ -70,6 +72,16 @@ public class EducationService {
     StudentEntity student = new StudentEntity(user);
 
     return educationServiceClient.addStudentToCourse(courseId, student).getBody();
+  }
+
+  public CourseDto addMarkToCourse(Integer courseId, Mark mark) {
+
+    return educationServiceClient.addMarkToCourse(courseId, mark).getBody();
+  }
+
+  public CourseDto addCommentToCourse(Integer courseId, Comment comment) {
+
+    return educationServiceClient.addCommentToCourse(courseId, comment).getBody();
   }
 
   public List<LessonDto> getLessonsByUserId(int userId) {

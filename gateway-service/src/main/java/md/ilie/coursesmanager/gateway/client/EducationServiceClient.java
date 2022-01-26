@@ -1,6 +1,9 @@
 package md.ilie.coursesmanager.gateway.client;
 
+import java.util.List;
+import md.ilie.coursesmanager.educationservice.entity.Comment;
 import md.ilie.coursesmanager.educationservice.entity.Course;
+import md.ilie.coursesmanager.educationservice.entity.Mark;
 import md.ilie.coursesmanager.educationservice.entity.dto.CourseDto;
 import md.ilie.coursesmanager.userservice.entity.StudentEntity;
 import md.ilie.coursesmanager.userservice.entity.TeacherEntity;
@@ -12,8 +15,6 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-
-import java.util.List;
 
 @FeignClient(name = "education-service", url = "localhost:8083")
 public interface EducationServiceClient {
@@ -37,9 +38,17 @@ public interface EducationServiceClient {
   ResponseEntity<List<CourseDto>> getCoursesByUserId(@PathVariable("id") int id);
 
   @PatchMapping("/courses/{courseId}/teacher")
-  ResponseEntity<CourseDto> setTeacherToCourse(@PathVariable("courseId") Integer courseId, @RequestBody TeacherEntity teacher);
+  ResponseEntity<CourseDto> setTeacherToCourse(@PathVariable("courseId") Integer courseId,
+      @RequestBody TeacherEntity teacher);
 
   @PatchMapping("/courses/{courseId}/student")
-  ResponseEntity<CourseDto> addStudentToCourse(@PathVariable("courseId") Integer courseId, @RequestBody StudentEntity student);
+  ResponseEntity<CourseDto> addStudentToCourse(@PathVariable("courseId") Integer courseId,
+      @RequestBody StudentEntity student);
+
+  @PatchMapping("/courses/{courseId}/comment")
+  ResponseEntity<CourseDto> addCommentToCourse(@PathVariable Integer courseId, @RequestBody Comment comment);
+
+  @PatchMapping("/courses/{courseId}/mark")
+  ResponseEntity<CourseDto> addMarkToCourse(@PathVariable Integer courseId, @RequestBody Mark mark);
 
 }

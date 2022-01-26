@@ -1,7 +1,10 @@
 package md.ilie.coursesmanager.educationservice.controller;
 
+import java.util.List;
 import lombok.AllArgsConstructor;
+import md.ilie.coursesmanager.educationservice.entity.Comment;
 import md.ilie.coursesmanager.educationservice.entity.Course;
+import md.ilie.coursesmanager.educationservice.entity.Mark;
 import md.ilie.coursesmanager.educationservice.entity.dto.CourseDto;
 import md.ilie.coursesmanager.educationservice.service.CourseService;
 import md.ilie.coursesmanager.userservice.entity.StudentEntity;
@@ -14,8 +17,6 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-
-import java.util.List;
 
 @Controller
 @AllArgsConstructor
@@ -61,16 +62,29 @@ public class CourseController {
   }
 
   @PatchMapping("/courses/{courseId}/teacher")
-  public ResponseEntity<CourseDto> setTeacherToCourse(@PathVariable Integer courseId, @RequestBody TeacherEntity teacher) {
+  public ResponseEntity<CourseDto> setTeacherToCourse(@PathVariable Integer courseId,
+      @RequestBody TeacherEntity teacher) {
 
     return ResponseEntity.ok(courseService.setTeacherToCourse(courseId, teacher));
   }
 
   @PatchMapping("/courses/{courseId}/student")
-  public ResponseEntity<CourseDto> addStudentToCourse(@PathVariable Integer courseId, @RequestBody StudentEntity student) {
+  public ResponseEntity<CourseDto> addStudentToCourse(@PathVariable Integer courseId,
+      @RequestBody StudentEntity student) {
 
     return ResponseEntity.ok(courseService.addStudentToCourse(courseId, student));
   }
 
+  @PatchMapping("/courses/{courseId}/comment")
+  public ResponseEntity<CourseDto> addCommentToCourse(@PathVariable Integer courseId, @RequestBody Comment comment) {
+
+    return ResponseEntity.ok(courseService.addCommentToCourse(courseId, comment));
+  }
+
+  @PatchMapping("/courses/{courseId}/mark")
+  public ResponseEntity<CourseDto> addMarkToCourse(@PathVariable("courseId") Integer courseId, @RequestBody Mark mark) {
+
+    return ResponseEntity.ok(courseService.addMarkToCourse(courseId, mark));
+  }
 
 }
