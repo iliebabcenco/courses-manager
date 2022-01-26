@@ -5,6 +5,6 @@ import org.springframework.data.annotation.Transient;
 public interface MongoEntity {
 
   @Transient
-  String SEQUENCE_NAME = "marks_sequence";
+  String SEQUENCE_NAME = "sequence";
 
 }

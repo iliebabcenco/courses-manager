@@ -11,7 +11,6 @@ import md.ilie.coursesmanager.educationservice.service.CommentService;
 import md.ilie.coursesmanager.educationservice.service.CourseService;
 import md.ilie.coursesmanager.educationservice.service.LessonService;
 import md.ilie.coursesmanager.educationservice.service.MarkService;
-import md.ilie.coursesmanager.educationservice.util.mongo.SequenceGeneratorService;
 import md.ilie.coursesmanager.userservice.entity.StudentEntity;
 import md.ilie.coursesmanager.userservice.entity.TeacherEntity;
 import md.ilie.coursesmanager.userservice.entity.UserEntity;
@@ -34,9 +33,6 @@ public class InsertTestData {
 
   @Autowired
   private CommentService commentService;
-
-  @Autowired
-  private SequenceGeneratorService sequenceGeneratorService;
 
   @Value("${insertTestData}")
   boolean insertData;
@@ -62,7 +58,6 @@ public class InsertTestData {
 
     Course course = Course
         .builder()
-        .id(3)
         .name("Algorithms and Data Structures Course")
         .description("Full description for Algorithms and Data Structures")
         .startDate(LocalDate.of(2022, 9, 1))
@@ -95,7 +90,6 @@ public class InsertTestData {
 
     Course course = Course
         .builder()
-        .id(2)
         .name("Frontend Course")
         .description("Full description for Frontend Course")
         .startDate(LocalDate.of(2022, 9, 1))
@@ -131,7 +125,6 @@ public class InsertTestData {
 
     Course course = Course
         .builder()
-        .id(1)
         .name("Java Course")
         .description("Full description for Java Course")
         .startDate(LocalDate.of(2022, 9, 1))
@@ -176,7 +169,6 @@ public class InsertTestData {
 
     return Mark
         .builder()
-        .id(value)
         .student(student)
         .value(value)
         .build();
@@ -186,7 +178,6 @@ public class InsertTestData {
 
     return Lesson
         .builder()
-        .id(value)
         .name("Lesson " + value)
         .content("Full descriptino for lesson " + value)
         .build();
@@ -196,7 +187,6 @@ public class InsertTestData {
 
     return commentService.save(Comment
         .builder()
-        .id(sequenceGeneratorService.generateSequence(Comment.SEQUENCE_NAME))
         .content("Content " + value)
         .user(user)
         .build());

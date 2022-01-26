@@ -20,7 +20,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Setter
 @Builder
 @Document(collection = "courses")
-public class Course {
+public class Course implements MongoEntity {
 
   @Id
   private Integer id;

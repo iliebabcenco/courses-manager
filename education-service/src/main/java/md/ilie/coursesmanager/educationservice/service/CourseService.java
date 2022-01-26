@@ -3,13 +3,14 @@ package md.ilie.coursesmanager.educationservice.service;
 import java.util.List;
 import java.util.NoSuchElementException;
 import lombok.AllArgsConstructor;
+import md.ilie.coursesmanager.educationservice.entity.Comment;
 import md.ilie.coursesmanager.educationservice.entity.Course;
 import md.ilie.coursesmanager.educationservice.entity.dto.CourseDto;
 import md.ilie.coursesmanager.educationservice.entity.dto.mapper.EducationServiceMapper;
 import md.ilie.coursesmanager.educationservice.repository.CourseRepository;
+import md.ilie.coursesmanager.educationservice.util.mongo.SequenceGeneratorService;
 import md.ilie.coursesmanager.userservice.entity.StudentEntity;
 import md.ilie.coursesmanager.userservice.entity.TeacherEntity;
-import md.ilie.coursesmanager.userservice.entity.UserEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,6 +19,7 @@ public class CourseService {
 
   private final CourseRepository repository;
   private final EducationServiceMapper mapper;
+  private final SequenceGeneratorService sequenceGeneratorService;
 
   public List<CourseDto> findAll() {
 
@@ -36,6 +38,7 @@ public class CourseService {
 
   public CourseDto save(Course courseEntity) {
 
+    courseEntity.setId(sequenceGeneratorService.generateSequence(Comment.SEQUENCE_NAME));
     Course course = repository.save(courseEntity);
 
     return mapper.toCourseDto(course);

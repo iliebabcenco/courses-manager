@@ -5,8 +5,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
 import lombok.AllArgsConstructor;
+import md.ilie.coursesmanager.educationservice.entity.Comment;
 import md.ilie.coursesmanager.educationservice.entity.Lesson;
 import md.ilie.coursesmanager.educationservice.repository.LessonRepository;
+import md.ilie.coursesmanager.educationservice.util.mongo.SequenceGeneratorService;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Service;
 public class LessonService {
 
   private final LessonRepository repository;
+  private final SequenceGeneratorService sequenceGeneratorService;
 
   public List<Lesson> findAllLessonsByIds(Integer... ids) {
     List<Lesson> lessonsList = new ArrayList<>();
@@ -32,6 +35,7 @@ public class LessonService {
 
   public Lesson save(Lesson lessonEntity) {
 
+    lessonEntity.setId(sequenceGeneratorService.generateSequence(Comment.SEQUENCE_NAME));
     return repository.save(lessonEntity);
   }
 

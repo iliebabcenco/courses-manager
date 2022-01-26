@@ -17,8 +17,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "marks")
 public class Mark implements MongoEntity {
 
-
-
   @Id
   private Integer id;
   private Integer value;

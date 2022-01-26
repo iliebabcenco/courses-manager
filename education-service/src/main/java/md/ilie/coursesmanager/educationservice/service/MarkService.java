@@ -1,19 +1,22 @@
 package md.ilie.coursesmanager.educationservice.service;
 
-import lombok.AllArgsConstructor;
-import md.ilie.coursesmanager.educationservice.entity.Mark;
-import md.ilie.coursesmanager.educationservice.repository.MarkRepository;
-import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
+import lombok.AllArgsConstructor;
+import md.ilie.coursesmanager.educationservice.entity.Comment;
+import md.ilie.coursesmanager.educationservice.entity.Mark;
+import md.ilie.coursesmanager.educationservice.repository.MarkRepository;
+import md.ilie.coursesmanager.educationservice.util.mongo.SequenceGeneratorService;
+import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
 public class MarkService {
 
   private final MarkRepository repository;
+  private final SequenceGeneratorService sequenceGeneratorService;
 
   public List<Mark> findAllLessonsByIds(Integer... ids) {
     List<Mark> marksList = new ArrayList<>();
@@ -34,6 +37,7 @@ public class MarkService {
 
   public Mark save(Mark markEntity) {
 
+    markEntity.setId(sequenceGeneratorService.generateSequence(Comment.SEQUENCE_NAME));
     return repository.save(markEntity);
   }
 
