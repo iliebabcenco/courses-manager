@@ -46,9 +46,10 @@ public interface EducationServiceClient {
       @RequestBody StudentEntity student);
 
   @PatchMapping("/courses/{courseId}/comment")
-  ResponseEntity<CourseDto> addCommentToCourse(@PathVariable Integer courseId, @RequestBody Comment comment);
+  ResponseEntity<CourseDto> addCommentToCourse(@PathVariable("courseId") Integer courseId,
+      @RequestBody Comment comment);
 
   @PatchMapping("/courses/{courseId}/mark")
-  ResponseEntity<CourseDto> addMarkToCourse(@PathVariable Integer courseId, @RequestBody Mark mark);
+  ResponseEntity<CourseDto> addMarkToCourse(@PathVariable("courseId") Integer courseId, @RequestBody Mark mark);
 
 }

@@ -31,7 +31,7 @@ public class CourseController {
   }
 
   @PatchMapping("/courses/{id}")
-  public ResponseEntity<CourseDto> update(@PathVariable int id, @RequestBody Course courseEntity) {
+  public ResponseEntity<CourseDto> update(@PathVariable("id") int id, @RequestBody Course courseEntity) {
 
     return ResponseEntity.ok(courseService.update(id, courseEntity));
   }
@@ -43,40 +43,41 @@ public class CourseController {
   }
 
   @GetMapping("/courses/{id}")
-  public ResponseEntity<CourseDto> findById(@PathVariable int id) {
+  public ResponseEntity<CourseDto> findById(@PathVariable("id") int id) {
 
     return ResponseEntity.ok(courseService.findById(id));
   }
 
   @DeleteMapping("/courses/{id}")
-  public ResponseEntity<String> remove(@PathVariable int id) {
+  public ResponseEntity<String> remove(@PathVariable("id") int id) {
     courseService.delete(id);
 
     return ResponseEntity.ok("Successfully deleted");
   }
 
   @GetMapping("/users/{id}/courses")
-  public ResponseEntity<List<CourseDto>> getCoursesByUserId(@PathVariable int id) {
+  public ResponseEntity<List<CourseDto>> getCoursesByUserId(@PathVariable("id") int id) {
 
     return ResponseEntity.ok(courseService.getCoursesByUserId(id));
   }
 
   @PatchMapping("/courses/{courseId}/teacher")
-  public ResponseEntity<CourseDto> setTeacherToCourse(@PathVariable Integer courseId,
+  public ResponseEntity<CourseDto> setTeacherToCourse(@PathVariable("courseId") Integer courseId,
       @RequestBody TeacherEntity teacher) {
 
     return ResponseEntity.ok(courseService.setTeacherToCourse(courseId, teacher));
   }
 
   @PatchMapping("/courses/{courseId}/student")
-  public ResponseEntity<CourseDto> addStudentToCourse(@PathVariable Integer courseId,
+  public ResponseEntity<CourseDto> addStudentToCourse(@PathVariable("courseId") Integer courseId,
       @RequestBody StudentEntity student) {
 
     return ResponseEntity.ok(courseService.addStudentToCourse(courseId, student));
   }
 
   @PatchMapping("/courses/{courseId}/comment")
-  public ResponseEntity<CourseDto> addCommentToCourse(@PathVariable Integer courseId, @RequestBody Comment comment) {
+  public ResponseEntity<CourseDto> addCommentToCourse(@PathVariable("courseId") Integer courseId,
+      @RequestBody Comment comment) {
 
     return ResponseEntity.ok(courseService.addCommentToCourse(courseId, comment));
   }

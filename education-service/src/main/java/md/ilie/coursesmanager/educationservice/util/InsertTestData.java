@@ -169,7 +169,8 @@ public class InsertTestData {
 
     return Mark
         .builder()
-        .student(student)
+        .studentId(student.getId())
+        .studentName(student.getUsername())
         .value(value)
         .build();
   }
@@ -188,7 +189,8 @@ public class InsertTestData {
     return commentService.save(Comment
         .builder()
         .content("Content " + value)
-        .user(user)
+        .userId(user.getId())
+        .userName(user.getUsername())
         .build());
   }
 

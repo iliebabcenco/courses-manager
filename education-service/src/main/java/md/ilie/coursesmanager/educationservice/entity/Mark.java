@@ -19,7 +19,7 @@ public class Mark implements MongoEntity {
   @Id
   private Integer id;
   private Integer value;
-  private String studentId;
+  private Integer studentId;
   private String studentName;
 
 }

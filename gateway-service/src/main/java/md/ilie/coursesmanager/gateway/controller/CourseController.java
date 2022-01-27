@@ -46,7 +46,7 @@ public class CourseController {
   @Operation(security = @SecurityRequirement(name = "bearerAuth"))
   @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
   @PatchMapping("/{id}")
-  public ResponseEntity<CourseDto> update(@PathVariable int id, @RequestBody Course courseEntity) {
+  public ResponseEntity<CourseDto> update(@PathVariable("id") int id, @RequestBody Course courseEntity) {
     try {
       return ResponseEntity
           .status(HttpStatus.OK)
@@ -72,7 +72,7 @@ public class CourseController {
 
   @Operation(security = @SecurityRequirement(name = "bearerAuth"))
   @GetMapping("/{id}")
-  public ResponseEntity<CourseDto> findById(@PathVariable int id) {
+  public ResponseEntity<CourseDto> findById(@PathVariable("id") int id) {
     try {
       return ResponseEntity
           .status(HttpStatus.OK)
@@ -86,7 +86,7 @@ public class CourseController {
   @Operation(security = @SecurityRequirement(name = "bearerAuth"))
   @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
   @DeleteMapping("/{id}")
-  public ResponseEntity<String> remove(@PathVariable int id) {
+  public ResponseEntity<String> remove(@PathVariable("id") int id) {
     try {
       return ResponseEntity
           .status(HttpStatus.OK)
@@ -100,7 +100,8 @@ public class CourseController {
   @Operation(security = @SecurityRequirement(name = "bearerAuth"))
   @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
   @PatchMapping("/{courseId}/teacher/{teacherId}")
-  public ResponseEntity<CourseDto> setTeacherToCourse(@PathVariable Integer courseId, @PathVariable Integer teacherId) {
+  public ResponseEntity<CourseDto> setTeacherToCourse(@PathVariable("courseId") Integer courseId,
+      @PathVariable("teacherId") Integer teacherId) {
     try {
       return ResponseEntity
           .status(HttpStatus.OK)
@@ -114,7 +115,8 @@ public class CourseController {
   @Operation(security = @SecurityRequirement(name = "bearerAuth"))
   @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
   @PatchMapping("/{courseId}/student/{studentId}")
-  public ResponseEntity<CourseDto> addStudentToCourse(@PathVariable Integer courseId, @PathVariable Integer studentId) {
+  public ResponseEntity<CourseDto> addStudentToCourse(@PathVariable("courseId") Integer courseId,
+      @PathVariable("studentId") Integer studentId) {
     try {
       return ResponseEntity
           .status(HttpStatus.OK)
