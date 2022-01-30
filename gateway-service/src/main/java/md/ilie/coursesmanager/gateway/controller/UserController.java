@@ -6,7 +6,7 @@ import java.util.List;
 import lombok.AllArgsConstructor;
 import md.ilie.coursesmanager.educationservice.entity.dto.CourseDto;
 import md.ilie.coursesmanager.educationservice.entity.dto.LessonDto;
-import md.ilie.coursesmanager.gateway.service.CourseService;
+import md.ilie.coursesmanager.gateway.service.EducationService;
 import md.ilie.coursesmanager.gateway.service.UserService;
 import md.ilie.coursesmanager.userservice.entity.RoleEnum;
 import md.ilie.coursesmanager.userservice.entity.dto.UserEntityDto;
@@ -29,7 +29,7 @@ import org.springframework.web.server.ResponseStatusException;
 public class UserController {
 
   private final UserService userService;
-  private final CourseService courseService;
+  private final EducationService courseService;
 
   @PostMapping("/register")
   public ResponseEntity<UserEntityDto> registerUser(@RequestBody UserEntityRequest userRequest) {

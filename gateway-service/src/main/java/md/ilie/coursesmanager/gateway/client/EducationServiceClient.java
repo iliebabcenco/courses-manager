@@ -5,6 +5,7 @@ import md.ilie.coursesmanager.educationservice.entity.Comment;
 import md.ilie.coursesmanager.educationservice.entity.Course;
 import md.ilie.coursesmanager.educationservice.entity.Mark;
 import md.ilie.coursesmanager.educationservice.entity.dto.CourseDto;
+import md.ilie.coursesmanager.educationservice.entity.dto.LessonDto;
 import md.ilie.coursesmanager.userservice.entity.StudentEntity;
 import md.ilie.coursesmanager.userservice.entity.TeacherEntity;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -51,5 +52,13 @@ public interface EducationServiceClient {
 
   @PatchMapping("/courses/{courseId}/mark")
   ResponseEntity<CourseDto> addMarkToCourse(@PathVariable("courseId") Integer courseId, @RequestBody Mark mark);
+
+  @PatchMapping("/{lessonId}/student")
+  ResponseEntity<LessonDto> addStudentToLesson(@PathVariable("lessonId") Integer lessonId,
+      @RequestBody List<StudentEntity> students);
+
+  @PatchMapping("/{lessonId}/comment")
+  ResponseEntity<LessonDto> addCommentToLesson(@PathVariable("lessonId") Integer lessonId,
+      @RequestBody Comment comment);
 
 }

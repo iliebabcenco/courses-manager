@@ -60,14 +60,14 @@ public class LessonController {
   }
 
   @PatchMapping("/{lessonId}/student")
-  public ResponseEntity<LessonDto> addStudentToCourse(@PathVariable("lessonId") Integer lessonId,
+  public ResponseEntity<LessonDto> addStudentToLesson(@PathVariable("lessonId") Integer lessonId,
       @RequestBody List<StudentEntity> students) {
 
     return ResponseEntity.ok(lessonService.addStudentsToLesson(lessonId, students));
   }
 
   @PatchMapping("/{lessonId}/comment")
-  public ResponseEntity<LessonDto> addCommentToCourse(@PathVariable("lessonId") Integer lessonId,
+  public ResponseEntity<LessonDto> addCommentToLesson(@PathVariable("lessonId") Integer lessonId,
       @RequestBody Comment comment) {
 
     return ResponseEntity.ok(lessonService.addCommentToLesson(lessonId, comment));

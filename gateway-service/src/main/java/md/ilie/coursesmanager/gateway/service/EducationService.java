@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 
 @AllArgsConstructor
 @Service
-public class CourseService {
+public class EducationService {
 
   private final EducationServiceClient educationServiceClient;
   private final UserServiceClient userServiceClient;
@@ -89,4 +89,21 @@ public class CourseService {
     return null;
 
   }
+
+  public LessonDto addStudentToLesson(Integer lessonId, Integer studentId) {
+
+    UserEntityDto user = userServiceClient.findById(studentId).getBody();
+    if (user == null) {
+      throw new NoSuchElementException("Could not find student: [" + studentId + "]");
+    }
+    StudentEntity student = new StudentEntity(user);
+
+    return educationServiceClient.addStudentToLesson(lessonId, List.of(student)).getBody();
+  }
+
+  public LessonDto addCommentToLesson(Integer lessonId, Comment comment) {
+
+    return educationServiceClient.addCommentToLesson(lessonId, comment).getBody();
+  }
+
 }

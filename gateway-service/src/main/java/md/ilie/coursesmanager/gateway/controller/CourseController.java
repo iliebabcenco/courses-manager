@@ -8,7 +8,7 @@ import md.ilie.coursesmanager.educationservice.entity.Comment;
 import md.ilie.coursesmanager.educationservice.entity.Course;
 import md.ilie.coursesmanager.educationservice.entity.Mark;
 import md.ilie.coursesmanager.educationservice.entity.dto.CourseDto;
-import md.ilie.coursesmanager.gateway.service.CourseService;
+import md.ilie.coursesmanager.gateway.service.EducationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -27,7 +27,7 @@ import org.springframework.web.server.ResponseStatusException;
 @RestController
 public class CourseController {
 
-  private final CourseService courseService;
+  private final EducationService educationService;
 
   @Operation(security = @SecurityRequirement(name = "bearerAuth"))
   @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
@@ -36,7 +36,7 @@ public class CourseController {
     try {
       return ResponseEntity
           .status(HttpStatus.CREATED)
-          .body(courseService.create(courseEntity));
+          .body(educationService.create(courseEntity));
     } catch (Exception e) {
       throw new ResponseStatusException(
           HttpStatus.BAD_REQUEST, "Error while registering new user!", e);
@@ -50,7 +50,7 @@ public class CourseController {
     try {
       return ResponseEntity
           .status(HttpStatus.OK)
-          .body(courseService.update(id, courseEntity));
+          .body(educationService.update(id, courseEntity));
     } catch (Exception e) {
       throw new ResponseStatusException(
           HttpStatus.BAD_REQUEST, "Error while registering new user!", e);
@@ -63,7 +63,7 @@ public class CourseController {
     try {
       return ResponseEntity
           .status(HttpStatus.OK)
-          .body(courseService.findAll());
+          .body(educationService.findAll());
     } catch (Exception e) {
       throw new ResponseStatusException(
           HttpStatus.BAD_REQUEST, "Error while getting all courses!", e);
@@ -76,7 +76,7 @@ public class CourseController {
     try {
       return ResponseEntity
           .status(HttpStatus.OK)
-          .body(courseService.findById(id));
+          .body(educationService.findById(id));
     } catch (Exception e) {
       throw new ResponseStatusException(
           HttpStatus.BAD_REQUEST, "Error while getting course by id!", e);
@@ -90,7 +90,7 @@ public class CourseController {
     try {
       return ResponseEntity
           .status(HttpStatus.OK)
-          .body(courseService.delete(id));
+          .body(educationService.delete(id));
     } catch (Exception e) {
       throw new ResponseStatusException(
           HttpStatus.BAD_REQUEST, "Error while removing course by id!", e);
@@ -105,7 +105,7 @@ public class CourseController {
     try {
       return ResponseEntity
           .status(HttpStatus.OK)
-          .body(courseService.setTeacherToCourse(courseId, teacherId));
+          .body(educationService.setTeacherToCourse(courseId, teacherId));
     } catch (Exception e) {
       throw new ResponseStatusException(
           HttpStatus.BAD_REQUEST, "Error while setting teacher to course", e);
@@ -120,7 +120,7 @@ public class CourseController {
     try {
       return ResponseEntity
           .status(HttpStatus.OK)
-          .body(courseService.addStudentToCourse(courseId, studentId));
+          .body(educationService.addStudentToCourse(courseId, studentId));
     } catch (Exception e) {
       throw new ResponseStatusException(
           HttpStatus.BAD_REQUEST, "Error while adding student to course", e);
@@ -129,12 +129,12 @@ public class CourseController {
 
   @Operation(security = @SecurityRequirement(name = "bearerAuth"))
   @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
-  @PatchMapping("/courses/{courseId}/mark")
+  @PatchMapping("/{courseId}/mark")
   public ResponseEntity<CourseDto> addMarkToCourse(@PathVariable("courseId") Integer courseId, @RequestBody Mark mark) {
     try {
       return ResponseEntity
           .status(HttpStatus.OK)
-          .body(courseService.addMarkToCourse(courseId, mark));
+          .body(educationService.addMarkToCourse(courseId, mark));
     } catch (Exception e) {
       throw new ResponseStatusException(
           HttpStatus.BAD_REQUEST, "Error while adding mark to course", e);
@@ -142,13 +142,13 @@ public class CourseController {
   }
 
   @Operation(security = @SecurityRequirement(name = "bearerAuth"))
-  @PatchMapping("/courses/{courseId}/mark")
+  @PatchMapping("/{courseId}/comment")
   public ResponseEntity<CourseDto> addCommentToCourse(@PathVariable("courseId") Integer courseId, @RequestBody
       Comment comment) {
     try {
       return ResponseEntity
           .status(HttpStatus.OK)
-          .body(courseService.addCommentToCourse(courseId, comment));
+          .body(educationService.addCommentToCourse(courseId, comment));
     } catch (Exception e) {
       throw new ResponseStatusException(
           HttpStatus.BAD_REQUEST, "Error while adding comment to course", e);
