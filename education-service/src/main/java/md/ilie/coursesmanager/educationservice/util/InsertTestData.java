@@ -72,10 +72,6 @@ public class InsertTestData {
     Mark mark4 = createMark(student1, 5);
     course.addMarks(List.of(mark1, mark2, mark3, mark4));
 
-    markService.save(mark1);
-    markService.save(mark2);
-    markService.save(mark3);
-    markService.save(mark4);
     courseService.save(course);
   }
 
@@ -105,8 +101,6 @@ public class InsertTestData {
     course.setComments(List.of(comment1));
     lesson1.setComments(List.of(comment3));
 
-    markService.save(mark1);
-    markService.save(mark3);
     lessonService.save(lesson1);
     courseService.save(course);
   }
@@ -141,9 +135,6 @@ public class InsertTestData {
     course.setComments(List.of(comment1, comment2));
     lesson1.setComments(List.of(comment3));
 
-    markService.save(mark1);
-    markService.save(mark2);
-    markService.save(mark3);
     lessonService.save(lesson1);
     lessonService.save(lesson2);
     courseService.save(course);
@@ -186,12 +177,12 @@ public class InsertTestData {
 
   public Comment createComment(Integer value, UserEntity user) {
 
-    return commentService.save(Comment
+    return Comment
         .builder()
         .content("Content " + value)
         .userId(user.getId())
         .userName(user.getUsername())
-        .build());
+        .build();
   }
 
 

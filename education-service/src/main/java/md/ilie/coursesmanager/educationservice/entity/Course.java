@@ -13,6 +13,7 @@ import md.ilie.coursesmanager.userservice.entity.StudentEntity;
 import md.ilie.coursesmanager.userservice.entity.TeacherEntity;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -31,6 +32,7 @@ public class Course implements MongoEntity {
   private List<StudentEntity> students;
   private TeacherEntity teacher;
   private List<Mark> marks;
+  @DocumentReference
   private List<Lesson> lessons;
   private List<Comment> comments;
 
@@ -46,6 +48,13 @@ public class Course implements MongoEntity {
       students = new ArrayList<>();
     }
     students.addAll(studentsToAdd);
+  }
+
+  public void addComments(List<Comment> commentsToAdd) {
+    if (comments == null) {
+      comments = new ArrayList<>();
+    }
+    comments.addAll(commentsToAdd);
   }
 
   public void addLessons(List<Lesson> lessonsToAdd) {

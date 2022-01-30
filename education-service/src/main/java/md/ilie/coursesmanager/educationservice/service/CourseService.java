@@ -92,7 +92,7 @@ public class CourseService {
 
     Course course = repository.findById(courseId).orElseThrow(
         () -> new NoSuchElementException("Could not find course: [" + courseId + "]"));
-    course.getComments().add(comment);
+    course.addComments(List.of(comment));
 
     return mapper.toCourseDto(repository.save(course));
   }

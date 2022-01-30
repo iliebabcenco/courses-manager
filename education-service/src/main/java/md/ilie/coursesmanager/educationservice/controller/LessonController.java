@@ -1,8 +1,12 @@
 package md.ilie.coursesmanager.educationservice.controller;
 
+import java.util.List;
 import lombok.AllArgsConstructor;
+import md.ilie.coursesmanager.educationservice.entity.Comment;
 import md.ilie.coursesmanager.educationservice.entity.Lesson;
+import md.ilie.coursesmanager.educationservice.entity.dto.LessonDto;
 import md.ilie.coursesmanager.educationservice.service.LessonService;
+import md.ilie.coursesmanager.userservice.entity.StudentEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,7 +16,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import java.util.List;
 
 @Controller
 @RequestMapping("/lessons")
@@ -54,6 +57,20 @@ public class LessonController {
 
     lessonService.delete(id);
     return ResponseEntity.ok("Successfully deleted");
+  }
+
+  @PatchMapping("/{lessonId}/student")
+  public ResponseEntity<LessonDto> addStudentToCourse(@PathVariable("lessonId") Integer lessonId,
+      @RequestBody List<StudentEntity> students) {
+
+    return ResponseEntity.ok(lessonService.addStudentsToLesson(lessonId, students));
+  }
+
+  @PatchMapping("/{lessonId}/comment")
+  public ResponseEntity<LessonDto> addCommentToCourse(@PathVariable("lessonId") Integer lessonId,
+      @RequestBody Comment comment) {
+
+    return ResponseEntity.ok(lessonService.addCommentToLesson(lessonId, comment));
   }
 
 }

@@ -7,8 +7,11 @@ import java.util.NoSuchElementException;
 import lombok.AllArgsConstructor;
 import md.ilie.coursesmanager.educationservice.entity.Comment;
 import md.ilie.coursesmanager.educationservice.entity.Lesson;
+import md.ilie.coursesmanager.educationservice.entity.dto.LessonDto;
+import md.ilie.coursesmanager.educationservice.entity.dto.mapper.EducationServiceMapper;
 import md.ilie.coursesmanager.educationservice.repository.LessonRepository;
 import md.ilie.coursesmanager.educationservice.util.mongo.SequenceGeneratorService;
+import md.ilie.coursesmanager.userservice.entity.StudentEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,6 +19,7 @@ import org.springframework.stereotype.Service;
 public class LessonService {
 
   private final LessonRepository repository;
+  private final EducationServiceMapper mapper;
   private final SequenceGeneratorService sequenceGeneratorService;
 
   public List<Lesson> findAllLessonsByIds(Integer... ids) {
@@ -52,4 +56,19 @@ public class LessonService {
     throw new NoSuchElementException("Could not find lesson: [" + id + "]");
   }
 
+  public LessonDto addStudentsToLesson(Integer lessonId, List<StudentEntity> students) {
+    Lesson lesson = repository.findById(lessonId).orElseThrow(
+        () -> new NoSuchElementException("Could not find lesson: [" + lessonId + "]"));
+    lesson.addStudents(students);
+
+    return mapper.toLessonDto(repository.save(lesson));
+  }
+
+  public LessonDto addCommentToLesson(Integer lessonId, Comment comment) {
+    Lesson lesson = repository.findById(lessonId).orElseThrow(
+        () -> new NoSuchElementException("Could not find lesson: [" + lessonId + "]"));
+    lesson.addComments(List.of(comment));
+
+    return mapper.toLessonDto(repository.save(lesson));
+  }
 }

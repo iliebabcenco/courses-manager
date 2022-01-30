@@ -1,5 +1,6 @@
 package md.ilie.coursesmanager.educationservice.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,5 +27,19 @@ public class Lesson implements MongoEntity {
   private List<StudentEntity> students;
   private Integer courseId;
   private String courseName;
+
+  public void addComments(List<Comment> commentsToAdd) {
+    if (comments == null) {
+      comments = new ArrayList<>();
+    }
+    comments.addAll(commentsToAdd);
+  }
+
+  public void addStudents(List<StudentEntity> studentsToAdd) {
+    if (students == null) {
+      students = new ArrayList<>();
+    }
+    students.addAll(studentsToAdd);
+  }
 
 }
