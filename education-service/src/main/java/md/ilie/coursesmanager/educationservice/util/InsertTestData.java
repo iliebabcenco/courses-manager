@@ -7,10 +7,9 @@ import md.ilie.coursesmanager.educationservice.entity.Comment;
 import md.ilie.coursesmanager.educationservice.entity.Course;
 import md.ilie.coursesmanager.educationservice.entity.Lesson;
 import md.ilie.coursesmanager.educationservice.entity.Mark;
-import md.ilie.coursesmanager.educationservice.service.CommentService;
+import md.ilie.coursesmanager.educationservice.entity.dto.CourseDto;
 import md.ilie.coursesmanager.educationservice.service.CourseService;
 import md.ilie.coursesmanager.educationservice.service.LessonService;
-import md.ilie.coursesmanager.educationservice.service.MarkService;
 import md.ilie.coursesmanager.userservice.entity.StudentEntity;
 import md.ilie.coursesmanager.userservice.entity.TeacherEntity;
 import md.ilie.coursesmanager.userservice.entity.UserEntity;
@@ -27,12 +26,6 @@ public class InsertTestData {
 
   @Autowired
   private LessonService lessonService;
-
-  @Autowired
-  private MarkService markService;
-
-  @Autowired
-  private CommentService commentService;
 
   @Value("${insertTestData}")
   boolean insertData;
@@ -70,9 +63,13 @@ public class InsertTestData {
     Mark mark2 = createMark(student2, 4);
     Mark mark3 = createMark(student3, 3);
     Mark mark4 = createMark(student1, 5);
-    course.addMarks(List.of(mark1, mark2, mark3, mark4));
 
-    courseService.save(course);
+    CourseDto persistedCourseDto = courseService.save(course);
+    courseService.addMarkToCourse(persistedCourseDto.getId(), mark1);
+    courseService.addMarkToCourse(persistedCourseDto.getId(), mark2);
+    courseService.addMarkToCourse(persistedCourseDto.getId(), mark3);
+    courseService.addMarkToCourse(persistedCourseDto.getId(), mark4);
+
   }
 
   private void insertSecondCourse() {
@@ -96,13 +93,13 @@ public class InsertTestData {
 
     Mark mark1 = createMark(student1, 5);
     Mark mark3 = createMark(student3, 7);
-    course.addMarks(List.of(mark1, mark3));
-    course.addLessons(List.of(lesson1));
-    course.setComments(List.of(comment1));
-    lesson1.setComments(List.of(comment3));
 
-    lessonService.save(lesson1);
-    courseService.save(course);
+    CourseDto persistedCourseDto = courseService.save(course);
+    courseService.addMarkToCourse(persistedCourseDto.getId(), mark1);
+    courseService.addMarkToCourse(persistedCourseDto.getId(), mark3);
+    courseService.addCommentToCourse(persistedCourseDto.getId(), comment1);
+    courseService.addCommentToCourse(persistedCourseDto.getId(), comment3);
+    courseService.addLessonToCourse(persistedCourseDto.getId(), lesson1);
   }
 
   private void insertFirstCourse() {
@@ -130,20 +127,17 @@ public class InsertTestData {
     Mark mark1 = createMark(student1, 8);
     Mark mark2 = createMark(student2, 7);
     Mark mark3 = createMark(student3, 10);
-    course.addLessons(List.of(lesson1, lesson2));
-    lesson1.setComments(List.of(comment3));
 
-    lessonService.save(lesson1);
-    lessonService.save(lesson2);
-    courseService.addMarkToCourse(course.getId(), mark1);
-    courseService.addMarkToCourse(course.getId(), mark2);
-    courseService.addMarkToCourse(course.getId(), mark3);
-    courseService.addCommentToCourse(course.getId(), comment1);
-    courseService.addCommentToCourse(course.getId(), comment2);
-    courseService.addCommentToCourse(course.getId(), comment3);
-    courseService.addLessonToCourse(course.getId(), lesson1);
-    courseService.addLessonToCourse(course.getId(), lesson2);
-    courseService.save(course);
+    CourseDto persistedCourseDto = courseService.save(course);
+    courseService.addMarkToCourse(persistedCourseDto.getId(), mark1);
+    courseService.addMarkToCourse(persistedCourseDto.getId(), mark2);
+    courseService.addMarkToCourse(persistedCourseDto.getId(), mark3);
+    courseService.addCommentToCourse(persistedCourseDto.getId(), comment1);
+    courseService.addCommentToCourse(persistedCourseDto.getId(), comment2);
+    courseService.addCommentToCourse(persistedCourseDto.getId(), comment3);
+    courseService.addLessonToCourse(persistedCourseDto.getId(), lesson1);
+    courseService.addLessonToCourse(persistedCourseDto.getId(), lesson2);
+    lessonService.addCommentToLesson(lesson1.getId(), comment3);
   }
 
   public TeacherEntity createTeacher(String param) {
