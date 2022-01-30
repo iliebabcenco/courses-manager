@@ -11,15 +11,15 @@ import md.ilie.coursesmanager.educationservice.service.CourseService;
 import md.ilie.coursesmanager.userservice.entity.StudentEntity;
 import md.ilie.coursesmanager.userservice.entity.TeacherEntity;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 @AllArgsConstructor
 public class CourseController {
 
@@ -54,12 +54,6 @@ public class CourseController {
     courseService.delete(id);
 
     return ResponseEntity.ok("Successfully deleted");
-  }
-
-  @GetMapping("/users/{id}/courses")
-  public ResponseEntity<List<CourseDto>> getCoursesByUserId(@PathVariable("id") int id) {
-
-    return ResponseEntity.ok(courseService.getCoursesByUserId(id));
   }
 
   @PatchMapping("/courses/{courseId}/teacher")

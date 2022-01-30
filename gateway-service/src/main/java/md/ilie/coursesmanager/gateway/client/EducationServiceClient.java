@@ -39,6 +39,9 @@ public interface EducationServiceClient {
   @GetMapping("/users/{id}/courses")
   ResponseEntity<List<CourseDto>> getCoursesByUserId(@PathVariable("id") int id);
 
+  @GetMapping("/users/{id}/lessons")
+  ResponseEntity<List<LessonDto>> getLessonsByUserId(@PathVariable("id") int id);
+
   @PatchMapping("/courses/{courseId}/teacher")
   ResponseEntity<CourseDto> setTeacherToCourse(@PathVariable("courseId") Integer courseId,
       @RequestBody TeacherEntity teacher);
@@ -54,11 +57,11 @@ public interface EducationServiceClient {
   @PatchMapping("/courses/{courseId}/mark")
   ResponseEntity<CourseDto> addMarkToCourse(@PathVariable("courseId") Integer courseId, @RequestBody Mark mark);
 
-  @PatchMapping("/{lessonId}/student")
+  @PatchMapping("/lessons/{lessonId}/student")
   ResponseEntity<LessonDto> addStudentToLesson(@PathVariable("lessonId") Integer lessonId,
       @RequestBody List<StudentEntity> students);
 
-  @PatchMapping("/{lessonId}/comment")
+  @PatchMapping("/lessons/{lessonId}/comment")
   ResponseEntity<LessonDto> addCommentToLesson(@PathVariable("lessonId") Integer lessonId,
       @RequestBody Comment comment);
 

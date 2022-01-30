@@ -92,7 +92,7 @@ public class EducationService {
 
   public List<LessonDto> getLessonsByUserId(int userId) {
 
-    return null;
+    return educationServiceClient.getLessonsByUserId(userId).getBody();
 
   }
 

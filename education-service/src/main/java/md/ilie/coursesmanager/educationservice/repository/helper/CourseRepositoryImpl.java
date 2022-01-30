@@ -27,4 +27,5 @@ public class CourseRepositoryImpl implements CourseRepositoryCustom {
 
     return mongoTemplate.find(query, Course.class);
   }
+
 }

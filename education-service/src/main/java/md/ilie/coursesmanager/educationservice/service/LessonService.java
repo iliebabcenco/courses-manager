@@ -73,4 +73,11 @@ public class LessonService {
 
     return mapper.toLessonDto(repository.save(lesson));
   }
+
+  public List<LessonDto> getLessonsByUserId(Integer id) {
+
+    List<Lesson> lessons = repository.getUserLessons(id);
+
+    return mapper.toLessonDtoList(lessons);
+  }
 }

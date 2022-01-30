@@ -28,4 +28,6 @@ public interface EducationServiceMapper {
 
   List<CourseDto> toCourseDtoList(List<Course> courseList);
 
+  List<LessonDto> toLessonDtoList(List<Lesson> lessonList);
+
 }
