@@ -4,6 +4,7 @@ import java.util.List;
 import lombok.AllArgsConstructor;
 import md.ilie.coursesmanager.educationservice.entity.Comment;
 import md.ilie.coursesmanager.educationservice.entity.Course;
+import md.ilie.coursesmanager.educationservice.entity.Lesson;
 import md.ilie.coursesmanager.educationservice.entity.Mark;
 import md.ilie.coursesmanager.educationservice.entity.dto.CourseDto;
 import md.ilie.coursesmanager.educationservice.service.CourseService;
@@ -83,9 +84,17 @@ public class CourseController {
   }
 
   @PatchMapping("/courses/{courseId}/mark")
-  public ResponseEntity<CourseDto> addMarkToCourse(@PathVariable("courseId") Integer courseId, @RequestBody Mark mark) {
+  public ResponseEntity<CourseDto> addMarkToCourse(@PathVariable("courseId") Integer courseId,
+      @RequestBody Mark mark) {
 
     return ResponseEntity.ok(courseService.addMarkToCourse(courseId, mark));
+  }
+
+  @PatchMapping("/courses/{courseId}/lesson")
+  public ResponseEntity<CourseDto> addLessonToCourse(@PathVariable("courseId") Integer courseId,
+      @RequestBody Lesson lesson) {
+
+    return ResponseEntity.ok(courseService.addLessonToCourse(courseId, lesson));
   }
 
 }

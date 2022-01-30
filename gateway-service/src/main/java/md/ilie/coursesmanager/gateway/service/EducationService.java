@@ -5,6 +5,7 @@ import java.util.NoSuchElementException;
 import lombok.AllArgsConstructor;
 import md.ilie.coursesmanager.educationservice.entity.Comment;
 import md.ilie.coursesmanager.educationservice.entity.Course;
+import md.ilie.coursesmanager.educationservice.entity.Lesson;
 import md.ilie.coursesmanager.educationservice.entity.Mark;
 import md.ilie.coursesmanager.educationservice.entity.dto.CourseDto;
 import md.ilie.coursesmanager.educationservice.entity.dto.LessonDto;
@@ -82,6 +83,11 @@ public class EducationService {
   public CourseDto addCommentToCourse(Integer courseId, Comment comment) {
 
     return educationServiceClient.addCommentToCourse(courseId, comment).getBody();
+  }
+
+  public CourseDto addLessonToCourse(Integer courseId, Lesson lesson) {
+
+    return educationServiceClient.addLessonToCourse(courseId, lesson).getBody();
   }
 
   public List<LessonDto> getLessonsByUserId(int userId) {

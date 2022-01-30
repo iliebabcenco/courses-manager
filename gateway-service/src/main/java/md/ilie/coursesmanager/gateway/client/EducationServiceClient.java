@@ -3,6 +3,7 @@ package md.ilie.coursesmanager.gateway.client;
 import java.util.List;
 import md.ilie.coursesmanager.educationservice.entity.Comment;
 import md.ilie.coursesmanager.educationservice.entity.Course;
+import md.ilie.coursesmanager.educationservice.entity.Lesson;
 import md.ilie.coursesmanager.educationservice.entity.Mark;
 import md.ilie.coursesmanager.educationservice.entity.dto.CourseDto;
 import md.ilie.coursesmanager.educationservice.entity.dto.LessonDto;
@@ -60,5 +61,9 @@ public interface EducationServiceClient {
   @PatchMapping("/{lessonId}/comment")
   ResponseEntity<LessonDto> addCommentToLesson(@PathVariable("lessonId") Integer lessonId,
       @RequestBody Comment comment);
+
+  @PatchMapping("/courses/{courseId}/lesson")
+  ResponseEntity<CourseDto> addLessonToCourse(@PathVariable("courseId") Integer courseId,
+      @RequestBody Lesson lesson);
 
 }

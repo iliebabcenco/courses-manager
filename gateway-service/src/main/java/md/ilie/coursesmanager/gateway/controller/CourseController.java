@@ -6,6 +6,7 @@ import java.util.List;
 import lombok.AllArgsConstructor;
 import md.ilie.coursesmanager.educationservice.entity.Comment;
 import md.ilie.coursesmanager.educationservice.entity.Course;
+import md.ilie.coursesmanager.educationservice.entity.Lesson;
 import md.ilie.coursesmanager.educationservice.entity.Mark;
 import md.ilie.coursesmanager.educationservice.entity.dto.CourseDto;
 import md.ilie.coursesmanager.gateway.service.EducationService;
@@ -152,6 +153,20 @@ public class CourseController {
     } catch (Exception e) {
       throw new ResponseStatusException(
           HttpStatus.BAD_REQUEST, "Error while adding comment to course", e);
+    }
+  }
+
+  @Operation(security = @SecurityRequirement(name = "bearerAuth"))
+  @PatchMapping("/{courseId}/lesson")
+  public ResponseEntity<CourseDto> addLessonToCourse(@PathVariable("courseId") Integer courseId, @RequestBody
+      Lesson lesson) {
+    try {
+      return ResponseEntity
+          .status(HttpStatus.OK)
+          .body(educationService.addLessonToCourse(courseId, lesson));
+    } catch (Exception e) {
+      throw new ResponseStatusException(
+          HttpStatus.BAD_REQUEST, "Error while adding lesson to course", e);
     }
   }
 

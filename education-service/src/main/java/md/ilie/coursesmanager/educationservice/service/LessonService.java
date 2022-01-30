@@ -65,6 +65,8 @@ public class LessonService {
   }
 
   public LessonDto addCommentToLesson(Integer lessonId, Comment comment) {
+
+    comment.setId(sequenceGeneratorService.generateSequence(Comment.SEQUENCE_NAME));
     Lesson lesson = repository.findById(lessonId).orElseThrow(
         () -> new NoSuchElementException("Could not find lesson: [" + lessonId + "]"));
     lesson.addComments(List.of(comment));

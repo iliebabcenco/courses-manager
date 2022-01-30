@@ -130,13 +130,19 @@ public class InsertTestData {
     Mark mark1 = createMark(student1, 8);
     Mark mark2 = createMark(student2, 7);
     Mark mark3 = createMark(student3, 10);
-    course.addMarks(List.of(mark1, mark2, mark3));
     course.addLessons(List.of(lesson1, lesson2));
-    course.setComments(List.of(comment1, comment2));
     lesson1.setComments(List.of(comment3));
 
     lessonService.save(lesson1);
     lessonService.save(lesson2);
+    courseService.addMarkToCourse(course.getId(), mark1);
+    courseService.addMarkToCourse(course.getId(), mark2);
+    courseService.addMarkToCourse(course.getId(), mark3);
+    courseService.addCommentToCourse(course.getId(), comment1);
+    courseService.addCommentToCourse(course.getId(), comment2);
+    courseService.addCommentToCourse(course.getId(), comment3);
+    courseService.addLessonToCourse(course.getId(), lesson1);
+    courseService.addLessonToCourse(course.getId(), lesson2);
     courseService.save(course);
   }
 
