@@ -1,13 +1,13 @@
 package md.ilie.coursesmanager.educationservice.util;
 
 import java.time.LocalDate;
-import java.util.List;
 import lombok.extern.slf4j.Slf4j;
-import md.ilie.coursesmanager.educationservice.entity.Comment;
-import md.ilie.coursesmanager.educationservice.entity.Course;
-import md.ilie.coursesmanager.educationservice.entity.Lesson;
-import md.ilie.coursesmanager.educationservice.entity.Mark;
+import md.ilie.coursesmanager.educationservice.entity.dto.request.CommentRequestDto;
+import md.ilie.coursesmanager.educationservice.entity.dto.request.CourseRequestDto;
+import md.ilie.coursesmanager.educationservice.entity.dto.request.LessonRequestDto;
+import md.ilie.coursesmanager.educationservice.entity.dto.request.MarkRequestDto;
 import md.ilie.coursesmanager.educationservice.entity.dto.response.CourseResponseDto;
+import md.ilie.coursesmanager.educationservice.entity.dto.response.LessonResponseDto;
 import md.ilie.coursesmanager.educationservice.service.CourseService;
 import md.ilie.coursesmanager.educationservice.service.LessonService;
 import md.ilie.coursesmanager.userservice.entity.StudentEntity;
@@ -49,20 +49,18 @@ public class InsertTestData {
     StudentEntity student2 = createStudent("11");
     StudentEntity student3 = createStudent("12");
 
-    Course course = Course
+    CourseRequestDto course = CourseRequestDto
         .builder()
         .name("Algorithms and Data Structures Course")
         .description("Full description for Algorithms and Data Structures")
         .startDate(LocalDate.of(2022, 9, 1))
         .endDate(LocalDate.of(2023, 3, 31))
-        .teacher(teacher)
-        .students(List.of(student1, student2, student3))
         .build();
 
-    Mark mark1 = createMark(student1, 2);
-    Mark mark2 = createMark(student2, 4);
-    Mark mark3 = createMark(student3, 3);
-    Mark mark4 = createMark(student1, 5);
+    MarkRequestDto mark1 = createMark(student1, 2);
+    MarkRequestDto mark2 = createMark(student2, 4);
+    MarkRequestDto mark3 = createMark(student3, 3);
+    MarkRequestDto mark4 = createMark(student1, 5);
 
     CourseResponseDto persistedCourseDto = courseService.save(course);
     courseService.addMarkToCourse(persistedCourseDto.getId(), mark1);
@@ -77,22 +75,20 @@ public class InsertTestData {
     StudentEntity student1 = createStudent("4");
     StudentEntity student2 = createStudent("7");
     StudentEntity student3 = createStudent("8");
-    Lesson lesson1 = createLesson(11);
-    Comment comment1 = createComment(13, teacher);
-    Comment comment3 = createComment(15, student3);
+    LessonRequestDto lesson1 = createLesson(11);
+    CommentRequestDto comment1 = createComment(13, teacher);
+    CommentRequestDto comment3 = createComment(15, student3);
 
-    Course course = Course
+    CourseRequestDto course = CourseRequestDto
         .builder()
         .name("Frontend Course")
         .description("Full description for Frontend Course")
         .startDate(LocalDate.of(2022, 9, 1))
         .endDate(LocalDate.of(2023, 5, 31))
-        .teacher(teacher)
-        .students(List.of(student1, student2, student3))
         .build();
 
-    Mark mark1 = createMark(student1, 5);
-    Mark mark3 = createMark(student3, 7);
+    MarkRequestDto mark1 = createMark(student1, 5);
+    MarkRequestDto mark3 = createMark(student3, 7);
 
     CourseResponseDto persistedCourseDto = courseService.save(course);
     courseService.addMarkToCourse(persistedCourseDto.getId(), mark1);
@@ -108,27 +104,26 @@ public class InsertTestData {
     StudentEntity student1 = createStudent("1");
     StudentEntity student2 = createStudent("2");
     StudentEntity student3 = createStudent("3");
-    Lesson lesson1 = createLesson(11);
-    Lesson lesson2 = createLesson(12);
-    Comment comment1 = createComment(13, teacher);
-    Comment comment2 = createComment(14, student2);
-    Comment comment3 = createComment(15, student3);
+    LessonRequestDto lesson1 = createLesson(11);
+    LessonRequestDto lesson2 = createLesson(12);
+    CommentRequestDto comment1 = createComment(13, teacher);
+    CommentRequestDto comment2 = createComment(14, student2);
+    CommentRequestDto comment3 = createComment(15, student3);
 
-    Course course = Course
+    CourseRequestDto course = CourseRequestDto
         .builder()
         .name("Java Course")
         .description("Full description for Java Course")
         .startDate(LocalDate.of(2022, 9, 1))
         .endDate(LocalDate.of(2023, 5, 31))
-        .teacher(teacher)
-        .students(List.of(student1, student2, student3))
         .build();
 
-    Mark mark1 = createMark(student1, 8);
-    Mark mark2 = createMark(student2, 7);
-    Mark mark3 = createMark(student3, 10);
+    MarkRequestDto mark1 = createMark(student1, 8);
+    MarkRequestDto mark2 = createMark(student2, 7);
+    MarkRequestDto mark3 = createMark(student3, 10);
 
     CourseResponseDto persistedCourseDto = courseService.save(course);
+    LessonResponseDto persistedLessonDto = lessonService.save(lesson1);
     courseService.addMarkToCourse(persistedCourseDto.getId(), mark1);
     courseService.addMarkToCourse(persistedCourseDto.getId(), mark2);
     courseService.addMarkToCourse(persistedCourseDto.getId(), mark3);
@@ -137,7 +132,7 @@ public class InsertTestData {
     courseService.addCommentToCourse(persistedCourseDto.getId(), comment3);
     courseService.addLessonToCourse(persistedCourseDto.getId(), lesson1);
     courseService.addLessonToCourse(persistedCourseDto.getId(), lesson2);
-    lessonService.addCommentToLesson(lesson1.getId(), comment3);
+    lessonService.addCommentToLesson(persistedLessonDto.getId(), comment3);
   }
 
   public TeacherEntity createTeacher(String param) {
@@ -156,32 +151,30 @@ public class InsertTestData {
     return student;
   }
 
-  public Mark createMark(StudentEntity student, Integer value) {
+  public MarkRequestDto createMark(StudentEntity student, Integer value) {
 
-    return Mark
+    return MarkRequestDto
         .builder()
         .studentId(student.getId())
-        .studentName(student.getUsername())
         .value(value)
         .build();
   }
 
-  public Lesson createLesson(Integer value) {
+  public LessonRequestDto createLesson(Integer value) {
 
-    return Lesson
+    return LessonRequestDto
         .builder()
         .name("Lesson " + value)
         .content("Full descriptino for lesson " + value)
         .build();
   }
 
-  public Comment createComment(Integer value, UserEntity user) {
+  public CommentRequestDto createComment(Integer value, UserEntity user) {
 
-    return Comment
+    return CommentRequestDto
         .builder()
         .content("Content " + value)
         .userId(user.getId())
-        .userName(user.getUsername())
         .build();
   }
 

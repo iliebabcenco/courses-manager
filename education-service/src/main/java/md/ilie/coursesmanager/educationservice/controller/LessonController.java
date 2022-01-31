@@ -2,8 +2,8 @@ package md.ilie.coursesmanager.educationservice.controller;
 
 import java.util.List;
 import lombok.AllArgsConstructor;
-import md.ilie.coursesmanager.educationservice.entity.Comment;
-import md.ilie.coursesmanager.educationservice.entity.Lesson;
+import md.ilie.coursesmanager.educationservice.entity.dto.request.CommentRequestDto;
+import md.ilie.coursesmanager.educationservice.entity.dto.request.LessonRequestDto;
 import md.ilie.coursesmanager.educationservice.entity.dto.response.LessonResponseDto;
 import md.ilie.coursesmanager.educationservice.service.LessonService;
 import md.ilie.coursesmanager.userservice.entity.StudentEntity;
@@ -25,29 +25,26 @@ public class LessonController {
   private final LessonService lessonService;
 
   @PostMapping
-  public ResponseEntity<Lesson> create(@RequestBody Lesson lessonEntity) {
+  public ResponseEntity<LessonResponseDto> create(@RequestBody LessonRequestDto lessonEntity) {
 
-    Lesson createdLessonEntity = lessonService.save(lessonEntity);
-
-    return ResponseEntity.ok(createdLessonEntity);
+    return ResponseEntity.ok(lessonService.save(lessonEntity));
   }
 
   @PatchMapping("/{id}")
-  public ResponseEntity<Lesson> update(@PathVariable int id, @RequestBody Lesson lessonEntity) {
+  public ResponseEntity<LessonResponseDto> update(@PathVariable int id,
+      @RequestBody LessonRequestDto lessonEntity) {
 
-    Lesson updatedLessonEntity = lessonService.update(id, lessonEntity);
-
-    return ResponseEntity.ok(updatedLessonEntity);
+    return ResponseEntity.ok(lessonService.update(id, lessonEntity));
   }
 
   @GetMapping
-  public ResponseEntity<List<Lesson>> findAll() {
+  public ResponseEntity<List<LessonResponseDto>> findAll() {
 
     return ResponseEntity.ok(lessonService.findAll());
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<Lesson> findById(@PathVariable int id) {
+  public ResponseEntity<LessonResponseDto> findById(@PathVariable int id) {
 
     return ResponseEntity.ok(lessonService.findById(id));
   }
@@ -68,7 +65,7 @@ public class LessonController {
 
   @PatchMapping("/{lessonId}/comment")
   public ResponseEntity<LessonResponseDto> addCommentToLesson(@PathVariable("lessonId") Integer lessonId,
-      @RequestBody Comment comment) {
+      @RequestBody CommentRequestDto comment) {
 
     return ResponseEntity.ok(lessonService.addCommentToLesson(lessonId, comment));
   }
