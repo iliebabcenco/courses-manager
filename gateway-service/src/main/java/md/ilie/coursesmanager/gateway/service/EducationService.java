@@ -3,10 +3,10 @@ package md.ilie.coursesmanager.gateway.service;
 import java.util.List;
 import java.util.NoSuchElementException;
 import lombok.AllArgsConstructor;
-import md.ilie.coursesmanager.educationservice.entity.Comment;
-import md.ilie.coursesmanager.educationservice.entity.Course;
-import md.ilie.coursesmanager.educationservice.entity.Lesson;
-import md.ilie.coursesmanager.educationservice.entity.Mark;
+import md.ilie.coursesmanager.educationservice.entity.dto.request.CommentRequestDto;
+import md.ilie.coursesmanager.educationservice.entity.dto.request.CourseRequestDto;
+import md.ilie.coursesmanager.educationservice.entity.dto.request.LessonRequestDto;
+import md.ilie.coursesmanager.educationservice.entity.dto.request.MarkRequestDto;
 import md.ilie.coursesmanager.educationservice.entity.dto.response.CourseResponseDto;
 import md.ilie.coursesmanager.educationservice.entity.dto.response.LessonResponseDto;
 import md.ilie.coursesmanager.gateway.client.EducationServiceClient;
@@ -33,7 +33,7 @@ public class EducationService {
     return educationServiceClient.findCourseById(id).getBody();
   }
 
-  public CourseResponseDto create(Course courseEntity) {
+  public CourseResponseDto create(CourseRequestDto courseEntity) {
 
     return educationServiceClient.createCourse(courseEntity).getBody();
   }
@@ -43,7 +43,7 @@ public class EducationService {
     return educationServiceClient.remove(id).getBody();
   }
 
-  public CourseResponseDto update(int id, Course courseEntity) {
+  public CourseResponseDto update(int id, CourseRequestDto courseEntity) {
 
     return educationServiceClient.update(id, courseEntity).getBody();
   }
@@ -75,17 +75,17 @@ public class EducationService {
     return educationServiceClient.addStudentToCourse(courseId, student).getBody();
   }
 
-  public CourseResponseDto addMarkToCourse(Integer courseId, Mark mark) {
+  public CourseResponseDto addMarkToCourse(Integer courseId, MarkRequestDto mark) {
 
     return educationServiceClient.addMarkToCourse(courseId, mark).getBody();
   }
 
-  public CourseResponseDto addCommentToCourse(Integer courseId, Comment comment) {
+  public CourseResponseDto addCommentToCourse(Integer courseId, CommentRequestDto comment) {
 
     return educationServiceClient.addCommentToCourse(courseId, comment).getBody();
   }
 
-  public CourseResponseDto addLessonToCourse(Integer courseId, Lesson lesson) {
+  public CourseResponseDto addLessonToCourse(Integer courseId, LessonRequestDto lesson) {
 
     return educationServiceClient.addLessonToCourse(courseId, lesson).getBody();
   }
@@ -107,7 +107,7 @@ public class EducationService {
     return educationServiceClient.addStudentToLesson(lessonId, List.of(student)).getBody();
   }
 
-  public LessonResponseDto addCommentToLesson(Integer lessonId, Comment comment) {
+  public LessonResponseDto addCommentToLesson(Integer lessonId, CommentRequestDto comment) {
 
     return educationServiceClient.addCommentToLesson(lessonId, comment).getBody();
   }

@@ -4,10 +4,10 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import java.util.List;
 import lombok.AllArgsConstructor;
-import md.ilie.coursesmanager.educationservice.entity.Comment;
-import md.ilie.coursesmanager.educationservice.entity.Course;
-import md.ilie.coursesmanager.educationservice.entity.Lesson;
-import md.ilie.coursesmanager.educationservice.entity.Mark;
+import md.ilie.coursesmanager.educationservice.entity.dto.request.CommentRequestDto;
+import md.ilie.coursesmanager.educationservice.entity.dto.request.CourseRequestDto;
+import md.ilie.coursesmanager.educationservice.entity.dto.request.LessonRequestDto;
+import md.ilie.coursesmanager.educationservice.entity.dto.request.MarkRequestDto;
 import md.ilie.coursesmanager.educationservice.entity.dto.response.CourseResponseDto;
 import md.ilie.coursesmanager.gateway.service.EducationService;
 import org.springframework.http.HttpStatus;
@@ -33,7 +33,7 @@ public class CourseController {
   @Operation(security = @SecurityRequirement(name = "bearerAuth"))
   @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
   @PostMapping
-  public ResponseEntity<CourseResponseDto> create(@RequestBody Course courseEntity) {
+  public ResponseEntity<CourseResponseDto> create(@RequestBody CourseRequestDto courseEntity) {
     try {
       return ResponseEntity
           .status(HttpStatus.CREATED)
@@ -47,7 +47,8 @@ public class CourseController {
   @Operation(security = @SecurityRequirement(name = "bearerAuth"))
   @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
   @PatchMapping("/{id}")
-  public ResponseEntity<CourseResponseDto> update(@PathVariable("id") int id, @RequestBody Course courseEntity) {
+  public ResponseEntity<CourseResponseDto> update(@PathVariable("id") int id,
+      @RequestBody CourseRequestDto courseEntity) {
     try {
       return ResponseEntity
           .status(HttpStatus.OK)
@@ -132,7 +133,7 @@ public class CourseController {
   @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
   @PatchMapping("/{courseId}/mark")
   public ResponseEntity<CourseResponseDto> addMarkToCourse(@PathVariable("courseId") Integer courseId,
-      @RequestBody Mark mark) {
+      @RequestBody MarkRequestDto mark) {
     try {
       return ResponseEntity
           .status(HttpStatus.OK)
@@ -145,8 +146,8 @@ public class CourseController {
 
   @Operation(security = @SecurityRequirement(name = "bearerAuth"))
   @PatchMapping("/{courseId}/comment")
-  public ResponseEntity<CourseResponseDto> addCommentToCourse(@PathVariable("courseId") Integer courseId, @RequestBody
-      Comment comment) {
+  public ResponseEntity<CourseResponseDto> addCommentToCourse(@PathVariable("courseId") Integer courseId,
+      @RequestBody CommentRequestDto comment) {
     try {
       return ResponseEntity
           .status(HttpStatus.OK)
@@ -159,8 +160,8 @@ public class CourseController {
 
   @Operation(security = @SecurityRequirement(name = "bearerAuth"))
   @PatchMapping("/{courseId}/lesson")
-  public ResponseEntity<CourseResponseDto> addLessonToCourse(@PathVariable("courseId") Integer courseId, @RequestBody
-      Lesson lesson) {
+  public ResponseEntity<CourseResponseDto> addLessonToCourse(@PathVariable("courseId") Integer courseId,
+      @RequestBody LessonRequestDto lesson) {
     try {
       return ResponseEntity
           .status(HttpStatus.OK)

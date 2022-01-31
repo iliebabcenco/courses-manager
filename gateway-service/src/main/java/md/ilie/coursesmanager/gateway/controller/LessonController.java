@@ -3,7 +3,7 @@ package md.ilie.coursesmanager.gateway.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.AllArgsConstructor;
-import md.ilie.coursesmanager.educationservice.entity.Comment;
+import md.ilie.coursesmanager.educationservice.entity.dto.request.CommentRequestDto;
 import md.ilie.coursesmanager.educationservice.entity.dto.response.LessonResponseDto;
 import md.ilie.coursesmanager.gateway.service.EducationService;
 import org.springframework.http.HttpStatus;
@@ -40,8 +40,8 @@ public class LessonController {
 
   @Operation(security = @SecurityRequirement(name = "bearerAuth"))
   @PatchMapping("/{lessonId}/comment")
-  public ResponseEntity<LessonResponseDto> addCommentToLesson(@PathVariable("lessonId") Integer lessonId, @RequestBody
-      Comment comment) {
+  public ResponseEntity<LessonResponseDto> addCommentToLesson(@PathVariable("lessonId") Integer lessonId,
+      @RequestBody CommentRequestDto comment) {
     try {
       return ResponseEntity
           .status(HttpStatus.OK)
