@@ -7,8 +7,8 @@ import md.ilie.coursesmanager.educationservice.entity.Comment;
 import md.ilie.coursesmanager.educationservice.entity.Course;
 import md.ilie.coursesmanager.educationservice.entity.Lesson;
 import md.ilie.coursesmanager.educationservice.entity.Mark;
-import md.ilie.coursesmanager.educationservice.entity.dto.CourseDto;
 import md.ilie.coursesmanager.educationservice.entity.dto.mapper.EducationServiceMapper;
+import md.ilie.coursesmanager.educationservice.entity.dto.response.CourseResponseDto;
 import md.ilie.coursesmanager.educationservice.repository.CourseRepository;
 import md.ilie.coursesmanager.educationservice.repository.LessonRepository;
 import md.ilie.coursesmanager.educationservice.util.mongo.SequenceGeneratorService;
@@ -25,14 +25,14 @@ public class CourseService {
   private final EducationServiceMapper mapper;
   private final SequenceGeneratorService sequenceGeneratorService;
 
-  public List<CourseDto> findAll() {
+  public List<CourseResponseDto> findAll() {
 
     List<Course> courseEntities = repository.findAll();
 
     return mapper.toCourseDtoList(courseEntities);
   }
 
-  public CourseDto findById(int id) {
+  public CourseResponseDto findById(int id) {
 
     Course course = repository.findById(id).orElseThrow(
         () -> new NoSuchElementException("Could not find course: [" + id + "]"));
@@ -40,7 +40,7 @@ public class CourseService {
     return mapper.toCourseDto(course);
   }
 
-  public CourseDto save(Course courseEntity) {
+  public CourseResponseDto save(Course courseEntity) {
 
     courseEntity.setId(sequenceGeneratorService.generateSequence(Comment.SEQUENCE_NAME));
     Course course = repository.save(courseEntity);
@@ -53,7 +53,7 @@ public class CourseService {
     repository.deleteById(id);
   }
 
-  public CourseDto update(int id, Course courseEntity) {
+  public CourseResponseDto update(int id, Course courseEntity) {
 
     Course course;
     if (repository.existsById(id)) {
@@ -65,14 +65,14 @@ public class CourseService {
     throw new NoSuchElementException("Could not find course: [" + id + "]");
   }
 
-  public List<CourseDto> getCoursesByUserId(Integer id) {
+  public List<CourseResponseDto> getCoursesByUserId(Integer id) {
 
     List<Course> courseEntities = repository.getUserCourses(id);
 
     return mapper.toCourseDtoList(courseEntities);
   }
 
-  public CourseDto setTeacherToCourse(Integer courseId, TeacherEntity teacher) {
+  public CourseResponseDto setTeacherToCourse(Integer courseId, TeacherEntity teacher) {
 
     Course course = repository.findById(courseId).orElseThrow(
         () -> new NoSuchElementException("Could not find course: [" + courseId + "]"));
@@ -81,7 +81,7 @@ public class CourseService {
     return mapper.toCourseDto(repository.save(course));
   }
 
-  public CourseDto addStudentToCourse(Integer courseId, StudentEntity student) {
+  public CourseResponseDto addStudentToCourse(Integer courseId, StudentEntity student) {
 
     Course course = repository.findById(courseId).orElseThrow(
         () -> new NoSuchElementException("Could not find course: [" + courseId + "]"));
@@ -91,7 +91,7 @@ public class CourseService {
 
   }
 
-  public CourseDto addCommentToCourse(Integer courseId, Comment comment) {
+  public CourseResponseDto addCommentToCourse(Integer courseId, Comment comment) {
 
     comment.setId(sequenceGeneratorService.generateSequence(Comment.SEQUENCE_NAME));
     Course course = repository.findById(courseId).orElseThrow(
@@ -101,7 +101,7 @@ public class CourseService {
     return mapper.toCourseDto(repository.save(course));
   }
 
-  public CourseDto addMarkToCourse(Integer courseId, Mark mark) {
+  public CourseResponseDto addMarkToCourse(Integer courseId, Mark mark) {
 
     mark.setId(sequenceGeneratorService.generateSequence(Comment.SEQUENCE_NAME));
     Course course = repository.findById(courseId).orElseThrow(
@@ -111,7 +111,7 @@ public class CourseService {
     return mapper.toCourseDto(repository.save(course));
   }
 
-  public CourseDto addLessonToCourse(Integer id, Lesson lesson) {
+  public CourseResponseDto addLessonToCourse(Integer id, Lesson lesson) {
 
     lesson.setId(sequenceGeneratorService.generateSequence(Comment.SEQUENCE_NAME));
     Course course = repository.findById(id).orElseThrow(

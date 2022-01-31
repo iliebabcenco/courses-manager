@@ -2,8 +2,8 @@ package md.ilie.coursesmanager.educationservice.controller;
 
 import java.util.List;
 import lombok.AllArgsConstructor;
-import md.ilie.coursesmanager.educationservice.entity.dto.CourseDto;
-import md.ilie.coursesmanager.educationservice.entity.dto.LessonDto;
+import md.ilie.coursesmanager.educationservice.entity.dto.response.CourseResponseDto;
+import md.ilie.coursesmanager.educationservice.entity.dto.response.LessonResponseDto;
 import md.ilie.coursesmanager.educationservice.service.CourseService;
 import md.ilie.coursesmanager.educationservice.service.LessonService;
 import org.springframework.http.ResponseEntity;
@@ -21,13 +21,13 @@ public class UserController {
   private final CourseService courseService;
 
   @GetMapping("/{id}/courses")
-  public ResponseEntity<List<CourseDto>> getCoursesByUserId(@PathVariable("id") int id) {
+  public ResponseEntity<List<CourseResponseDto>> getCoursesByUserId(@PathVariable("id") int id) {
 
     return ResponseEntity.ok(courseService.getCoursesByUserId(id));
   }
 
   @GetMapping("/{id}/lessons")
-  public ResponseEntity<List<LessonDto>> getLessonsByUserId(@PathVariable("id") int id) {
+  public ResponseEntity<List<LessonResponseDto>> getLessonsByUserId(@PathVariable("id") int id) {
 
     return ResponseEntity.ok(lessonService.getLessonsByUserId(id));
   }

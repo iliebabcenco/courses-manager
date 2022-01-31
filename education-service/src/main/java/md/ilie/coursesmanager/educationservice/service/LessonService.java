@@ -7,8 +7,8 @@ import java.util.NoSuchElementException;
 import lombok.AllArgsConstructor;
 import md.ilie.coursesmanager.educationservice.entity.Comment;
 import md.ilie.coursesmanager.educationservice.entity.Lesson;
-import md.ilie.coursesmanager.educationservice.entity.dto.LessonDto;
 import md.ilie.coursesmanager.educationservice.entity.dto.mapper.EducationServiceMapper;
+import md.ilie.coursesmanager.educationservice.entity.dto.response.LessonResponseDto;
 import md.ilie.coursesmanager.educationservice.repository.LessonRepository;
 import md.ilie.coursesmanager.educationservice.util.mongo.SequenceGeneratorService;
 import md.ilie.coursesmanager.userservice.entity.StudentEntity;
@@ -56,7 +56,7 @@ public class LessonService {
     throw new NoSuchElementException("Could not find lesson: [" + id + "]");
   }
 
-  public LessonDto addStudentsToLesson(Integer lessonId, List<StudentEntity> students) {
+  public LessonResponseDto addStudentsToLesson(Integer lessonId, List<StudentEntity> students) {
     Lesson lesson = repository.findById(lessonId).orElseThrow(
         () -> new NoSuchElementException("Could not find lesson: [" + lessonId + "]"));
     lesson.addStudents(students);
@@ -64,7 +64,7 @@ public class LessonService {
     return mapper.toLessonDto(repository.save(lesson));
   }
 
-  public LessonDto addCommentToLesson(Integer lessonId, Comment comment) {
+  public LessonResponseDto addCommentToLesson(Integer lessonId, Comment comment) {
 
     comment.setId(sequenceGeneratorService.generateSequence(Comment.SEQUENCE_NAME));
     Lesson lesson = repository.findById(lessonId).orElseThrow(
@@ -74,7 +74,7 @@ public class LessonService {
     return mapper.toLessonDto(repository.save(lesson));
   }
 
-  public List<LessonDto> getLessonsByUserId(Integer id) {
+  public List<LessonResponseDto> getLessonsByUserId(Integer id) {
 
     List<Lesson> lessons = repository.getUserLessons(id);
 

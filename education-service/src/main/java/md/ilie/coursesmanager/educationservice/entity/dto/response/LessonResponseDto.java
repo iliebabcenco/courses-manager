@@ -1,4 +1,4 @@
-package md.ilie.coursesmanager.educationservice.entity.dto;
+package md.ilie.coursesmanager.educationservice.entity.dto.response;
 
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -12,14 +12,14 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class LessonDto {
+public class LessonResponseDto {
 
   private Integer id;
   private String name;
   private String content;
-  private List<CommentDto> comments;
-  private List<UserDto> students;
-  private UserDto teacher;
+  private List<CommentResponseDto> comments;
+  private List<UserResponseDto> students;
+  private UserResponseDto teacher;
   private String courseName;
   private Integer courseId;
 

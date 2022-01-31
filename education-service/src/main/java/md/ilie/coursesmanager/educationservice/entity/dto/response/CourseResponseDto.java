@@ -1,4 +1,4 @@
-package md.ilie.coursesmanager.educationservice.entity.dto;
+package md.ilie.coursesmanager.educationservice.entity.dto.response;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -13,18 +13,18 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CourseDto {
+public class CourseResponseDto {
 
   private Integer id;
   private String name;
   private String description;
   private LocalDate startDate;
   private LocalDate endDate;
-  private List<UserDto> students;
-  private UserDto teacher;
-  private List<MarkDto> marks;
+  private List<UserResponseDto> students;
+  private UserResponseDto teacher;
+  private List<MarkResponseDto> marks;
 
-  private List<LessonDto> lessons;
-  private List<CommentDto> comments;
+  private List<LessonResponseDto> lessons;
+  private List<CommentResponseDto> comments;
 
 }

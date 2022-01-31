@@ -7,8 +7,8 @@ import md.ilie.coursesmanager.educationservice.entity.Comment;
 import md.ilie.coursesmanager.educationservice.entity.Course;
 import md.ilie.coursesmanager.educationservice.entity.Lesson;
 import md.ilie.coursesmanager.educationservice.entity.Mark;
-import md.ilie.coursesmanager.educationservice.entity.dto.CourseDto;
-import md.ilie.coursesmanager.educationservice.entity.dto.LessonDto;
+import md.ilie.coursesmanager.educationservice.entity.dto.response.CourseResponseDto;
+import md.ilie.coursesmanager.educationservice.entity.dto.response.LessonResponseDto;
 import md.ilie.coursesmanager.gateway.client.EducationServiceClient;
 import md.ilie.coursesmanager.gateway.client.UserServiceClient;
 import md.ilie.coursesmanager.userservice.entity.StudentEntity;
@@ -23,17 +23,17 @@ public class EducationService {
   private final EducationServiceClient educationServiceClient;
   private final UserServiceClient userServiceClient;
 
-  public List<CourseDto> findAll() {
+  public List<CourseResponseDto> findAll() {
 
     return educationServiceClient.findAllCourses().getBody();
   }
 
-  public CourseDto findById(int id) {
+  public CourseResponseDto findById(int id) {
 
     return educationServiceClient.findCourseById(id).getBody();
   }
 
-  public CourseDto create(Course courseEntity) {
+  public CourseResponseDto create(Course courseEntity) {
 
     return educationServiceClient.createCourse(courseEntity).getBody();
   }
@@ -43,17 +43,17 @@ public class EducationService {
     return educationServiceClient.remove(id).getBody();
   }
 
-  public CourseDto update(int id, Course courseEntity) {
+  public CourseResponseDto update(int id, Course courseEntity) {
 
     return educationServiceClient.update(id, courseEntity).getBody();
   }
 
-  public List<CourseDto> getCoursesByUserId(Integer id) {
+  public List<CourseResponseDto> getCoursesByUserId(Integer id) {
 
     return educationServiceClient.getCoursesByUserId(id).getBody();
   }
 
-  public CourseDto setTeacherToCourse(Integer courseId, Integer teacherId) {
+  public CourseResponseDto setTeacherToCourse(Integer courseId, Integer teacherId) {
 
     UserEntityDto user = userServiceClient.findById(teacherId).getBody();
     if (user == null) {
@@ -64,7 +64,7 @@ public class EducationService {
     return educationServiceClient.setTeacherToCourse(courseId, teacher).getBody();
   }
 
-  public CourseDto addStudentToCourse(Integer courseId, Integer studentId) {
+  public CourseResponseDto addStudentToCourse(Integer courseId, Integer studentId) {
 
     UserEntityDto user = userServiceClient.findById(studentId).getBody();
     if (user == null) {
@@ -75,28 +75,28 @@ public class EducationService {
     return educationServiceClient.addStudentToCourse(courseId, student).getBody();
   }
 
-  public CourseDto addMarkToCourse(Integer courseId, Mark mark) {
+  public CourseResponseDto addMarkToCourse(Integer courseId, Mark mark) {
 
     return educationServiceClient.addMarkToCourse(courseId, mark).getBody();
   }
 
-  public CourseDto addCommentToCourse(Integer courseId, Comment comment) {
+  public CourseResponseDto addCommentToCourse(Integer courseId, Comment comment) {
 
     return educationServiceClient.addCommentToCourse(courseId, comment).getBody();
   }
 
-  public CourseDto addLessonToCourse(Integer courseId, Lesson lesson) {
+  public CourseResponseDto addLessonToCourse(Integer courseId, Lesson lesson) {
 
     return educationServiceClient.addLessonToCourse(courseId, lesson).getBody();
   }
 
-  public List<LessonDto> getLessonsByUserId(int userId) {
+  public List<LessonResponseDto> getLessonsByUserId(int userId) {
 
     return educationServiceClient.getLessonsByUserId(userId).getBody();
 
   }
 
-  public LessonDto addStudentToLesson(Integer lessonId, Integer studentId) {
+  public LessonResponseDto addStudentToLesson(Integer lessonId, Integer studentId) {
 
     UserEntityDto user = userServiceClient.findById(studentId).getBody();
     if (user == null) {
@@ -107,7 +107,7 @@ public class EducationService {
     return educationServiceClient.addStudentToLesson(lessonId, List.of(student)).getBody();
   }
 
-  public LessonDto addCommentToLesson(Integer lessonId, Comment comment) {
+  public LessonResponseDto addCommentToLesson(Integer lessonId, Comment comment) {
 
     return educationServiceClient.addCommentToLesson(lessonId, comment).getBody();
   }

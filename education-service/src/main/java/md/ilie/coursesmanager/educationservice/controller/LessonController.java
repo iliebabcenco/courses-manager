@@ -4,7 +4,7 @@ import java.util.List;
 import lombok.AllArgsConstructor;
 import md.ilie.coursesmanager.educationservice.entity.Comment;
 import md.ilie.coursesmanager.educationservice.entity.Lesson;
-import md.ilie.coursesmanager.educationservice.entity.dto.LessonDto;
+import md.ilie.coursesmanager.educationservice.entity.dto.response.LessonResponseDto;
 import md.ilie.coursesmanager.educationservice.service.LessonService;
 import md.ilie.coursesmanager.userservice.entity.StudentEntity;
 import org.springframework.http.ResponseEntity;
@@ -60,14 +60,14 @@ public class LessonController {
   }
 
   @PatchMapping("/{lessonId}/student")
-  public ResponseEntity<LessonDto> addStudentToLesson(@PathVariable("lessonId") Integer lessonId,
+  public ResponseEntity<LessonResponseDto> addStudentToLesson(@PathVariable("lessonId") Integer lessonId,
       @RequestBody List<StudentEntity> students) {
 
     return ResponseEntity.ok(lessonService.addStudentsToLesson(lessonId, students));
   }
 
   @PatchMapping("/{lessonId}/comment")
-  public ResponseEntity<LessonDto> addCommentToLesson(@PathVariable("lessonId") Integer lessonId,
+  public ResponseEntity<LessonResponseDto> addCommentToLesson(@PathVariable("lessonId") Integer lessonId,
       @RequestBody Comment comment) {
 
     return ResponseEntity.ok(lessonService.addCommentToLesson(lessonId, comment));

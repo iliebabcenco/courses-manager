@@ -7,7 +7,7 @@ import md.ilie.coursesmanager.educationservice.entity.Comment;
 import md.ilie.coursesmanager.educationservice.entity.Course;
 import md.ilie.coursesmanager.educationservice.entity.Lesson;
 import md.ilie.coursesmanager.educationservice.entity.Mark;
-import md.ilie.coursesmanager.educationservice.entity.dto.CourseDto;
+import md.ilie.coursesmanager.educationservice.entity.dto.response.CourseResponseDto;
 import md.ilie.coursesmanager.educationservice.service.CourseService;
 import md.ilie.coursesmanager.educationservice.service.LessonService;
 import md.ilie.coursesmanager.userservice.entity.StudentEntity;
@@ -64,7 +64,7 @@ public class InsertTestData {
     Mark mark3 = createMark(student3, 3);
     Mark mark4 = createMark(student1, 5);
 
-    CourseDto persistedCourseDto = courseService.save(course);
+    CourseResponseDto persistedCourseDto = courseService.save(course);
     courseService.addMarkToCourse(persistedCourseDto.getId(), mark1);
     courseService.addMarkToCourse(persistedCourseDto.getId(), mark2);
     courseService.addMarkToCourse(persistedCourseDto.getId(), mark3);
@@ -94,7 +94,7 @@ public class InsertTestData {
     Mark mark1 = createMark(student1, 5);
     Mark mark3 = createMark(student3, 7);
 
-    CourseDto persistedCourseDto = courseService.save(course);
+    CourseResponseDto persistedCourseDto = courseService.save(course);
     courseService.addMarkToCourse(persistedCourseDto.getId(), mark1);
     courseService.addMarkToCourse(persistedCourseDto.getId(), mark3);
     courseService.addCommentToCourse(persistedCourseDto.getId(), comment1);
@@ -128,7 +128,7 @@ public class InsertTestData {
     Mark mark2 = createMark(student2, 7);
     Mark mark3 = createMark(student3, 10);
 
-    CourseDto persistedCourseDto = courseService.save(course);
+    CourseResponseDto persistedCourseDto = courseService.save(course);
     courseService.addMarkToCourse(persistedCourseDto.getId(), mark1);
     courseService.addMarkToCourse(persistedCourseDto.getId(), mark2);
     courseService.addMarkToCourse(persistedCourseDto.getId(), mark3);

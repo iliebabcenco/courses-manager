@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.AllArgsConstructor;
 import md.ilie.coursesmanager.educationservice.entity.Comment;
-import md.ilie.coursesmanager.educationservice.entity.dto.LessonDto;
+import md.ilie.coursesmanager.educationservice.entity.dto.response.LessonResponseDto;
 import md.ilie.coursesmanager.gateway.service.EducationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +26,7 @@ public class LessonController {
   @Operation(security = @SecurityRequirement(name = "bearerAuth"))
   @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
   @PatchMapping("/{lessonId}/student/{studentId}")
-  public ResponseEntity<LessonDto> addStudentToLesson(@PathVariable("lessonId") Integer lessonId,
+  public ResponseEntity<LessonResponseDto> addStudentToLesson(@PathVariable("lessonId") Integer lessonId,
       @PathVariable("studentId") Integer studentId) {
     try {
       return ResponseEntity
@@ -40,7 +40,7 @@ public class LessonController {
 
   @Operation(security = @SecurityRequirement(name = "bearerAuth"))
   @PatchMapping("/{lessonId}/comment")
-  public ResponseEntity<LessonDto> addCommentToLesson(@PathVariable("lessonId") Integer lessonId, @RequestBody
+  public ResponseEntity<LessonResponseDto> addCommentToLesson(@PathVariable("lessonId") Integer lessonId, @RequestBody
       Comment comment) {
     try {
       return ResponseEntity

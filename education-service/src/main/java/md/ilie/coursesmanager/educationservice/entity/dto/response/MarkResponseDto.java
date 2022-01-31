@@ -1,4 +1,4 @@
-package md.ilie.coursesmanager.educationservice.entity.dto;
+package md.ilie.coursesmanager.educationservice.entity.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,10 +11,12 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CommentDto {
+public class MarkResponseDto {
 
   private Integer id;
-  private String content;
-  private UserDto user;
+  private Integer value;
+  private UserResponseDto student;
+  private Integer courseId;
+  private String courseName;
 
 }

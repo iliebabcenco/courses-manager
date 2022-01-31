@@ -8,7 +8,7 @@ import md.ilie.coursesmanager.educationservice.entity.Comment;
 import md.ilie.coursesmanager.educationservice.entity.Course;
 import md.ilie.coursesmanager.educationservice.entity.Lesson;
 import md.ilie.coursesmanager.educationservice.entity.Mark;
-import md.ilie.coursesmanager.educationservice.entity.dto.CourseDto;
+import md.ilie.coursesmanager.educationservice.entity.dto.response.CourseResponseDto;
 import md.ilie.coursesmanager.gateway.service.EducationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,7 +33,7 @@ public class CourseController {
   @Operation(security = @SecurityRequirement(name = "bearerAuth"))
   @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
   @PostMapping
-  public ResponseEntity<CourseDto> create(@RequestBody Course courseEntity) {
+  public ResponseEntity<CourseResponseDto> create(@RequestBody Course courseEntity) {
     try {
       return ResponseEntity
           .status(HttpStatus.CREATED)
@@ -47,7 +47,7 @@ public class CourseController {
   @Operation(security = @SecurityRequirement(name = "bearerAuth"))
   @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
   @PatchMapping("/{id}")
-  public ResponseEntity<CourseDto> update(@PathVariable("id") int id, @RequestBody Course courseEntity) {
+  public ResponseEntity<CourseResponseDto> update(@PathVariable("id") int id, @RequestBody Course courseEntity) {
     try {
       return ResponseEntity
           .status(HttpStatus.OK)
@@ -60,7 +60,7 @@ public class CourseController {
 
   @Operation(security = @SecurityRequirement(name = "bearerAuth"))
   @GetMapping
-  public ResponseEntity<List<CourseDto>> findAll() {
+  public ResponseEntity<List<CourseResponseDto>> findAll() {
     try {
       return ResponseEntity
           .status(HttpStatus.OK)
@@ -73,7 +73,7 @@ public class CourseController {
 
   @Operation(security = @SecurityRequirement(name = "bearerAuth"))
   @GetMapping("/{id}")
-  public ResponseEntity<CourseDto> findById(@PathVariable("id") int id) {
+  public ResponseEntity<CourseResponseDto> findById(@PathVariable("id") int id) {
     try {
       return ResponseEntity
           .status(HttpStatus.OK)
@@ -101,7 +101,7 @@ public class CourseController {
   @Operation(security = @SecurityRequirement(name = "bearerAuth"))
   @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
   @PatchMapping("/{courseId}/teacher/{teacherId}")
-  public ResponseEntity<CourseDto> setTeacherToCourse(@PathVariable("courseId") Integer courseId,
+  public ResponseEntity<CourseResponseDto> setTeacherToCourse(@PathVariable("courseId") Integer courseId,
       @PathVariable("teacherId") Integer teacherId) {
     try {
       return ResponseEntity
@@ -116,7 +116,7 @@ public class CourseController {
   @Operation(security = @SecurityRequirement(name = "bearerAuth"))
   @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
   @PatchMapping("/{courseId}/student/{studentId}")
-  public ResponseEntity<CourseDto> addStudentToCourse(@PathVariable("courseId") Integer courseId,
+  public ResponseEntity<CourseResponseDto> addStudentToCourse(@PathVariable("courseId") Integer courseId,
       @PathVariable("studentId") Integer studentId) {
     try {
       return ResponseEntity
@@ -131,7 +131,8 @@ public class CourseController {
   @Operation(security = @SecurityRequirement(name = "bearerAuth"))
   @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
   @PatchMapping("/{courseId}/mark")
-  public ResponseEntity<CourseDto> addMarkToCourse(@PathVariable("courseId") Integer courseId, @RequestBody Mark mark) {
+  public ResponseEntity<CourseResponseDto> addMarkToCourse(@PathVariable("courseId") Integer courseId,
+      @RequestBody Mark mark) {
     try {
       return ResponseEntity
           .status(HttpStatus.OK)
@@ -144,7 +145,7 @@ public class CourseController {
 
   @Operation(security = @SecurityRequirement(name = "bearerAuth"))
   @PatchMapping("/{courseId}/comment")
-  public ResponseEntity<CourseDto> addCommentToCourse(@PathVariable("courseId") Integer courseId, @RequestBody
+  public ResponseEntity<CourseResponseDto> addCommentToCourse(@PathVariable("courseId") Integer courseId, @RequestBody
       Comment comment) {
     try {
       return ResponseEntity
@@ -158,7 +159,7 @@ public class CourseController {
 
   @Operation(security = @SecurityRequirement(name = "bearerAuth"))
   @PatchMapping("/{courseId}/lesson")
-  public ResponseEntity<CourseDto> addLessonToCourse(@PathVariable("courseId") Integer courseId, @RequestBody
+  public ResponseEntity<CourseResponseDto> addLessonToCourse(@PathVariable("courseId") Integer courseId, @RequestBody
       Lesson lesson) {
     try {
       return ResponseEntity

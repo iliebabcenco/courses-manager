@@ -4,8 +4,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import java.util.List;
 import lombok.AllArgsConstructor;
-import md.ilie.coursesmanager.educationservice.entity.dto.CourseDto;
-import md.ilie.coursesmanager.educationservice.entity.dto.LessonDto;
+import md.ilie.coursesmanager.educationservice.entity.dto.response.CourseResponseDto;
+import md.ilie.coursesmanager.educationservice.entity.dto.response.LessonResponseDto;
 import md.ilie.coursesmanager.gateway.service.EducationService;
 import md.ilie.coursesmanager.gateway.service.UserService;
 import md.ilie.coursesmanager.userservice.entity.RoleEnum;
@@ -73,7 +73,7 @@ public class UserController {
   @Operation(security = @SecurityRequirement(name = "bearerAuth"))
   @PreAuthorize("#userId == authentication.principal.id")
   @GetMapping("/{id}/courses")
-  public ResponseEntity<List<CourseDto>> getUserCourses(@PathVariable("id") int userId) {
+  public ResponseEntity<List<CourseResponseDto>> getUserCourses(@PathVariable("id") int userId) {
     try {
       return ResponseEntity
           .status(HttpStatus.OK)
@@ -87,7 +87,7 @@ public class UserController {
   @Operation(security = @SecurityRequirement(name = "bearerAuth"))
   @PreAuthorize("#userId == authentication.principal.id")
   @GetMapping("/{id}/lessons")
-  public ResponseEntity<List<LessonDto>> getUserLessons(@PathVariable("id") int userId) {
+  public ResponseEntity<List<LessonResponseDto>> getUserLessons(@PathVariable("id") int userId) {
     try {
       return ResponseEntity
           .status(HttpStatus.OK)
