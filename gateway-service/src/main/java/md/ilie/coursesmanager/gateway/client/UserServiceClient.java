@@ -30,4 +30,6 @@ public interface UserServiceClient {
   @PatchMapping("/users-service/upgrade-roles/{id}")
   ResponseEntity<UserEntityDto> updateUserRoles(@PathVariable("id") Integer id, @RequestBody List<RoleEnum> roles);
 
+  @PostMapping("/users-service/all-users-exist")
+  ResponseEntity<Boolean> checkAllUsersExistById(@RequestBody List<Integer> ids);
 }

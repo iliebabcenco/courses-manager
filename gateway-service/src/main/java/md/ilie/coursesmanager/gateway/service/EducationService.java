@@ -77,23 +77,38 @@ public class EducationService {
 
   public CourseResponseDto addMarkToCourse(Integer courseId, MarkRequestDto mark) {
 
+    Integer studentId = mark.getStudentId();
+    if (userServiceClient.findById(studentId).getBody() == null) {
+      throw new NoSuchElementException("Could not find student: [" + studentId + "]");
+    }
     return educationServiceClient.addMarkToCourse(courseId, mark).getBody();
   }
 
   public CourseResponseDto addCommentToCourse(Integer courseId, CommentRequestDto comment) {
 
+    Integer userId = comment.getUserId();
+    if (userServiceClient.findById(userId).getBody() == null) {
+      throw new NoSuchElementException("Could not find student: [" + userId + "]");
+    }
     return educationServiceClient.addCommentToCourse(courseId, comment).getBody();
   }
 
   public CourseResponseDto addLessonToCourse(Integer courseId, LessonRequestDto lesson) {
 
+    List<Integer> userIds = lesson.getStudentsIds();
+    userIds.add(lesson.getTeacherId());
+    if (!allUsersExistByIds(userIds)) {
+      throw new NoSuchElementException("Some users could not be found in db");
+    }
     return educationServiceClient.addLessonToCourse(courseId, lesson).getBody();
   }
 
   public List<LessonResponseDto> getLessonsByUserId(int userId) {
 
+    if (userServiceClient.findById(userId).getBody() == null) {
+      throw new NoSuchElementException("Could not find user: [" + userId + "]");
+    }
     return educationServiceClient.getLessonsByUserId(userId).getBody();
-
   }
 
   public LessonResponseDto addStudentToLesson(Integer lessonId, Integer studentId) {
@@ -109,7 +124,17 @@ public class EducationService {
 
   public LessonResponseDto addCommentToLesson(Integer lessonId, CommentRequestDto comment) {
 
+    Integer userId = comment.getUserId();
+    UserEntityDto user = userServiceClient.findById(userId).getBody();
+    if (user == null) {
+      throw new NoSuchElementException("Could not find user: [" + userId + "]");
+    }
     return educationServiceClient.addCommentToLesson(lessonId, comment).getBody();
+  }
+
+  public Boolean allUsersExistByIds(List<Integer> ids) {
+
+    return userServiceClient.checkAllUsersExistById(ids).getBody();
   }
 
 }

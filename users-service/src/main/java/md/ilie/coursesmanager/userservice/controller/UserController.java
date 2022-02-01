@@ -98,4 +98,14 @@ public class UserController {
     }
   }
 
+  @PostMapping("/all-users-exist")
+  public ResponseEntity<Boolean> checkAllUsersExistById(@RequestBody List<Integer> ids) {
+    try {
+      return ResponseEntity.ok(service.allUsersExistById(ids));
+    } catch (Exception e) {
+      throw new ResponseStatusException(
+          HttpStatus.BAD_REQUEST, "Error while checking ids!", e);
+    }
+  }
+
 }

@@ -136,4 +136,10 @@ public class UserService implements UserDetailsService {
 
     return mapper.toUserEntityDto(persistedUser);
   }
+
+  public boolean allUsersExistById(List<Integer> ids) {
+
+    return userRepository.countUserEntitiesByIdIn(ids) == ids.size();
+  }
+
 }

@@ -20,6 +20,6 @@ public class Comment implements MongoEntity {
   private Integer id;
   private String content;
   private Integer userId;
-  private String userName;
+  private String username;
 
 }

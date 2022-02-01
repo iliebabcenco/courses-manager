@@ -25,6 +25,10 @@ public interface EducationServiceMapper {
 
   UserResponseDto toUserResponseDto(UserEntity user);
 
+  UserResponseDto teacherToUserResponseDto(TeacherEntity teacher);
+
+  UserResponseDto studentToUserResponseDto(StudentEntity student);
+
   CommentResponseDto toCommentResponseDto(Comment comment);
 
   CourseResponseDto toCourseResponseDto(Course course);

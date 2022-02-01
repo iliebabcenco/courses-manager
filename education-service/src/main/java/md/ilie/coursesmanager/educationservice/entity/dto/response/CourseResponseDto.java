@@ -23,7 +23,6 @@ public class CourseResponseDto {
   private List<UserResponseDto> students;
   private UserResponseDto teacher;
   private List<MarkResponseDto> marks;
-
   private List<LessonResponseDto> lessons;
   private List<CommentResponseDto> comments;
 

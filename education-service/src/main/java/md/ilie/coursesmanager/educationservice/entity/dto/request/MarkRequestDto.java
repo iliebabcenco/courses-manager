@@ -15,6 +15,5 @@ public class MarkRequestDto {
 
   private Integer value;
   private Integer studentId;
-  private Integer courseId;
 
 }

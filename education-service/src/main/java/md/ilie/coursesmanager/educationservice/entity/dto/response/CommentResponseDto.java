@@ -15,6 +15,7 @@ public class CommentResponseDto {
 
   private Integer id;
   private String content;
-  private UserResponseDto user;
+  private Integer userId;
+  private String username;
 
 }

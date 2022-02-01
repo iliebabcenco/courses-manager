@@ -19,7 +19,6 @@ public class LessonResponseDto {
   private String content;
   private List<CommentResponseDto> comments;
   private List<UserResponseDto> students;
-  private UserResponseDto teacher;
   private String courseName;
   private Integer courseId;
 
