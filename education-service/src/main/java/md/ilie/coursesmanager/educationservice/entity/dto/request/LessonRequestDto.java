@@ -18,6 +18,5 @@ public class LessonRequestDto {
   private String content;
   private List<Integer> studentsIds;
   private Integer teacherId;
-  private Integer courseId;
 
 }

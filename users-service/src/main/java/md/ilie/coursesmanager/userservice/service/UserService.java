@@ -59,6 +59,16 @@ public class UserService implements UserDetailsService {
     return mapper.toUserEntityDtos(usersList);
   }
 
+  public List<UserEntityDto> getAllUsersByIds(List<Integer> ids) throws Exception {
+    if(!allUsersExistById(ids)) {
+      throw new Exception("Not all users are present in db");
+    }
+    List<UserEntity> usersList = new ArrayList<>();
+    userRepository.findAllById(ids).forEach(usersList::add);
+
+    return mapper.toUserEntityDtos(usersList);
+  }
+
   public UserEntityDto updateUser(Integer id, UserEntityRequest userEntityRequest) throws Exception {
     if (userRepository.existsById(id)) {
       UserEntity user = mapper.toUserEntity(userEntityRequest);

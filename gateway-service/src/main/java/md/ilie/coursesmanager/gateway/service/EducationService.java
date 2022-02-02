@@ -95,11 +95,11 @@ public class EducationService {
 
   public CourseResponseDto addLessonToCourse(Integer courseId, LessonRequestDto lesson) {
 
-    List<Integer> userIds = lesson.getStudentsIds();
-    userIds.add(lesson.getTeacherId());
-    if (!allUsersExistByIds(userIds)) {
-      throw new NoSuchElementException("Some users could not be found in db");
-    }
+    List<UserEntityDto> students = userServiceClient.getAllUsersByIds(lesson.getStudentsIds()).getBody();
+    UserEntityDto teacher = userServiceClient.findById(lesson.getTeacherId()).getBody();
+    System.out.println(students);
+    System.out.println(teacher);
+
     return educationServiceClient.addLessonToCourse(courseId, lesson).getBody();
   }
 
@@ -129,12 +129,8 @@ public class EducationService {
     if (user == null) {
       throw new NoSuchElementException("Could not find user: [" + userId + "]");
     }
+    comment.setUsername(user.getUsername());
     return educationServiceClient.addCommentToLesson(lessonId, comment).getBody();
-  }
-
-  public Boolean allUsersExistByIds(List<Integer> ids) {
-
-    return userServiceClient.checkAllUsersExistById(ids).getBody();
   }
 
 }
