@@ -1,7 +1,12 @@
 package md.ilie.coursesmanager.educationservice.util;
 
 import java.time.LocalDate;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
+import md.ilie.coursesmanager.educationservice.entity.dto.gatewayresponse.CommentGatewayResponseDto;
+import md.ilie.coursesmanager.educationservice.entity.dto.gatewayresponse.CourseGatewayResponseDto;
+import md.ilie.coursesmanager.educationservice.entity.dto.gatewayresponse.LessonGatewayResponseDto;
+import md.ilie.coursesmanager.educationservice.entity.dto.gatewayresponse.MarkGatewayResponseDto;
 import md.ilie.coursesmanager.educationservice.entity.dto.request.CommentRequestDto;
 import md.ilie.coursesmanager.educationservice.entity.dto.request.CourseRequestDto;
 import md.ilie.coursesmanager.educationservice.entity.dto.request.LessonRequestDto;
@@ -62,11 +67,16 @@ public class InsertTestData {
     MarkRequestDto mark3 = createMark(student3, 3);
     MarkRequestDto mark4 = createMark(student1, 5);
 
-    CourseResponseDto persistedCourseDto = courseService.save(course);
-    courseService.addMarkToCourse(persistedCourseDto.getId(), mark1);
-    courseService.addMarkToCourse(persistedCourseDto.getId(), mark2);
-    courseService.addMarkToCourse(persistedCourseDto.getId(), mark3);
-    courseService.addMarkToCourse(persistedCourseDto.getId(), mark4);
+    CourseResponseDto persistedCourseDto = courseService.save(new CourseGatewayResponseDto(
+        course, List.of(student1, student2, student3), teacher));
+    courseService.addMarkToCourse(persistedCourseDto.getId(),
+        new MarkGatewayResponseDto(mark1, student1.getUsername()));
+    courseService.addMarkToCourse(persistedCourseDto.getId(),
+        new MarkGatewayResponseDto(mark2, student1.getUsername()));
+    courseService.addMarkToCourse(persistedCourseDto.getId(),
+        new MarkGatewayResponseDto(mark3, student1.getUsername()));
+    courseService.addMarkToCourse(persistedCourseDto.getId(),
+        new MarkGatewayResponseDto(mark4, student1.getUsername()));
 
   }
 
@@ -90,12 +100,18 @@ public class InsertTestData {
     MarkRequestDto mark1 = createMark(student1, 5);
     MarkRequestDto mark3 = createMark(student3, 7);
 
-    CourseResponseDto persistedCourseDto = courseService.save(course);
-    courseService.addMarkToCourse(persistedCourseDto.getId(), mark1);
-    courseService.addMarkToCourse(persistedCourseDto.getId(), mark3);
-    courseService.addCommentToCourse(persistedCourseDto.getId(), comment1);
-    courseService.addCommentToCourse(persistedCourseDto.getId(), comment3);
-    courseService.addLessonToCourse(persistedCourseDto.getId(), lesson1);
+    CourseResponseDto persistedCourseDto = courseService.save(new CourseGatewayResponseDto(course,
+        List.of(student1, student2, student3), teacher));
+    courseService.addMarkToCourse(persistedCourseDto.getId(),
+        new MarkGatewayResponseDto(mark1, student1.getUsername()));
+    courseService.addMarkToCourse(persistedCourseDto.getId(),
+        new MarkGatewayResponseDto(mark3, student3.getUsername()));
+    courseService.addCommentToCourse(persistedCourseDto.getId(), new CommentGatewayResponseDto(
+        comment1, teacher.getUsername()));
+    courseService.addCommentToCourse(persistedCourseDto.getId(), new CommentGatewayResponseDto(comment3,
+        student3.getUsername()));
+    courseService.addLessonToCourse(persistedCourseDto.getId(), new LessonGatewayResponseDto(lesson1,
+        List.of(student1, student2)));
   }
 
   private void insertFirstCourse() {
@@ -122,17 +138,28 @@ public class InsertTestData {
     MarkRequestDto mark2 = createMark(student2, 7);
     MarkRequestDto mark3 = createMark(student3, 10);
 
-    CourseResponseDto persistedCourseDto = courseService.save(course);
-    LessonResponseDto persistedLessonDto = lessonService.save(lesson1);
-    courseService.addMarkToCourse(persistedCourseDto.getId(), mark1);
-    courseService.addMarkToCourse(persistedCourseDto.getId(), mark2);
-    courseService.addMarkToCourse(persistedCourseDto.getId(), mark3);
-    courseService.addCommentToCourse(persistedCourseDto.getId(), comment1);
-    courseService.addCommentToCourse(persistedCourseDto.getId(), comment2);
-    courseService.addCommentToCourse(persistedCourseDto.getId(), comment3);
-    courseService.addLessonToCourse(persistedCourseDto.getId(), lesson1);
-    courseService.addLessonToCourse(persistedCourseDto.getId(), lesson2);
-    lessonService.addCommentToLesson(persistedLessonDto.getId(), comment3);
+    CourseResponseDto persistedCourseDto =
+        courseService.save(new CourseGatewayResponseDto(course, List.of(student1, student2, student3), teacher));
+    LessonResponseDto persistedLessonDto =
+        lessonService.save(new LessonGatewayResponseDto(lesson1, List.of(student1, student2, student3)));
+    courseService.addMarkToCourse(persistedCourseDto.getId(),
+        new MarkGatewayResponseDto(mark1, student1.getUsername()));
+    courseService.addMarkToCourse(persistedCourseDto.getId(),
+        new MarkGatewayResponseDto(mark2, student2.getUsername()));
+    courseService.addMarkToCourse(persistedCourseDto.getId(),
+        new MarkGatewayResponseDto(mark3, student3.getUsername()));
+    courseService.addCommentToCourse(persistedCourseDto.getId(),
+        new CommentGatewayResponseDto(comment1, teacher.getUsername()));
+    courseService.addCommentToCourse(persistedCourseDto.getId(),
+        new CommentGatewayResponseDto(comment2, student2.getUsername()));
+    courseService.addCommentToCourse(persistedCourseDto.getId(),
+        new CommentGatewayResponseDto(comment3, student3.getUsername()));
+    courseService.addLessonToCourse(persistedCourseDto.getId(),
+        new LessonGatewayResponseDto(lesson1, List.of(student1, student2, student3)));
+    courseService.addLessonToCourse(persistedCourseDto.getId(),
+        new LessonGatewayResponseDto(lesson2, List.of(student1, student2, student3)));
+    lessonService.addCommentToLesson(persistedLessonDto.getId(),
+        new CommentGatewayResponseDto(comment3, student3.getUsername()));
   }
 
   public TeacherEntity createTeacher(String param) {

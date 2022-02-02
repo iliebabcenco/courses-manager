@@ -2,7 +2,13 @@ package md.ilie.coursesmanager.gateway.service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Objects;
+import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
+import md.ilie.coursesmanager.educationservice.entity.dto.gatewayresponse.CommentGatewayResponseDto;
+import md.ilie.coursesmanager.educationservice.entity.dto.gatewayresponse.CourseGatewayResponseDto;
+import md.ilie.coursesmanager.educationservice.entity.dto.gatewayresponse.LessonGatewayResponseDto;
+import md.ilie.coursesmanager.educationservice.entity.dto.gatewayresponse.MarkGatewayResponseDto;
 import md.ilie.coursesmanager.educationservice.entity.dto.request.CommentRequestDto;
 import md.ilie.coursesmanager.educationservice.entity.dto.request.CourseRequestDto;
 import md.ilie.coursesmanager.educationservice.entity.dto.request.LessonRequestDto;
@@ -35,7 +41,13 @@ public class EducationService {
 
   public CourseResponseDto create(CourseRequestDto courseEntity) {
 
-    return educationServiceClient.createCourse(courseEntity).getBody();
+    List<StudentEntity> studentEntities = toStudentsList(
+        Objects.requireNonNull(userServiceClient.getAllUsersByIds(courseEntity.getStudentsIds()).getBody()));
+    TeacherEntity teacherEntity = new TeacherEntity(Objects.requireNonNull(
+        userServiceClient.findById(courseEntity.getTeacherId()).getBody()));
+    CourseGatewayResponseDto courseGatewayResponseDto = new CourseGatewayResponseDto(courseEntity, studentEntities,
+        teacherEntity);
+    return educationServiceClient.createCourse(courseGatewayResponseDto).getBody();
   }
 
   public String delete(int id) {
@@ -45,7 +57,13 @@ public class EducationService {
 
   public CourseResponseDto update(int id, CourseRequestDto courseEntity) {
 
-    return educationServiceClient.update(id, courseEntity).getBody();
+    List<StudentEntity> studentEntities = toStudentsList(
+        Objects.requireNonNull(userServiceClient.getAllUsersByIds(courseEntity.getStudentsIds()).getBody()));
+    TeacherEntity teacherEntity = new TeacherEntity(Objects.requireNonNull(
+        userServiceClient.findById(courseEntity.getTeacherId()).getBody()));
+    CourseGatewayResponseDto courseGatewayResponseDto = new CourseGatewayResponseDto(courseEntity, studentEntities,
+        teacherEntity);
+    return educationServiceClient.update(id, courseGatewayResponseDto).getBody();
   }
 
   public List<CourseResponseDto> getCoursesByUserId(Integer id) {
@@ -77,30 +95,36 @@ public class EducationService {
 
   public CourseResponseDto addMarkToCourse(Integer courseId, MarkRequestDto mark) {
 
-    Integer studentId = mark.getStudentId();
-    if (userServiceClient.findById(studentId).getBody() == null) {
-      throw new NoSuchElementException("Could not find student: [" + studentId + "]");
+    Integer userId = mark.getStudentId();
+    UserEntityDto user = userServiceClient.findById(userId).getBody();
+    if (user == null) {
+      throw new NoSuchElementException("Could not find student: [" + userId + "]");
     }
-    return educationServiceClient.addMarkToCourse(courseId, mark).getBody();
+    MarkGatewayResponseDto markGatewayResponseDto = new MarkGatewayResponseDto(mark, user.getUsername());
+
+    return educationServiceClient.addMarkToCourse(courseId, markGatewayResponseDto).getBody();
   }
 
   public CourseResponseDto addCommentToCourse(Integer courseId, CommentRequestDto comment) {
 
     Integer userId = comment.getUserId();
-    if (userServiceClient.findById(userId).getBody() == null) {
+    UserEntityDto user = userServiceClient.findById(userId).getBody();
+    if (user == null) {
       throw new NoSuchElementException("Could not find student: [" + userId + "]");
     }
-    return educationServiceClient.addCommentToCourse(courseId, comment).getBody();
+    CommentGatewayResponseDto commentGatewayResponseDto = new CommentGatewayResponseDto(comment, user.getUsername());
+
+    return educationServiceClient.addCommentToCourse(courseId, commentGatewayResponseDto).getBody();
   }
 
   public CourseResponseDto addLessonToCourse(Integer courseId, LessonRequestDto lesson) {
 
-    List<UserEntityDto> students = userServiceClient.getAllUsersByIds(lesson.getStudentsIds()).getBody();
-    UserEntityDto teacher = userServiceClient.findById(lesson.getTeacherId()).getBody();
-    System.out.println(students);
-    System.out.println(teacher);
+    List<StudentEntity> studentEntities = toStudentsList(
+        Objects.requireNonNull(userServiceClient.getAllUsersByIds(lesson.getStudentsIds()).getBody()));
 
-    return educationServiceClient.addLessonToCourse(courseId, lesson).getBody();
+    LessonGatewayResponseDto lessonGatewayResponseDto = new LessonGatewayResponseDto(lesson, studentEntities);
+
+    return educationServiceClient.addLessonToCourse(courseId, lessonGatewayResponseDto).getBody();
   }
 
   public List<LessonResponseDto> getLessonsByUserId(int userId) {
@@ -108,6 +132,7 @@ public class EducationService {
     if (userServiceClient.findById(userId).getBody() == null) {
       throw new NoSuchElementException("Could not find user: [" + userId + "]");
     }
+
     return educationServiceClient.getLessonsByUserId(userId).getBody();
   }
 
@@ -129,8 +154,14 @@ public class EducationService {
     if (user == null) {
       throw new NoSuchElementException("Could not find user: [" + userId + "]");
     }
-    comment.setUsername(user.getUsername());
-    return educationServiceClient.addCommentToLesson(lessonId, comment).getBody();
+    CommentGatewayResponseDto commentGatewayResponseDto = new CommentGatewayResponseDto(comment, user.getUsername());
+
+    return educationServiceClient.addCommentToLesson(lessonId, commentGatewayResponseDto).getBody();
+  }
+
+  private List<StudentEntity> toStudentsList(List<UserEntityDto> userEntityDtoList) {
+
+    return userEntityDtoList.stream().map(StudentEntity::new).collect(Collectors.toList());
   }
 
 }

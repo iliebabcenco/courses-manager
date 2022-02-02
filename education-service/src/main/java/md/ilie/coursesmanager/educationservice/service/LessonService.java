@@ -7,9 +7,9 @@ import java.util.NoSuchElementException;
 import lombok.AllArgsConstructor;
 import md.ilie.coursesmanager.educationservice.entity.Comment;
 import md.ilie.coursesmanager.educationservice.entity.Lesson;
+import md.ilie.coursesmanager.educationservice.entity.dto.gatewayresponse.CommentGatewayResponseDto;
+import md.ilie.coursesmanager.educationservice.entity.dto.gatewayresponse.LessonGatewayResponseDto;
 import md.ilie.coursesmanager.educationservice.entity.dto.mapper.EducationServiceMapper;
-import md.ilie.coursesmanager.educationservice.entity.dto.request.CommentRequestDto;
-import md.ilie.coursesmanager.educationservice.entity.dto.request.LessonRequestDto;
 import md.ilie.coursesmanager.educationservice.entity.dto.response.LessonResponseDto;
 import md.ilie.coursesmanager.educationservice.repository.LessonRepository;
 import md.ilie.coursesmanager.educationservice.util.mongo.SequenceGeneratorService;
@@ -40,9 +40,10 @@ public class LessonService {
         () -> new NoSuchElementException("Could not find lesson: [" + id + "]")));
   }
 
-  public LessonResponseDto save(LessonRequestDto lessonRequestDto) {
+  public LessonResponseDto save(LessonGatewayResponseDto lessonGatewayResponseDto) {
 
-    Lesson lessonEntity = mapper.toLessonEntity(lessonRequestDto);
+    Lesson lessonEntity = mapper.toLessonEntity(lessonGatewayResponseDto.getLessonRequestDto());
+    lessonEntity.addStudents(lessonGatewayResponseDto.getStudentEntities());
     lessonEntity.setId(sequenceGeneratorService.generateSequence(Comment.SEQUENCE_NAME));
     return mapper.toLessonResponseDto(repository.save(lessonEntity));
   }
@@ -52,10 +53,12 @@ public class LessonService {
     repository.deleteById(id);
   }
 
-  public LessonResponseDto update(int id, LessonRequestDto lessonRequestDto) {
+  public LessonResponseDto update(int id, LessonGatewayResponseDto lessonGatewayResponseDto) {
 
     if (repository.existsById(id)) {
-      return mapper.toLessonResponseDto(repository.save(mapper.toLessonEntity(lessonRequestDto)));
+      Lesson lessonEntity = mapper.toLessonEntity(lessonGatewayResponseDto.getLessonRequestDto());
+      lessonEntity.addStudents(lessonGatewayResponseDto.getStudentEntities());
+      return mapper.toLessonResponseDto(repository.save(lessonEntity));
     }
     throw new NoSuchElementException("Could not find lesson: [" + id + "]");
   }
@@ -68,10 +71,11 @@ public class LessonService {
     return mapper.toLessonResponseDto(repository.save(lesson));
   }
 
-  public LessonResponseDto addCommentToLesson(Integer lessonId, CommentRequestDto commentRequestDto) {
+  public LessonResponseDto addCommentToLesson(Integer lessonId, CommentGatewayResponseDto commentGatewayResponseDto) {
 
-    Comment comment = mapper.toCommentEntity(commentRequestDto);
+    Comment comment = mapper.toCommentEntity(commentGatewayResponseDto.getCommentRequestDto());
     comment.setId(sequenceGeneratorService.generateSequence(Comment.SEQUENCE_NAME));
+    comment.setUsername(commentGatewayResponseDto.getUsername());
     Lesson lesson = repository.findById(lessonId).orElseThrow(
         () -> new NoSuchElementException("Could not find lesson: [" + lessonId + "]"));
     lesson.addComments(List.of(comment));

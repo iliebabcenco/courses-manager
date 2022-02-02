@@ -2,8 +2,8 @@ package md.ilie.coursesmanager.educationservice.controller;
 
 import java.util.List;
 import lombok.AllArgsConstructor;
-import md.ilie.coursesmanager.educationservice.entity.dto.request.CommentRequestDto;
-import md.ilie.coursesmanager.educationservice.entity.dto.request.LessonRequestDto;
+import md.ilie.coursesmanager.educationservice.entity.dto.gatewayresponse.CommentGatewayResponseDto;
+import md.ilie.coursesmanager.educationservice.entity.dto.gatewayresponse.LessonGatewayResponseDto;
 import md.ilie.coursesmanager.educationservice.entity.dto.response.LessonResponseDto;
 import md.ilie.coursesmanager.educationservice.service.LessonService;
 import md.ilie.coursesmanager.userservice.entity.StudentEntity;
@@ -25,14 +25,14 @@ public class LessonController {
   private final LessonService lessonService;
 
   @PostMapping
-  public ResponseEntity<LessonResponseDto> create(@RequestBody LessonRequestDto lessonEntity) {
+  public ResponseEntity<LessonResponseDto> create(@RequestBody LessonGatewayResponseDto lessonEntity) {
 
     return ResponseEntity.ok(lessonService.save(lessonEntity));
   }
 
   @PatchMapping("/{id}")
   public ResponseEntity<LessonResponseDto> update(@PathVariable int id,
-      @RequestBody LessonRequestDto lessonEntity) {
+      @RequestBody LessonGatewayResponseDto lessonEntity) {
 
     return ResponseEntity.ok(lessonService.update(id, lessonEntity));
   }
@@ -65,7 +65,7 @@ public class LessonController {
 
   @PatchMapping("/{lessonId}/comment")
   public ResponseEntity<LessonResponseDto> addCommentToLesson(@PathVariable("lessonId") Integer lessonId,
-      @RequestBody CommentRequestDto comment) {
+      @RequestBody CommentGatewayResponseDto comment) {
 
     return ResponseEntity.ok(lessonService.addCommentToLesson(lessonId, comment));
   }
