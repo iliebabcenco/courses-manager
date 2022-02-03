@@ -17,6 +17,7 @@ import md.ilie.coursesmanager.educationservice.entity.dto.response.CourseRespons
 import md.ilie.coursesmanager.educationservice.entity.dto.response.LessonResponseDto;
 import md.ilie.coursesmanager.gateway.client.EducationServiceClient;
 import md.ilie.coursesmanager.gateway.client.UserServiceClient;
+import md.ilie.coursesmanager.userservice.entity.RoleEnum;
 import md.ilie.coursesmanager.userservice.entity.StudentEntity;
 import md.ilie.coursesmanager.userservice.entity.TeacherEntity;
 import md.ilie.coursesmanager.userservice.entity.dto.UserEntityDto;
@@ -77,6 +78,7 @@ public class EducationService {
     if (user == null) {
       throw new NoSuchElementException("Could not find teacher: [" + teacherId + "]");
     }
+    userServiceClient.updateUserRoles(user.getId(), List.of(RoleEnum.MANAGER));
     TeacherEntity teacher = new TeacherEntity(user);
 
     return educationServiceClient.setTeacherToCourse(courseId, teacher).getBody();

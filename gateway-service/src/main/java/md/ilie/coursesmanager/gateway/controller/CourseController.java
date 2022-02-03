@@ -145,6 +145,7 @@ public class CourseController {
   }
 
   @Operation(security = @SecurityRequirement(name = "bearerAuth"))
+  @PreAuthorize("#comment.userId == authentication.principal.id")
   @PatchMapping("/{courseId}/comment")
   public ResponseEntity<CourseResponseDto> addCommentToCourse(@PathVariable("courseId") Integer courseId,
       @RequestBody CommentRequestDto comment) {

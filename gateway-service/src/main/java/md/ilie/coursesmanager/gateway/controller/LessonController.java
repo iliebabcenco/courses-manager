@@ -39,6 +39,7 @@ public class LessonController {
   }
 
   @Operation(security = @SecurityRequirement(name = "bearerAuth"))
+  @PreAuthorize("#comment.userId == authentication.principal.id")
   @PatchMapping("/{lessonId}/comment")
   public ResponseEntity<LessonResponseDto> addCommentToLesson(@PathVariable("lessonId") Integer lessonId,
       @RequestBody CommentRequestDto comment) {
