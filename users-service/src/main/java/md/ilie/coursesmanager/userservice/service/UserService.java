@@ -16,6 +16,7 @@ import md.ilie.coursesmanager.userservice.entity.dto.UserEntityDto;
 import md.ilie.coursesmanager.userservice.entity.dto.UserEntityRequest;
 import md.ilie.coursesmanager.userservice.entity.dto.mapper.UserEntityMapper;
 import md.ilie.coursesmanager.userservice.repository.UserRepository;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -30,6 +31,7 @@ public class UserService implements UserDetailsService {
   private final UserRepository userRepository;
   private static final RoleEnum USER_ROLE = RoleEnum.USER;
   private final UserEntityMapper mapper;
+  private final KafkaTemplate<String, UserEntityDto> kafkaTemplate;
 
   public UserEntityDto registerUser(UserEntityRequest userEntityRequest) throws Exception {
 
@@ -40,6 +42,7 @@ public class UserService implements UserDetailsService {
     UserRecord firebaseUser = createFirebaseRecordUser(userEntity);
     userEntity.setUid(firebaseUser.getUid());
     UserEntity persistedUser = userRepository.save(userEntity);
+    kafkaTemplate.send("userServiceTopic", mapper.toUserEntityDto(persistedUser));
     persistedUser.setAuthorities(List.of(USER_ROLE));
     setDefaultClaims(persistedUser);
 
@@ -60,7 +63,7 @@ public class UserService implements UserDetailsService {
   }
 
   public List<UserEntityDto> getAllUsersByIds(List<Integer> ids) throws Exception {
-    if(!allUsersExistById(ids)) {
+    if (!allUsersExistById(ids)) {
       throw new Exception("Not all users are present in db");
     }
     List<UserEntity> usersList = new ArrayList<>();

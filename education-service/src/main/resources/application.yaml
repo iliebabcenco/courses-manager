@@ -7,9 +7,6 @@ spring:
   security:
     filter:
       order: 10
-
+  kafka:
+    bootstrap-servers: localhost:9092
 insertTestData: true
-
-spring.security.ignored: /**
-spring.security.basic.enabled: false
-spring.management.security.enabled: false

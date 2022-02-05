@@ -5,6 +5,7 @@ import md.ilie.coursesmanager.educationservice.entity.Comment;
 import md.ilie.coursesmanager.educationservice.entity.Course;
 import md.ilie.coursesmanager.educationservice.entity.Lesson;
 import md.ilie.coursesmanager.educationservice.entity.Mark;
+import md.ilie.coursesmanager.educationservice.entity.User;
 import md.ilie.coursesmanager.educationservice.entity.dto.request.CommentRequestDto;
 import md.ilie.coursesmanager.educationservice.entity.dto.request.CourseRequestDto;
 import md.ilie.coursesmanager.educationservice.entity.dto.request.LessonRequestDto;
@@ -18,12 +19,15 @@ import md.ilie.coursesmanager.educationservice.entity.dto.response.UserResponseD
 import md.ilie.coursesmanager.userservice.entity.StudentEntity;
 import md.ilie.coursesmanager.userservice.entity.TeacherEntity;
 import md.ilie.coursesmanager.userservice.entity.UserEntity;
+import md.ilie.coursesmanager.userservice.entity.dto.UserEntityDto;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface EducationServiceMapper {
 
   UserResponseDto toUserResponseDto(UserEntity user);
+
+  User toUser(UserEntityDto userEntityDto);
 
   UserResponseDto teacherToUserResponseDto(TeacherEntity teacher);
 
