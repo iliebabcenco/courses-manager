@@ -6,6 +6,7 @@ import com.google.firebase.FirebaseOptions;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+
 import java.io.IOException;
 
 @Configuration

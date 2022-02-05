@@ -1,6 +1,5 @@
 package md.ilie.coursesmanager.userservice.controller;
 
-import java.util.List;
 import lombok.AllArgsConstructor;
 import md.ilie.coursesmanager.userservice.entity.RoleEnum;
 import md.ilie.coursesmanager.userservice.entity.dto.UserEntityDto;
@@ -18,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/users-service")

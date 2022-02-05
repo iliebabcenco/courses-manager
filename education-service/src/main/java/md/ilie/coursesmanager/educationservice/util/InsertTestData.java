@@ -1,7 +1,5 @@
 package md.ilie.coursesmanager.educationservice.util;
 
-import java.time.LocalDate;
-import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import md.ilie.coursesmanager.educationservice.entity.dto.gatewayresponse.CommentGatewayResponseDto;
 import md.ilie.coursesmanager.educationservice.entity.dto.gatewayresponse.CourseGatewayResponseDto;
@@ -22,18 +20,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+import java.util.List;
+
 @Slf4j
 @Component
 public class InsertTestData {
 
-  @Autowired
-  private CourseService courseService;
-
-  @Autowired
-  private LessonService lessonService;
-
   @Value("${insertTestData}")
   boolean insertData;
+  @Autowired
+  private CourseService courseService;
+  @Autowired
+  private LessonService lessonService;
 
   public void insertTestData() {
     if (courseService.findAll().isEmpty() && this.insertData) {

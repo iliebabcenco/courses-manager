@@ -1,7 +1,13 @@
 package md.ilie.coursesmanager.userservice.entity;
 
-import java.util.Collection;
-import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,13 +17,8 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.experimental.SuperBuilder;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Getter
@@ -40,12 +41,10 @@ public class UserEntity implements UserDetails {
   protected String phoneNumber;
   protected boolean isEmailVerified;
   protected String picture;
-
-  @Transient
-  private String password;
-
   @Transient
   protected List<RoleEnum> authorities;
+  @Transient
+  private String password;
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
