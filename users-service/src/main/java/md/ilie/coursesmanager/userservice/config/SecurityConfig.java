@@ -1,6 +1,5 @@
 package md.ilie.coursesmanager.userservice.config;
 
-import javax.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import md.ilie.coursesmanager.userservice.config.firebase.FirebaseAuthenticationProvider;
 import md.ilie.coursesmanager.userservice.config.firebase.FirebaseTokenFilter;
@@ -16,6 +15,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import javax.servlet.http.HttpServletResponse;
 
 @EnableWebSecurity
 @Configuration

@@ -1,6 +1,7 @@
 package md.ilie.coursesmanager.userservice.config.firebase;
 
 import com.google.firebase.auth.FirebaseToken;
+
 import java.util.Map;
 
 public class FirebaseTokenHolder {

@@ -1,11 +1,12 @@
 package md.ilie.coursesmanager.educationservice.repository.helper;
 
-import java.util.List;
 import lombok.AllArgsConstructor;
 import md.ilie.coursesmanager.educationservice.entity.Course;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+
+import java.util.List;
 
 
 @AllArgsConstructor

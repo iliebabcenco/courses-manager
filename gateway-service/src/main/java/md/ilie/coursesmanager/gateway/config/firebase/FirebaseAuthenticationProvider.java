@@ -1,10 +1,5 @@
 package md.ilie.coursesmanager.gateway.config.firebase;
 
-import static md.ilie.coursesmanager.userservice.utils.UserEntityMapper.firebaseTokenHolderToUserEntity;
-
-import java.math.BigDecimal;
-import java.util.List;
-import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import md.ilie.coursesmanager.userservice.config.firebase.FirebaseAuthenticationToken;
@@ -17,6 +12,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static md.ilie.coursesmanager.userservice.utils.UserEntityMapper.firebaseTokenHolderToUserEntity;
 
 @AllArgsConstructor
 @Component

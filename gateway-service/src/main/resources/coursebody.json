@@ -1,39 +1,115 @@
 {
-    "id": 15,
-    "name": "Crash Course",
-    "description": "Full description for Frontend Course",
-    "startDate": "2022-09-01",
-    "endDate": "2023-05-31",
-    "students": [
+  "id": 15,
+  "name": "Crash Course",
+  "description": "Full description for Frontend Course",
+  "startDate": "2022-09-01",
+  "endDate": "2023-05-31",
+  "students": [
+    {
+      "id": 6,
+      "uid": null,
+      "username": "student 6",
+      "email": "student6@mail.com",
+      "phoneNumber": null,
+      "picture": null,
+      "authorities": null,
+      "enabled": false,
+      "emailVerified": false,
+      "accountNonExpired": false,
+      "credentialsNonExpired": false,
+      "accountNonLocked": false
+    },
+    {
+      "id": 7,
+      "uid": null,
+      "username": "student 7",
+      "email": "student7@mail.com",
+      "phoneNumber": null,
+      "picture": null,
+      "authorities": null,
+      "enabled": false,
+      "emailVerified": false,
+      "accountNonExpired": false,
+      "credentialsNonExpired": false,
+      "accountNonLocked": false
+    },
+    {
+      "id": 8,
+      "uid": null,
+      "username": "student 8",
+      "email": "student8@mail.com",
+      "phoneNumber": null,
+      "picture": null,
+      "authorities": null,
+      "enabled": false,
+      "emailVerified": false,
+      "accountNonExpired": false,
+      "credentialsNonExpired": false,
+      "accountNonLocked": false
+    }
+  ],
+  "teacher": {
+    "id": 5,
+    "uid": null,
+    "username": "Teacher 5",
+    "email": "teacher5@mail.com",
+    "phoneNumber": null,
+    "picture": null,
+    "authorities": null,
+    "enabled": false,
+    "emailVerified": false,
+    "accountNonExpired": false,
+    "credentialsNonExpired": false,
+    "accountNonLocked": false
+  },
+  "marks": [
+    {
+      "id": 5,
+      "value": 5,
+      "student": {
+        "id": 6,
+        "uid": null,
+        "username": "student 6",
+        "email": "student6@mail.com",
+        "phoneNumber": null,
+        "picture": null,
+        "authorities": null,
+        "enabled": false,
+        "emailVerified": false,
+        "accountNonExpired": false,
+        "credentialsNonExpired": false,
+        "accountNonLocked": false
+      }
+    },
+    {
+      "id": 7,
+      "value": 7,
+      "student": {
+        "id": 8,
+        "uid": null,
+        "username": "student 8",
+        "email": "student8@mail.com",
+        "phoneNumber": null,
+        "picture": null,
+        "authorities": null,
+        "enabled": false,
+        "emailVerified": false,
+        "accountNonExpired": false,
+        "credentialsNonExpired": false,
+        "accountNonLocked": false
+      }
+    }
+  ],
+  "lessons": [
+    {
+      "id": 11,
+      "name": "Lesson 11",
+      "content": "Full descriptino for lesson 11",
+      "comments": [
         {
-            "id": 6,
-            "uid": null,
-            "username": "student 6",
-            "email": "student6@mail.com",
-            "phoneNumber": null,
-            "picture": null,
-            "authorities": null,
-            "enabled": false,
-            "emailVerified": false,
-            "accountNonExpired": false,
-            "credentialsNonExpired": false,
-            "accountNonLocked": false
-        },
-        {
-            "id": 7,
-            "uid": null,
-            "username": "student 7",
-            "email": "student7@mail.com",
-            "phoneNumber": null,
-            "picture": null,
-            "authorities": null,
-            "enabled": false,
-            "emailVerified": false,
-            "accountNonExpired": false,
-            "credentialsNonExpired": false,
-            "accountNonLocked": false
-        },
-        {
+          "id": 15,
+          "content": "Content 15",
+          "user": {
             "id": 8,
             "uid": null,
             "username": "student 8",
@@ -46,9 +122,16 @@
             "accountNonExpired": false,
             "credentialsNonExpired": false,
             "accountNonLocked": false
+          }
         }
-    ],
-    "teacher": {
+      ]
+    }
+  ],
+  "comments": [
+    {
+      "id": 13,
+      "content": "Content 13",
+      "user": {
         "id": 5,
         "uid": null,
         "username": "Teacher 5",
@@ -61,90 +144,7 @@
         "accountNonExpired": false,
         "credentialsNonExpired": false,
         "accountNonLocked": false
-    },
-    "marks": [
-        {
-            "id": 5,
-            "value": 5,
-            "student": {
-                "id": 6,
-                "uid": null,
-                "username": "student 6",
-                "email": "student6@mail.com",
-                "phoneNumber": null,
-                "picture": null,
-                "authorities": null,
-                "enabled": false,
-                "emailVerified": false,
-                "accountNonExpired": false,
-                "credentialsNonExpired": false,
-                "accountNonLocked": false
-            }
-        },
-        {
-            "id": 7,
-            "value": 7,
-            "student": {
-                "id": 8,
-                "uid": null,
-                "username": "student 8",
-                "email": "student8@mail.com",
-                "phoneNumber": null,
-                "picture": null,
-                "authorities": null,
-                "enabled": false,
-                "emailVerified": false,
-                "accountNonExpired": false,
-                "credentialsNonExpired": false,
-                "accountNonLocked": false
-            }
-        }
-    ],
-    "lessons": [
-        {
-            "id": 11,
-            "name": "Lesson 11",
-            "content": "Full descriptino for lesson 11",
-            "comments": [
-                {
-                    "id": 15,
-                    "content": "Content 15",
-                    "user": {
-                        "id": 8,
-                        "uid": null,
-                        "username": "student 8",
-                        "email": "student8@mail.com",
-                        "phoneNumber": null,
-                        "picture": null,
-                        "authorities": null,
-                        "enabled": false,
-                        "emailVerified": false,
-                        "accountNonExpired": false,
-                        "credentialsNonExpired": false,
-                        "accountNonLocked": false
-                    }
-                }
-            ]
-        }
-    ],
-    "comments": [
-        {
-            "id": 13,
-            "content": "Content 13",
-            "user": {
-                "id": 5,
-                "uid": null,
-                "username": "Teacher 5",
-                "email": "teacher5@mail.com",
-                "phoneNumber": null,
-                "picture": null,
-                "authorities": null,
-                "enabled": false,
-                "emailVerified": false,
-                "accountNonExpired": false,
-                "credentialsNonExpired": false,
-                "accountNonLocked": false
-            }
-        }
-    ]
+      }
+    }
+  ]
 }

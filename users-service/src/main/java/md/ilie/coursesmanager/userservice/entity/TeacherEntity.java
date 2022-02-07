@@ -1,12 +1,13 @@
 package md.ilie.coursesmanager.userservice.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import md.ilie.coursesmanager.userservice.entity.dto.UserEntityDto;
+
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Entity
 @Getter

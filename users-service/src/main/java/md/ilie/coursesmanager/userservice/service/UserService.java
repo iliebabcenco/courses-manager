@@ -3,11 +3,6 @@ package md.ilie.coursesmanager.userservice.service;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.UserRecord;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import md.ilie.coursesmanager.userservice.entity.RoleEnum;
@@ -23,13 +18,19 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class UserService implements UserDetailsService {
 
-  private final UserRepository userRepository;
   private static final RoleEnum USER_ROLE = RoleEnum.USER;
+  private final UserRepository userRepository;
   private final UserEntityMapper mapper;
   private final KafkaTemplate<String, UserEntityDto> kafkaTemplate;
 

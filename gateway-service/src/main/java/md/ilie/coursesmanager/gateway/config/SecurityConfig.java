@@ -1,6 +1,5 @@
 package md.ilie.coursesmanager.gateway.config;
 
-import javax.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import md.ilie.coursesmanager.gateway.config.firebase.FirebaseAuthenticationProvider;
 import md.ilie.coursesmanager.gateway.config.firebase.FirebaseTokenFilter;
@@ -17,15 +16,13 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import javax.servlet.http.HttpServletResponse;
+
 @EnableWebSecurity
 @Configuration
 @AllArgsConstructor
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
-  private UserService userService;
-  private FirebaseTokenFilter firebaseTokenFilter;
-  private FirebaseAuthenticationProvider firebaseProvider;
 
   private static final String[] AUTH_WHITELIST = {
       // -- Swagger UI v2
@@ -41,6 +38,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
       "/swagger-ui/**"
       // other public endpoints of your API may be appended to this array
   };
+  private UserService userService;
+  private FirebaseTokenFilter firebaseTokenFilter;
+  private FirebaseAuthenticationProvider firebaseProvider;
 
   @Override
   protected void configure(AuthenticationManagerBuilder auth) throws Exception {

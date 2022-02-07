@@ -1,6 +1,5 @@
 package md.ilie.coursesmanager.gateway.client;
 
-import java.util.List;
 import md.ilie.coursesmanager.educationservice.entity.dto.gatewayresponse.CommentGatewayResponseDto;
 import md.ilie.coursesmanager.educationservice.entity.dto.gatewayresponse.CourseGatewayResponseDto;
 import md.ilie.coursesmanager.educationservice.entity.dto.gatewayresponse.LessonGatewayResponseDto;
@@ -18,6 +17,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.List;
+
 @FeignClient(name = "education-service", url = "localhost:8083")
 public interface EducationServiceClient {
 
@@ -26,7 +27,7 @@ public interface EducationServiceClient {
 
   @PatchMapping("/courses/{id}")
   ResponseEntity<CourseResponseDto> update(@PathVariable("id") int id,
-      @RequestBody CourseGatewayResponseDto courseEntity);
+                                           @RequestBody CourseGatewayResponseDto courseEntity);
 
   @GetMapping("/courses")
   ResponseEntity<List<CourseResponseDto>> findAllCourses();
@@ -45,30 +46,30 @@ public interface EducationServiceClient {
 
   @PatchMapping("/courses/{courseId}/teacher")
   ResponseEntity<CourseResponseDto> setTeacherToCourse(@PathVariable("courseId") Integer courseId,
-      @RequestBody TeacherEntity teacher);
+                                                       @RequestBody TeacherEntity teacher);
 
   @PatchMapping("/courses/{courseId}/student")
   ResponseEntity<CourseResponseDto> addStudentToCourse(@PathVariable("courseId") Integer courseId,
-      @RequestBody StudentEntity student);
+                                                       @RequestBody StudentEntity student);
 
   @PatchMapping("/courses/{courseId}/comment")
   ResponseEntity<CourseResponseDto> addCommentToCourse(@PathVariable("courseId") Integer courseId,
-      @RequestBody CommentGatewayResponseDto comment);
+                                                       @RequestBody CommentGatewayResponseDto comment);
 
   @PatchMapping("/courses/{courseId}/mark")
   ResponseEntity<CourseResponseDto> addMarkToCourse(@PathVariable("courseId") Integer courseId,
-      @RequestBody MarkGatewayResponseDto mark);
+                                                    @RequestBody MarkGatewayResponseDto mark);
 
   @PatchMapping("/lessons/{lessonId}/student")
   ResponseEntity<LessonResponseDto> addStudentToLesson(@PathVariable("lessonId") Integer lessonId,
-      @RequestBody List<StudentEntity> students);
+                                                       @RequestBody List<StudentEntity> students);
 
   @PatchMapping("/lessons/{lessonId}/comment")
   ResponseEntity<LessonResponseDto> addCommentToLesson(@PathVariable("lessonId") Integer lessonId,
-      @RequestBody CommentGatewayResponseDto comment);
+                                                       @RequestBody CommentGatewayResponseDto comment);
 
   @PatchMapping("/courses/{courseId}/lesson")
   ResponseEntity<CourseResponseDto> addLessonToCourse(@PathVariable("courseId") Integer courseId,
-      @RequestBody LessonGatewayResponseDto lesson);
+                                                      @RequestBody LessonGatewayResponseDto lesson);
 
 }

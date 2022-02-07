@@ -27,7 +27,7 @@ public class LessonController {
   @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
   @PatchMapping("/{lessonId}/student/{studentId}")
   public ResponseEntity<LessonResponseDto> addStudentToLesson(@PathVariable("lessonId") Integer lessonId,
-      @PathVariable("studentId") Integer studentId) {
+                                                              @PathVariable("studentId") Integer studentId) {
     try {
       return ResponseEntity
           .status(HttpStatus.OK)
@@ -42,7 +42,7 @@ public class LessonController {
   @PreAuthorize("#comment.userId == authentication.principal.id")
   @PatchMapping("/{lessonId}/comment")
   public ResponseEntity<LessonResponseDto> addCommentToLesson(@PathVariable("lessonId") Integer lessonId,
-      @RequestBody CommentRequestDto comment) {
+                                                              @RequestBody CommentRequestDto comment) {
     try {
       return ResponseEntity
           .status(HttpStatus.OK)
