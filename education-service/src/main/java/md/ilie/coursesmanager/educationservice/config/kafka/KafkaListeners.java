@@ -5,7 +5,6 @@ import md.ilie.coursesmanager.educationservice.entity.dto.mapper.EducationServic
 import md.ilie.coursesmanager.educationservice.service.UserService;
 import md.ilie.coursesmanager.userservice.entity.dto.UserEntityDto;
 import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -16,7 +15,7 @@ public class KafkaListeners {
   private final EducationServiceMapper mapper;
 
   @KafkaListener(topics = "userServiceTopic", groupId = "groupId", containerFactory = "factory")
-  void userServiceListener(@Payload UserEntityDto user) {
+  void userServiceListener(UserEntityDto user) {
     userService.save(mapper.toUser(user));
   }
 
