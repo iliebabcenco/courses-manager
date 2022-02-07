@@ -1,0 +1,6 @@
+type UserResponseDto {
+    id: ID!
+    username: String
+    email: String
+    phoneNumber: String
+}

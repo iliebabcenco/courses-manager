@@ -1,0 +1,6 @@
+type CommentResponseDto {
+    id: ID!
+    content: String
+    userId: Int
+    username: String
+}
