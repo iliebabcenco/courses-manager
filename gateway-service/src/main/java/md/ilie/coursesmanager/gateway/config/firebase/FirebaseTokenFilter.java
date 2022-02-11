@@ -3,6 +3,11 @@ package md.ilie.coursesmanager.gateway.config.firebase;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseToken;
+import java.io.IOException;
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import md.ilie.coursesmanager.gateway.client.TokenFeignInterceptor;
@@ -16,12 +21,6 @@ import org.springframework.util.AntPathMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-
 @Component
 @AllArgsConstructor
 @Slf4j
@@ -32,7 +31,7 @@ public class FirebaseTokenFilter extends OncePerRequestFilter {
   @Override
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
       throws ServletException, IOException {
-    log.info("Entering doFilterInternal from FirebaseTokenFilter");
+    log.info("Entering doFilterInternal from FirebaseTokenFilter request: " + request.getServletPath());
     String authenticationHeader = request.getHeader("Authorization");
     if (authenticationHeader == null || !authenticationHeader.startsWith("Bearer "))
       throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Missing token!");
@@ -61,6 +60,9 @@ public class FirebaseTokenFilter extends OncePerRequestFilter {
   @Override
   protected boolean shouldNotFilter(HttpServletRequest request) {
     AntPathMatcher pathMatcher = new AntPathMatcher();
+    System.out.println("\n\n\n path: " + request.getServletPath());
+    System.out.println(
+        "pathMatcher.match(\"/vendor/**\")" + pathMatcher.match("/vendor/**", request.getServletPath()));
     return pathMatcher.match("/users/register", request.getServletPath())
         || pathMatcher.match("/swagger-ui/**", request.getServletPath())
         || pathMatcher.match("/v3/api-docs/**", request.getServletPath())
@@ -70,6 +72,11 @@ public class FirebaseTokenFilter extends OncePerRequestFilter {
         || pathMatcher.match("/configuration/security", request.getServletPath())
         || pathMatcher.match("/swagger-ui.html", request.getServletPath())
         || pathMatcher.match("/webjars/**", request.getServletPath())
+        || pathMatcher.match("/playground", request.getServletPath())
+        || pathMatcher.match("/graphiql", request.getServletPath())
+        || pathMatcher.match("/graphql", request.getServletPath())
+        || pathMatcher.match("/vendor/**", request.getServletPath())
+        || pathMatcher.match("/subscriptions", request.getServletPath())
         || pathMatcher.match("/users/register-admin", request.getServletPath());
   }
 

@@ -17,7 +17,7 @@ public class CourseResolver implements GraphQLQueryResolver, GraphQLMutationReso
 
   private final EducationService educationService;
 
-  public List<CourseResponseDto> getCourses() {
+  public List<CourseResponseDto> courses() {
     log.info("Get all courses request in CourseResolver");
     return educationService.findAll();
   }
