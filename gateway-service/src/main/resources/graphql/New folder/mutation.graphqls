@@ -1,0 +1,7 @@
+scalar GraphQLLong
+scalar Object
+
+# All project mutations
+type Mutation {
+    
+}

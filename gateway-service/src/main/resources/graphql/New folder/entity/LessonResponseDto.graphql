@@ -1,0 +1,9 @@
+type LessonResponseDto {
+    id: ID!
+    name: String
+    content: String
+    comments: [CommentResponseDto]
+    students: [UserResponseDto]
+    courseName: UserResponseDto
+    courseId: Int
+}
