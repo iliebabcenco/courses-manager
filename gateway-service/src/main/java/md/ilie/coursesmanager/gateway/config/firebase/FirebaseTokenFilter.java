@@ -71,7 +71,7 @@ public class FirebaseTokenFilter extends OncePerRequestFilter {
         || pathMatcher.match("/webjars/**", request.getServletPath())
         || pathMatcher.match("/playground", request.getServletPath())
         || pathMatcher.match("/graphiql", request.getServletPath())
-        || pathMatcher.match("/graphql", request.getServletPath())
+        //        || pathMatcher.match("/graphql", request.getServletPath())
         || pathMatcher.match("/vendor/**", request.getServletPath())
         || pathMatcher.match("/subscriptions", request.getServletPath())
         || pathMatcher.match("/users/register-admin", request.getServletPath());

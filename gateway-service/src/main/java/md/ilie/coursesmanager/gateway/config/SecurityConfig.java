@@ -67,7 +67,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.POST, "/users/register-admin").permitAll()
         .antMatchers("/playground").permitAll()
         .antMatchers("/graphiql").permitAll()
-        .antMatchers("/graphql").permitAll()
+        //        .antMatchers("/graphql").permitAll()
         .antMatchers("/vendor/**").permitAll()
         .antMatchers("/subscriptions").permitAll()
         .antMatchers(AUTH_WHITELIST).permitAll()

@@ -7,3 +7,8 @@ server:
 
 springdoc:
   packagesToScan: md.ilie.coursesmanager.gateway.controller
+
+graphql:
+  playground:
+    headers:
+      Authorization: TOKEN
