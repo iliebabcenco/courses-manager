@@ -132,7 +132,7 @@ public class CourseController {
 
   @Operation(security = @SecurityRequirement(name = "bearerAuth"))
   @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
-  @PatchMapping("/{courseId}/mark")
+  @PostMapping("/{courseId}/mark")
   public ResponseEntity<CourseResponseDto> addMarkToCourse(@PathVariable("courseId") Integer courseId,
                                                            @RequestBody MarkRequestDto mark) {
     try {
@@ -147,7 +147,7 @@ public class CourseController {
 
   @Operation(security = @SecurityRequirement(name = "bearerAuth"))
   @PreAuthorize("#comment.userId == authentication.principal.id")
-  @PatchMapping("/{courseId}/comment")
+  @PostMapping("/{courseId}/comment")
   public ResponseEntity<CourseResponseDto> addCommentToCourse(@PathVariable("courseId") Integer courseId,
                                                               @RequestBody CommentRequestDto comment) {
     try {
@@ -161,7 +161,7 @@ public class CourseController {
   }
 
   @Operation(security = @SecurityRequirement(name = "bearerAuth"))
-  @PatchMapping("/{courseId}/lesson")
+  @PostMapping("/{courseId}/lesson")
   public ResponseEntity<CourseResponseDto> addLessonToCourse(@PathVariable("courseId") Integer courseId,
                                                              @RequestBody LessonRequestDto lesson) {
     try {

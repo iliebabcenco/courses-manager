@@ -1,0 +1,4 @@
+input CommentRequestDto {
+    content: String!
+    userId: Int!
+}

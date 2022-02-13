@@ -1,0 +1,4 @@
+extend type Mutation {
+    createCourse(course: CourseRequestDto!): CourseResponseDto!
+    addCommentToCourse(courseId: Int!, comment: CommentRequestDto!): CourseResponseDto!
+}

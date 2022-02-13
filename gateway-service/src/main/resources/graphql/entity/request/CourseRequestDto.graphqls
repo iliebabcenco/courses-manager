@@ -1,0 +1,8 @@
+input CourseRequestDto {
+    name: ID!
+    description: String
+    startDate: String
+    endDate: String
+    studentsIds: [Int]
+    teacherId: Int
+}
