@@ -1,6 +1,0 @@
-type MarkResponseDto {
-    id: ID!
-    value: Int
-    studentId: Int
-    studentName: String
-}

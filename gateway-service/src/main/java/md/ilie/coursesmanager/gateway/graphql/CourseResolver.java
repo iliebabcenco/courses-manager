@@ -15,16 +15,16 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class CourseResolver implements GraphQLQueryResolver, GraphQLMutationResolver, GraphQLSubscriptionResolver {
 
-//  private final EducationService educationService;
-//
-//  public List<CourseResponseDto> courses() {
-//    log.info("Get all courses request in CourseResolver");
-//    return educationService.findAll();
-//  }
+  private final EducationService educationService;
+
+  public List<CourseResponseDto> courses() {
+    log.info("Get all courses request in CourseResolver");
+    return educationService.findAll();
+  }
 
   public String getIt() {
     log.info("Get all courses request in CourseResolver");
-    return "Got it!";
+    return "GOt it!";
   }
 
 }

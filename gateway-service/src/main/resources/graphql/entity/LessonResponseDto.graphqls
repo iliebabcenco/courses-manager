@@ -4,6 +4,6 @@ type LessonResponseDto {
     content: String
     comments: [CommentResponseDto]
     students: [UserResponseDto]
-    courseName: UserResponseDto
+    courseName: String
     courseId: Int
 }

@@ -60,9 +60,6 @@ public class FirebaseTokenFilter extends OncePerRequestFilter {
   @Override
   protected boolean shouldNotFilter(HttpServletRequest request) {
     AntPathMatcher pathMatcher = new AntPathMatcher();
-    System.out.println("\n\n\n path: " + request.getServletPath());
-    System.out.println(
-        "pathMatcher.match(\"/vendor/**\")" + pathMatcher.match("/vendor/**", request.getServletPath()));
     return pathMatcher.match("/users/register", request.getServletPath())
         || pathMatcher.match("/swagger-ui/**", request.getServletPath())
         || pathMatcher.match("/v3/api-docs/**", request.getServletPath())
