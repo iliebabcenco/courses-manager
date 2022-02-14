@@ -11,4 +11,4 @@ springdoc:
 graphql:
   playground:
     headers:
-      Authorization: TOKEN
+      Authorization: Bearer token
