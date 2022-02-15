@@ -2,6 +2,7 @@ package md.ilie.coursesmanager.gateway.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import md.ilie.coursesmanager.educationservice.entity.dto.response.CourseResponseDto;
 import md.ilie.coursesmanager.educationservice.entity.dto.response.LessonResponseDto;
@@ -21,8 +22,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/users")
@@ -60,7 +59,7 @@ public class UserController {
   @PreAuthorize("hasAuthority('ADMIN')")
   @PatchMapping("/{id}/upgrade-roles")
   public ResponseEntity<UserEntityDto> updateUsersRoles(@PathVariable("id") Integer id,
-                                                        @RequestBody List<RoleEnum> roles) {
+      @RequestBody List<RoleEnum> roles) {
     try {
       return ResponseEntity
           .status(HttpStatus.OK)

@@ -1,5 +1,7 @@
 package md.ilie.coursesmanager.educationservice.service;
 
+import java.util.List;
+import java.util.NoSuchElementException;
 import lombok.AllArgsConstructor;
 import md.ilie.coursesmanager.educationservice.entity.Comment;
 import md.ilie.coursesmanager.educationservice.entity.Course;
@@ -17,9 +19,6 @@ import md.ilie.coursesmanager.educationservice.util.mongo.SequenceGeneratorServi
 import md.ilie.coursesmanager.userservice.entity.StudentEntity;
 import md.ilie.coursesmanager.userservice.entity.TeacherEntity;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.NoSuchElementException;
 
 @Service
 @AllArgsConstructor

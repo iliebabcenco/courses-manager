@@ -1,5 +1,6 @@
 package md.ilie.coursesmanager.educationservice.controller;
 
+import java.util.List;
 import lombok.AllArgsConstructor;
 import md.ilie.coursesmanager.educationservice.entity.dto.response.CourseResponseDto;
 import md.ilie.coursesmanager.educationservice.entity.dto.response.LessonResponseDto;
@@ -10,8 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @RestController
 @AllArgsConstructor

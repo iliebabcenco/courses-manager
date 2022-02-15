@@ -1,5 +1,6 @@
 package md.ilie.coursesmanager.educationservice.controller;
 
+import java.util.List;
 import lombok.AllArgsConstructor;
 import md.ilie.coursesmanager.educationservice.entity.dto.gatewayresponse.CommentGatewayResponseDto;
 import md.ilie.coursesmanager.educationservice.entity.dto.gatewayresponse.LessonGatewayResponseDto;
@@ -16,8 +17,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/lessons")
 @AllArgsConstructor
@@ -33,7 +32,7 @@ public class LessonController {
 
   @PatchMapping("/{id}")
   public ResponseEntity<LessonResponseDto> update(@PathVariable int id,
-                                                  @RequestBody LessonGatewayResponseDto lessonEntity) {
+      @RequestBody LessonGatewayResponseDto lessonEntity) {
 
     return ResponseEntity.ok(lessonService.update(id, lessonEntity));
   }
@@ -59,14 +58,14 @@ public class LessonController {
 
   @PatchMapping("/{lessonId}/student")
   public ResponseEntity<LessonResponseDto> addStudentToLesson(@PathVariable("lessonId") Integer lessonId,
-                                                              @RequestBody List<StudentEntity> students) {
+      @RequestBody List<StudentEntity> students) {
 
     return ResponseEntity.ok(lessonService.addStudentsToLesson(lessonId, students));
   }
 
   @PatchMapping("/{lessonId}/comment")
   public ResponseEntity<LessonResponseDto> addCommentToLesson(@PathVariable("lessonId") Integer lessonId,
-                                                              @RequestBody CommentGatewayResponseDto comment) {
+      @RequestBody CommentGatewayResponseDto comment) {
 
     return ResponseEntity.ok(lessonService.addCommentToLesson(lessonId, comment));
   }

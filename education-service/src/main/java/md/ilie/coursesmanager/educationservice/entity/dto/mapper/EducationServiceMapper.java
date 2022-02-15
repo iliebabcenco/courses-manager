@@ -1,5 +1,6 @@
 package md.ilie.coursesmanager.educationservice.entity.dto.mapper;
 
+import java.util.List;
 import md.ilie.coursesmanager.educationservice.entity.Comment;
 import md.ilie.coursesmanager.educationservice.entity.Course;
 import md.ilie.coursesmanager.educationservice.entity.Lesson;
@@ -20,8 +21,6 @@ import md.ilie.coursesmanager.userservice.entity.TeacherEntity;
 import md.ilie.coursesmanager.userservice.entity.UserEntity;
 import md.ilie.coursesmanager.userservice.entity.dto.UserEntityDto;
 import org.mapstruct.Mapper;
-
-import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface EducationServiceMapper {

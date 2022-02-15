@@ -1,5 +1,7 @@
 package md.ilie.coursesmanager.educationservice.entity;
 
+import java.util.ArrayList;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -8,9 +10,6 @@ import lombok.Setter;
 import md.ilie.coursesmanager.userservice.entity.StudentEntity;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor

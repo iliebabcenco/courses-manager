@@ -1,10 +1,9 @@
 package md.ilie.coursesmanager.userservice.utils;
 
+import java.util.List;
 import md.ilie.coursesmanager.userservice.config.firebase.FirebaseTokenHolder;
 import md.ilie.coursesmanager.userservice.entity.RoleEnum;
 import md.ilie.coursesmanager.userservice.entity.UserEntity;
-
-import java.util.List;
 
 public class UserEntityMapper {
   public static UserEntity firebaseTokenHolderToUserEntity(FirebaseTokenHolder holder, List<RoleEnum> roles) {

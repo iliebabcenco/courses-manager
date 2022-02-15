@@ -3,6 +3,7 @@ package md.ilie.coursesmanager.gateway.graphql;
 import com.coxautodev.graphql.tools.GraphQLMutationResolver;
 import com.coxautodev.graphql.tools.GraphQLQueryResolver;
 import com.coxautodev.graphql.tools.GraphQLSubscriptionResolver;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import md.ilie.coursesmanager.educationservice.entity.dto.request.CommentRequestDto;
@@ -14,8 +15,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.server.ResponseStatusException;
-
-import java.util.List;
 
 @Component
 @Slf4j

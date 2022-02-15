@@ -1,8 +1,7 @@
 package md.ilie.coursesmanager.educationservice.repository.helper;
 
-import md.ilie.coursesmanager.educationservice.entity.Lesson;
-
 import java.util.List;
+import md.ilie.coursesmanager.educationservice.entity.Lesson;
 
 public interface LessonRepositoryCustom {
 

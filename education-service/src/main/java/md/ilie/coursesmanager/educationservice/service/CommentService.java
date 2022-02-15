@@ -1,15 +1,14 @@
 package md.ilie.coursesmanager.educationservice.service;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.NoSuchElementException;
 import lombok.AllArgsConstructor;
 import md.ilie.coursesmanager.educationservice.entity.Comment;
 import md.ilie.coursesmanager.educationservice.repository.CommentRepository;
 import md.ilie.coursesmanager.educationservice.util.mongo.SequenceGeneratorService;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.NoSuchElementException;
 
 @Service
 @AllArgsConstructor

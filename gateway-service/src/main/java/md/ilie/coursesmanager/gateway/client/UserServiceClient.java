@@ -1,5 +1,6 @@
 package md.ilie.coursesmanager.gateway.client;
 
+import java.util.List;
 import md.ilie.coursesmanager.userservice.entity.RoleEnum;
 import md.ilie.coursesmanager.userservice.entity.dto.UserEntityDto;
 import md.ilie.coursesmanager.userservice.entity.dto.UserEntityRequest;
@@ -11,8 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.List;
 
 @FeignClient(name = "users-service", url = "localhost:8082")
 public interface UserServiceClient {
