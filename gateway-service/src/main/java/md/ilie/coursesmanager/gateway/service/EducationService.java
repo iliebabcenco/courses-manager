@@ -161,7 +161,7 @@ public class EducationService {
     return educationServiceClient.addCommentToLesson(lessonId, commentGatewayResponseDto).getBody();
   }
 
-  private List<StudentEntity> toStudentsList(List<UserEntityDto> userEntityDtoList) {
+  public static List<StudentEntity> toStudentsList(List<UserEntityDto> userEntityDtoList) {
 
     return userEntityDtoList.stream().map(StudentEntity::new).collect(Collectors.toList());
   }

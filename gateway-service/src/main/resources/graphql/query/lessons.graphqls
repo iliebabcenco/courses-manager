@@ -1,0 +1,4 @@
+extend type Query {
+    #    studentsByIds(ids: [ID]): [UserResponseDto]
+    studentsByIdsWithLessons(ids: [ID]): [UserLessonsResponseDto]
+}
