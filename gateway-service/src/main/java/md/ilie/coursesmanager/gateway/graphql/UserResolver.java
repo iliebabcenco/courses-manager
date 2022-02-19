@@ -14,12 +14,18 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class UserResolver implements GraphQLResolver<UserLessonsResponseDto> {
 
+  private LessonDataLoaderComponent dataLoaderComponent;
   private EducationService educationService;
 
   public List<LessonResponseDto> lessons(UserLessonsResponseDto responseDto) {
 
-    log.info("Request lessons for user with id: {}", responseDto.getStudent().getId());
-    return educationService.getLessonsByUserId(responseDto.getStudent().getId());
+    Integer studentId = responseDto.getStudent().getId();
+
+    List<LessonResponseDto> lessonResponseDtoList = educationService.getLessonsByUserId(studentId);
+    dataLoaderComponent.getDataLoader().load(studentId);
+    dataLoaderComponent.getDataLoader().dispatchAndJoin();
+
+    return lessonResponseDtoList;
   }
 
 }
